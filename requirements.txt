@@ -1,0 +1,7 @@
+numpy
+scipy
+cython
+jitcode
+jitcdde
+jitcsde
+matplotlib
