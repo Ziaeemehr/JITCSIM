@@ -59,6 +59,7 @@ class Kuramoto_II:
 
     def compile(self, **kwargs):
 
+        # if not os.path.exists(join(self.output, self.modulename)+".so") or recompile:
         I = jitcode(self.rhs, n=self.N,
                     control_pars=self.control_pars)
         I.generate_f_C(**kwargs)
