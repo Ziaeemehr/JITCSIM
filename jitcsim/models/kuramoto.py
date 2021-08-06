@@ -39,6 +39,9 @@ class Kuramoto_II:
 
         if not os.path.exists(self.output):
             os.makedirs(self.output)
+        
+        if not "modulename" in par.keys():
+            self.modulename = "km"
 
     # ---------------------------------------------------------------
 
