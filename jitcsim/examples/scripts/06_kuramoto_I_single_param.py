@@ -53,7 +53,6 @@ if __name__ == "__main__":
 
         "use_omp": False,                   # use OpenMP
         "output": "data",                   # output directory
-        "modulename": "km"                  # compiled filename
     }
 
     # make an instance of the model
@@ -73,5 +72,6 @@ if __name__ == "__main__":
     # plot order parameter vs time
     plot_order(t,
                order,
-               "data/06.png",
-               "time", "r(t)")
+               filename="data/06.png",
+               xlabel="time",
+               ylabel="r(t)")

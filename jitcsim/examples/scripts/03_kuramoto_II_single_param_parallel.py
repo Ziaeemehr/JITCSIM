@@ -48,7 +48,6 @@ if __name__ == "__main__":
         'control': ['coupling'],
         "use_omp": False,
         "output": "data",
-        "modulename": "km"
     }
 
     def run_for_each(coupl):
@@ -88,5 +87,6 @@ if __name__ == "__main__":
     # plotting time average of the order parameters vs coupling
     plot_order(couplings,
                np.mean(orders, axis=1),
-               "data/03.png",
-               "R", "coupling")
+               filename="data/03.png",
+               ylabel="R",
+               xlabel="coupling")

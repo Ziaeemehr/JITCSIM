@@ -14,6 +14,9 @@ class Kuramoto_II:
 
     def __init__(self, par) -> None:
 
+        
+        self.modulename = "km"                  # compiled filename
+
         for item in par.items():
             name = item[0]
             value = item[1]
@@ -52,7 +55,7 @@ class Kuramoto_II:
 
         for i in range(self.N):
             sumj = np.sum(sin(y(j)-y(i) - self.alpha)
-                       for j in range(self.N) if self.adj[i, j])
+                          for j in range(self.N) if self.adj[i, j])
 
             yield self.omega[i] + self.coupling * sumj
     # ---------------------------------------------------------------
@@ -69,7 +72,7 @@ class Kuramoto_II:
     def set_initial_state(self, x0):
 
         assert(len(x0) == self.N)
-        self.initial_state=x0
+        self.initial_state = x0
     # ---------------------------------------------------------------
 
     def simulate(self, par, **integrator_params):
@@ -84,7 +87,7 @@ class Kuramoto_II:
             - **x** coordinates.
         '''
 
-        I=jitcode(n=self.N,
+        I = jitcode(n=self.N,
                     control_pars=self.control_pars,
                     module_location=join(self.output, self.modulename+".so"))
         I.set_integrator(name=self.integration_method,
@@ -92,23 +95,23 @@ class Kuramoto_II:
         I.set_parameters(par)
         I.set_initial_value(self.initial_state, time=self.t_initial)
 
-        times=self.t_transition + \
+        times = self.t_transition + \
             np.arange(self.t_initial, self.t_final -
                       self.t_transition, self.interval)
-        phases=np.zeros((len(times), self.N))
+        phases = np.zeros((len(times), self.N))
         for i in range(len(times)):
-            phases[i, :]=I.integrate(times[i]) % (2*np.pi)
+            phases[i, :] = I.integrate(times[i]) % (2*np.pi)
 
         return {"t": times, "x": phases}
     # ---------------------------------------------------------------
 
     def order_parameter(self, phases):
-        order=_order(phases)
+        order = _order(phases)
         return order
     # ---------------------------------------------------------------
 
     def local_order_parameter(self, phases, indices):
-        order=_local_order(phases, indices)
+        order = _local_order(phases, indices)
         return order
 
     # ---------------------------------------------------------------
@@ -130,8 +133,8 @@ class Kuramoto_I(Kuramoto_II):
         '''
 
         for i in range(self.N):
-            sumj=0.5 * np.sum(1-cos(y(j)-y(i) - self.alpha)
-                             for j in range(self.N) if self.adj[i, j])
+            sumj = 0.5 * np.sum(1-cos(y(j)-y(i) - self.alpha)
+                                for j in range(self.N) if self.adj[i, j])
             yield self.omega[i] + self.coupling * sumj
 
 

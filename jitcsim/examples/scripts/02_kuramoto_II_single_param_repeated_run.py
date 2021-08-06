@@ -46,7 +46,6 @@ if __name__ == "__main__":
         'control': ['coupling'],
         "use_omp": False,
         "output": "data",
-        "modulename": "km"
     }
 
     # make an instance of the model
@@ -77,5 +76,6 @@ if __name__ == "__main__":
     # plotting time average of the order parameters vs coupling
     plot_order(couplings,
                np.mean(orders, axis=1),
-               "data/kuramoto_II_r.png",
-               "R", "coupling")
+               filename="data/02.png",
+               ylabel="R", 
+               xlabel="coupling")

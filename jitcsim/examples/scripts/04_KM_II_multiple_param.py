@@ -41,7 +41,6 @@ if __name__ == "__main__":
         'control': ['coupling', 'omega'],
         "use_omp": False,
         "output": "data",
-        "modulename": "km"
     }
 
     controls = flatten([[coupling0], omega0])
@@ -54,5 +53,7 @@ if __name__ == "__main__":
 
     plot_order(t,
                order,
-               "data/04.png",
-               xlabel="time", ylabel="r(t)")
+               xlabel="time", 
+               ylabel="r(t)",
+               filename="data/04.png"
+               )

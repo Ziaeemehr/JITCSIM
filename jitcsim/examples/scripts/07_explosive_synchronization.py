@@ -86,7 +86,6 @@ if __name__ == "__main__":
         'control': ['coupling'],
         "use_omp": False,
         "output": "data",
-        "modulename": "km",
     }
 
     I = Kuramoto_II(parameters)

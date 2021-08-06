@@ -6,7 +6,6 @@ The output is plotting the Kuramoto order parameter vs time.
 """
 
 
-import os
 import numpy as np
 from numpy import pi
 import networkx as nx
@@ -43,7 +42,6 @@ if __name__ == "__main__":
 
         "use_omp": False,                   # use OpenMP
         "output": "data",                   # output directory
-        "modulename": "km"                  # compiled filename
     }
 
     # make an instance of the model
@@ -63,5 +61,6 @@ if __name__ == "__main__":
     # plot order parameter vs time
     plot_order(t,
                order,
-               "data/01.png",
-               "time", "r(t)")
+               filename="data/01.png",
+               xlabel="time", 
+               ylabel="r(t)")
