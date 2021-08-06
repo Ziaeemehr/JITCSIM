@@ -59,7 +59,6 @@ class Kuramoto_II:
 
     def compile(self, **kwargs):
 
-        # if not os.path.exists(join(self.output, self.modulename)+".so") or recompile:
         I = jitcode(self.rhs, n=self.N,
                     control_pars=self.control_pars)
         I.generate_f_C(**kwargs)
@@ -136,7 +135,7 @@ class Kuramoto_I(Kuramoto_II):
             yield self.omega[i] + self.coupling * sumj
 
 
-class Lyap_Kuramoto_II():
+class Lyap_Kuramoto_II(Kuramoto_II):
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, par) -> None:
+        super().__init__(par)
