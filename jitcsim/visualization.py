@@ -1,25 +1,46 @@
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+import networkx as nx
 import pylab as plt
+import numpy as np
 
 
-def plot_order(x, y, filename, xlabel=None, ylabel=None, close_fig=True):
+def plot_order(x, y,
+               filename="f.png",
+               color="k",
+               xlabel=None,
+               ylabel=None,
+               label=None,
+               ax=None,
+               close_fig=True,
+               **kwargs):
     """
     plot y vs x with given x and y labels
     """
 
     plt.style.use('ggplot')
-    fig, ax = plt.subplots(1, figsize=(6, 4))
-    ax.plot(x, y, lw=1, color='b')
+
+    savefig = False
+    if ax is None:
+        fig, ax = plt.subplots(1, figsize=(6, 4))
+        savefig = True
+
+    ax.plot(x, y, lw=1, color=color, label=label, **kwargs)
 
     if xlabel:
         ax.set_xlabel(xlabel)
     if ylabel:
         ax.set_ylabel(ylabel)
 
+    if label is not None:
+        ax.legend(frameon=False, loc="upper right")
+
     ax.margins(x=0.01)
     ax.set_ylim(0, 1.1)
-    fig.savefig(filename, dpi=150)
-    if close_fig:
+
+    if savefig:
+        fig.savefig(filename, dpi=150)
+
+    if close_fig and savefig:
         plt.close()
 
 
@@ -55,4 +76,43 @@ def plot_matrix(A,
 
     if savefig:
         plt.savefig(filename)
+        plt.close()
+
+
+def plot_degree_omega_distribution(adj, omega,
+                                   filename="omega_k.png",
+                                   close_fig=True):
+
+    adj = np.asarray(adj)
+    assert (len(adj.shape) == 2)
+
+    G = nx.from_numpy_array(adj)
+
+    N = adj.shape[0]
+    omegaNeighborsBar = [0] * N
+
+    omegaBar = omega - np.mean(omega)
+
+    degrees = list(dict(G.degree()).values())
+
+    for i in range(N):
+        neighbors = [n for n in G[i]]
+        omegaNeighborsBar[i] = np.mean(omegaBar[neighbors])
+
+    fig, ax = plt.subplots(2, figsize=(8, 5))
+
+    ax[0].plot(omegaBar, degrees, "ro")
+    ax[1].plot(omegaBar, omegaNeighborsBar, "ko")
+
+    ax[0].set_ylabel(r"$k_i$", fontsize=16)
+    ax[1].set_ylabel(r"$\langle \omega_j \rangle$", fontsize=16)
+    ax[1].set_xlabel(r"$\omega_i$", fontsize=16)
+
+    for i in range(2):
+        ax[i].tick_params(labelsize=15)
+
+    plt.tight_layout()
+    plt.savefig(filename)
+
+    if close_fig:
         plt.close()
