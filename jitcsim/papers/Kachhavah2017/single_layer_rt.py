@@ -8,7 +8,7 @@ import pylab as plt
 from numpy.random import uniform
 from jitcsim.networks import make_network
 from jitcsim.visualization import plot_order, plot_phases
-from jitcsim.models.kuramoto import SOKM_Single
+from jitcsim.models.kuramoto import SOKM_SingleLayer
 
 
 if __name__ == "__main__":
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         "output": "data",
     }
 
-    I = SOKM_Single(parameters)
+    I = SOKM_SingleLayer(parameters)
     I.compile()
 
     controls = [coupling]

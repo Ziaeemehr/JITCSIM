@@ -116,3 +116,36 @@ def plot_degree_omega_distribution(adj, omega,
 
     if close_fig:
         plt.close()
+
+
+def plot_phases(phases, extent,
+                ax=None,
+                cmap="afmhot",
+                xlabel=None,
+                ylabel=None,
+                filename="fig.png",
+                close_fig=True):
+
+    savefig = False
+    if ax is None:
+        fig, ax = plt.subplots(1, figsize=(6, 4))
+        savefig = True
+
+    im = ax.imshow(phases.T,
+                   origin="lower",
+                   extent=extent,
+                   aspect="auto",
+                   cmap=cmap)
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    cbar = plt.colorbar(im, cax=cax)
+
+    if xlabel is not None:
+        ax.set_xlabel(xlabel)
+    if ylabel is not None:
+        ax.set_ylabel(ylabel)
+
+    if savefig and close_fig:
+        plt.savefig(filename, dpi=150)
+        plt.close()
+# -------------------------------------------------------------------

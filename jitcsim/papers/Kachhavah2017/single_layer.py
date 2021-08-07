@@ -13,7 +13,7 @@ from time import time
 from multiprocessing import Pool
 from numpy.random import uniform
 from jitcsim.visualization import plot_order
-from jitcsim.models.kuramoto import SOKM_Single
+from jitcsim.models.kuramoto import SOKM_SingleLayer
 from jitcsim.utility import display_time
 from jitcsim.networks import make_network
 
@@ -36,7 +36,7 @@ def simulateHalfLoop(direction):
             direction, Couplings[i]))
         sys.stdout.flush()
 
-        I = SOKM_Single(parameters)
+        I = SOKM_SingleLayer(parameters)
         I.set_initial_state(prev_phases)
         data = I.simulate([Couplings[i]])
         x = data['x']
@@ -91,7 +91,7 @@ if __name__ == "__main__":
         "output": "data",
     }
 
-    I = SOKM_Single(parameters)
+    I = SOKM_SingleLayer(parameters)
     I.compile()
 
     start = time()
