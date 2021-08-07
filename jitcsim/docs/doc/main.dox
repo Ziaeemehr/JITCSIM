@@ -1,0 +1,34 @@
+/*! 
+ * \version 0.1
+ * \date Jun. 2021
+ * \copyright GNU Public License
+ * \mainpage Simulation of networks with Ordinary/Delay/Stochastic differential equations (just-in-time compilation)
+ * \section intall Installation
+ * 
+ * 
+
+```sh
+unzip JITCSIM.zip
+cd JITCSIM
+pip install .
+cd CPPModels
+makefile
+``` 
+
+ for auto-generated **documentation** you need to have `doxygen` installed on your machine.
+ 
+ * ```shell
+ * # on linux machines use
+ * sudo apt-get install doxygen
+ * cd docs
+ * doxygen 
+ * ```
+ 
+ which produce `html` files. 
+ open `html/index.html`
+ 
+ \section quick_start Quick start
+  
+ 
+ for more examples you can refer to the *examples* or *tests* directory.
+ */
