@@ -218,55 +218,7 @@ class SOKM_SingleLayer(Kuramoto_Base):
         return {"t": times, "x": phases}
 
 
-class SOKM_BiLayer(Kuramoto_Base):
-    """!
-    Second order Kuramoto Model for single layer network
-    \f$
-    m \frac{d^2 \theta_i(t)}{dt^2}+\frac{d\theta_i(t)}{dt} = \omega_i + \frac{\lambda}{\langle k \rangle} \sum_{j=1}^N \sin \Big[ \theta_j(t) - \theta_i(t) \Big]
-    \f$
-
-
-    Reference: 
-
-    Kachhvah, A.D. and Jalan, S., 2017. Multiplexing induced explosive synchronization in Kuramoto oscillators with inertia. EPL (Europhysics Letters), 119(6), p.60005.
-
-    """
-
-    def __init__(self, par) -> None:
-        super().__init__(par)
-        def X(self, i, q): return y(q * 2 * self.N + i)
-
-    def Y(self, i, q): return y(self.N + q * 2 * self.N + i)
-
-    def rhs(self):
-
-        for q in [0, 1]:
-            for i in range(self.N):
-                yield self.Y(i, q)
-
-            for i in range(self.N):
-                sumj = sum(sin(self.X(j, q) - self.X(i, q))
-                           for j in range(self.N) if self.adj[q][i, j])
-                yield (-self.Y(i, q) + self.omega[i, q] + self.g_intra * sumj +
-                       self.g_inter * sin(self.X(i, q) - self.X(i, int(not q)))) * self.inv_m
-
-    def compile(self, **kwargs):
-
-        I = jitcode(self.rhs, n=4 * self.N,
-                    control_pars=self.control_pars)
-        I.generate_f_C(**kwargs)
-        I.compile_C(omp=self.use_omp, modulename=self.modulename)
-        I.save_compiled(overwrite=True, destination=join(self.output, ''))
-
-    def set_initial_state(self, x0):
-
-        assert(len(x0) == 2 * self.N)
-        self.initial_state = x0
-
-
-
 class Lyap_Kuramoto_II(Kuramoto_II):
 
     def __init__(self, par) -> None:
         super().__init__(par)
-
