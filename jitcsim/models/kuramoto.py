@@ -10,12 +10,9 @@ from jitcsim.utility import (order_parameter as _order,
 os.environ["CC"] = "clang"
 
 
-class Kuramoto_II:
+class Kuramoto_Base:
 
     def __init__(self, par) -> None:
-
-        
-        self.modulename = "km"                  # compiled filename
 
         for item in par.items():
             name = item[0]
@@ -39,28 +36,10 @@ class Kuramoto_II:
 
         if not os.path.exists(self.output):
             os.makedirs(self.output)
-        
+
         if not "modulename" in par.keys():
             self.modulename = "km"
 
-    # ---------------------------------------------------------------
-
-    def rhs(self):
-        '''!
-        Kuramoto model of type II
-
-        \f$
-        \frac{d\theta_i}{dt} = \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - alpha)  \hspace{3.5cm} \text{for Type II}\\
-        \f$
-
-        @return right hand side of the Kuramoto model
-        '''
-
-        for i in range(self.N):
-            sumj = np.sum(sin(y(j)-y(i) - self.alpha)
-                          for j in range(self.N) if self.adj[i, j])
-
-            yield self.omega[i] + self.coupling * sumj
     # ---------------------------------------------------------------
 
     def compile(self, **kwargs):
@@ -83,7 +62,7 @@ class Kuramoto_II:
         integrate the system of equations and return the
         coordinates and times
 
-        @param par [torch.tensor] parameters to be changed for each simulation
+        @param par 
 
         @return dict(t, x)
             - **t** times
@@ -120,7 +99,33 @@ class Kuramoto_II:
     # ---------------------------------------------------------------
 
 
-class Kuramoto_I(Kuramoto_II):
+class Kuramoto_II(Kuramoto_Base):
+
+    def __init__(self, par) -> None:
+        super().__init__(par)
+
+    # ---------------------------------------------------------------
+
+    def rhs(self):
+        '''!
+        Kuramoto model of type II
+
+        \f$
+        \frac{d\theta_i}{dt} = \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - alpha)  \hspace{3.5cm} \text{for Type II}\\
+        \f$
+
+        @return right hand side of the Kuramoto model
+        '''
+
+        for i in range(self.N):
+            sumj = np.sum(sin(y(j)-y(i) - self.alpha)
+                          for j in range(self.N) if self.adj[i, j])
+
+            yield self.omega[i] + self.coupling * sumj
+    # ---------------------------------------------------------------
+
+
+class Kuramoto_I(Kuramoto_Base):
     def __init__(self, par) -> None:
         super().__init__(par)
 
@@ -141,7 +146,127 @@ class Kuramoto_I(Kuramoto_II):
             yield self.omega[i] + self.coupling * sumj
 
 
+class SOKM_SingleLayer(Kuramoto_Base):
+    """!
+    Second order Kuramoto Model for single layer network
+    \f$
+    m \frac{d^2 \theta_i(t)}{dt^2}+\frac{d\theta_i(t)}{dt} = \omega_i + \frac{\lambda}{\langle k \rangle} \sum_{j=1}^N \sin \Big[ \theta_j(t) - \theta_i(t) \Big]
+    \f$
+
+
+    Reference: 
+
+    Kachhvah, A.D. and Jalan, S., 2017. Multiplexing induced explosive synchronization in Kuramoto oscillators with inertia. EPL (Europhysics Letters), 119(6), p.60005.
+
+    """
+
+    def __init__(self, par) -> None:
+        super().__init__(par)
+
+    def rhs(self):
+
+        for i in range(self.N):
+            yield y(i+self.N)
+
+        for i in range(self.N):
+            sumj = sum(sin(y(j)-y(i))
+                       for j in range(self.N)
+                       if self.adj[i, j])
+            yield (-y(i+self.N) + self.omega[i] +
+                   self.coupling * sumj) * self.inv_m
+
+    def compile(self, **kwargs):
+
+        I = jitcode(self.rhs, n=2 * self.N,
+                    control_pars=self.control_pars)
+        I.generate_f_C(**kwargs)
+        I.compile_C(omp=self.use_omp, modulename=self.modulename)
+        I.save_compiled(overwrite=True, destination=join(self.output, ''))
+
+    def set_initial_state(self, x0):
+
+        assert(len(x0) == 2 * self.N)
+        self.initial_state = x0
+
+    def simulate(self, par, **integrator_params):
+        '''!
+        integrate the system of equations and return the
+        coordinates and times
+
+        @return dict(t, x)
+            - **t** times
+            - **x** coordinates.
+        '''
+
+        I = jitcode(n=2 * self.N,
+                    control_pars=self.control_pars,
+                    module_location=join(self.output, self.modulename+".so"))
+        I.set_integrator(name=self.integration_method,
+                         **integrator_params)
+        I.set_parameters(par)
+        I.set_initial_value(self.initial_state, time=self.t_initial)
+
+        times = self.t_transition + \
+            np.arange(self.t_initial, self.t_final -
+                      self.t_transition, self.interval)
+        phases = np.zeros((len(times), 2 * self.N))
+
+        for i in range(len(times)):
+            phases[i, :] = I.integrate(times[i])
+            phases[i, :self.N] = phases[i, :self.N] % (2*np.pi)
+
+        return {"t": times, "x": phases}
+
+
+class SOKM_BiLayer(Kuramoto_Base):
+    """!
+    Second order Kuramoto Model for single layer network
+    \f$
+    m \frac{d^2 \theta_i(t)}{dt^2}+\frac{d\theta_i(t)}{dt} = \omega_i + \frac{\lambda}{\langle k \rangle} \sum_{j=1}^N \sin \Big[ \theta_j(t) - \theta_i(t) \Big]
+    \f$
+
+
+    Reference: 
+
+    Kachhvah, A.D. and Jalan, S., 2017. Multiplexing induced explosive synchronization in Kuramoto oscillators with inertia. EPL (Europhysics Letters), 119(6), p.60005.
+
+    """
+
+    def __init__(self, par) -> None:
+        super().__init__(par)
+        def X(self, i, q): return y(q * 2 * self.N + i)
+
+    def Y(self, i, q): return y(self.N + q * 2 * self.N + i)
+
+    def rhs(self):
+
+        for q in [0, 1]:
+            for i in range(self.N):
+                yield self.Y(i, q)
+
+            for i in range(self.N):
+                sumj = sum(sin(self.X(j, q) - self.X(i, q))
+                           for j in range(self.N) if self.adj[q][i, j])
+                yield (-self.Y(i, q) + self.omega[i, q] + self.g_intra * sumj +
+                       self.g_inter * sin(self.X(i, q) - self.X(i, int(not q)))) * self.inv_m
+
+    def compile(self, **kwargs):
+
+        I = jitcode(self.rhs, n=4 * self.N,
+                    control_pars=self.control_pars)
+        I.generate_f_C(**kwargs)
+        I.compile_C(omp=self.use_omp, modulename=self.modulename)
+        I.save_compiled(overwrite=True, destination=join(self.output, ''))
+
+    def set_initial_state(self, x0):
+
+        assert(len(x0) == 2 * self.N)
+        self.initial_state = x0
+
+
+
 class Lyap_Kuramoto_II(Kuramoto_II):
 
     def __init__(self, par) -> None:
         super().__init__(par)
+
