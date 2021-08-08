@@ -61,7 +61,7 @@ if __name__ == "__main__":
     ki = 20
     gamma = 0.45
     alpha = 0.0
-    num_processes = 2
+    num_processes = 1
 
     net = make_network()
     adj = net.fgc(N=N, k=ki, omega=omega, gamma=gamma)

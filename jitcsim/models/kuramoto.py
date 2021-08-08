@@ -149,6 +149,7 @@ class Kuramoto_I(Kuramoto_Base):
 class SOKM_SingleLayer(Kuramoto_Base):
     """!
     Second order Kuramoto Model for single layer network
+    
     \f$
     m \frac{d^2 \theta_i(t)}{dt^2}+\frac{d\theta_i(t)}{dt} = \omega_i + \frac{\lambda}{\langle k \rangle} \sum_{j=1}^N \sin \Big[ \theta_j(t) - \theta_i(t) \Big]
     \f$
