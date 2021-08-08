@@ -149,3 +149,55 @@ def plot_phases(phases, extent,
         plt.savefig(filename, dpi=150)
         plt.close()
 # -------------------------------------------------------------------
+
+
+def plot_lyaps(x, y,
+               filename="f.png",
+               color="k",
+               xlabel=None,
+               ylabel=None,
+               label=None,
+               xlog=False,
+               ylog=False,
+               xlim=None,
+               ylim=None,
+               ax=None,
+               close_fig=True,
+               **kwargs):
+    """
+    plot y vs x with given x and y labels
+    """
+
+    plt.style.use('ggplot')
+
+    savefig = False
+    if ax is None:
+        fig, ax = plt.subplots(1, figsize=(6, 4))
+        savefig = True
+
+    ax.plot(x, y, lw=1, color=color, label=label, **kwargs)
+
+    if xlabel is not None:
+        ax.set_xlabel(xlabel)
+    if ylabel is not None:
+        ax.set_ylabel(ylabel)
+
+    if label is not None:
+        ax.legend(frameon=False, loc="upper right")
+
+    if xlog:
+        ax.set_xscale("log")
+    if ylog:
+        ax.set_yscale("log")
+
+    ax.margins(x=0.01, y=0.01)
+    if xlim is not None:
+        ax.set_xlim(xlim)
+    if ylim is not None:
+        ax.set_ylim(ylim)
+
+    if savefig:
+        fig.savefig(filename, dpi=150)
+
+    if close_fig and savefig:
+        plt.close()
