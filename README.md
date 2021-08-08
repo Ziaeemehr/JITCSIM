@@ -4,3 +4,9 @@ Just-in time compilation differential equations for simulation of complex networ
 
 It mainly use [JITC*DE](https://github.com/neurophysik/jitcode) packages for solving differential equations.
 
+### installation
+
+```sh
+pip3 install -e .
+```
+
