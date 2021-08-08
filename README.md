@@ -7,6 +7,7 @@ It mainly use [JITC*DE](https://github.com/neurophysik/jitcode) packages for sol
 ### installation
 
 ```sh
+cd JITCSIM # directory where you have setup.py
 pip3 install -e .
 ```
 
