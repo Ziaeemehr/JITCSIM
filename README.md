@@ -5,7 +5,7 @@ Just-in time compilation differential equations for simulation of complex networ
 It mainly use [JITC*DE](https://github.com/neurophysik/jitcode) packages for solving differential equations.
 Check JITC*DE [documentation](https://jitcode.readthedocs.io/en/latest/) for more details.
 
-For a quick review of what you can use this package for, look at the [notebooks](https://github.com/Ziaeemehr/JITCSIM/tree/master/jitcsim/examples/notebooks).
+For a quick review of what you can use **jitcsim** for, look at the [notebooks](https://github.com/Ziaeemehr/JITCSIM/tree/master/jitcsim/examples/notebooks).
 
 
 ### installation tha latest changes
