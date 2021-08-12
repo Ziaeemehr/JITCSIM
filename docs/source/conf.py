@@ -24,7 +24,7 @@ copyright = '2021, Abolfazl Ziaeemehr'
 author = 'Abolfazl Ziaeemehr'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = '0.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -60,8 +60,8 @@ master_doc = 'index'
 # a list of builtin themes.
 #
 # html_theme = 'alabaster'
-html_theme = 'stanford_theme'
-html_theme_path = [stanford_theme.get_html_theme_path()]
+html_theme = 'nature' #'stanford_theme'
+# html_theme_path = [stanford_theme.get_html_theme_path()]
 
 
 # Add any paths that contain custom static files (such as style sheets) here,

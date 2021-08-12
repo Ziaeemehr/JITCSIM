@@ -12,6 +12,44 @@ os.environ["CC"] = "clang"
 
 class Kuramoto_Base:
 
+    """
+    Base class for the Kuramoto model.
+
+    Parameters
+    ----------
+
+    N: int
+        number of nodes
+    adj: 2d array
+        adjacency matrix
+    t_initial: float, int
+        initial time of integration
+    t_final: float, int
+        final time of integration
+    t_transition: float, int
+        transition time
+    interval : float
+        time interval for sampling
+    sigma : float
+        noise aplitude of normal distribution
+    alpha : flaot
+        frustration
+    omega : float
+        initial angular frequencies
+    initial_state : array of size N
+        initial phase of oscillators
+    control : list of str 
+        control parameters 
+    use_omp : boolian 
+        if `True` allow to use OpenMP
+    output : str
+        output directory
+    verbose: boolian
+        if  `True` some information about the process will be desplayed.
+
+    """
+
+
     def __init__(self, par) -> None:
 
         for item in par.items():
@@ -59,15 +97,19 @@ class Kuramoto_Base:
     # ---------------------------------------------------------------
 
     def simulate(self, par):
-        '''!
+        '''
         integrate the system of equations and return the
         coordinates and times
 
-        @param par
+        Parameters
+        -----------
 
-        @return dict(t, x)
-            - **t** times
-            - **x** coordinates.
+        par : list
+            list of values for control parameters in order of appearence in control
+
+        Return : dict(t, x)
+                - t times
+                - x coordinates.
         '''
 
         I = jitcsde(n=self.N,
@@ -101,24 +143,66 @@ class Kuramoto_Base:
 
 class Kuramoto_II(Kuramoto_Base):
 
+    """
+    **Kuramoto model with noise.**
+
+    .. math::
+            \\frac{d\\theta_i}{dt} = \\omega_i + \\xi_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha)  
+    
+    Parameters
+    ----------
+
+    N: int
+        number of nodes
+    adj: 2d array
+        adjacency matrix
+    t_initial: float, int
+        initial time of integration
+    t_final: float, int
+        final time of integration
+    t_transition: float, int
+        transition time
+    interval : float
+        time interval for sampling
+    sigma : float
+        noise aplitude of normal distribution
+    alpha : flaot
+        frustration
+    omega : float
+        initial angular frequencies
+    initial_state : array of size N
+        initial phase of oscillators
+    control : list of str 
+        control parameters 
+    use_omp : boolian 
+        if `True` allow to use OpenMP
+    output : str
+        output directory
+    verbose: boolian
+        if  `True` some information about the process will be desplayed.
+
+    """
+
     def __init__(self, par) -> None:
         super().__init__(par)
 
     # ---------------------------------------------------------------
 
     def g_(self):
+        """
+        to do.
+        """
         for i in range(self.N):
             yield self.sigma
 
     def rhs(self):
-        '''!
-        Kuramoto model of type II
+        '''
+        **Kuramoto model of type II**
 
-        \f$
-        \frac{d\theta_i}{dt} = \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - alpha)  \hspace{3.5cm} \text{for Type II}\\
-        \f$
+        .. math::
+            \\frac{d\\theta_i}{dt} = \\omega_i + \\xi_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha)  
 
-        @return right hand side of the Kuramoto model
+        
         '''
 
         for i in range(self.N):

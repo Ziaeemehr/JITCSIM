@@ -59,6 +59,8 @@ class Kuramoto_Base:
         if `True` allow to use OpenMP
     output : str
         output directory
+    verbose: boolian
+        if  `True` some information about the process will be desplayed.
 
     """
 
@@ -194,7 +196,7 @@ class Kuramoto_Base:
 class Kuramoto_II(Kuramoto_Base):
 
     """
-    **Kuramoto model type I**
+    **Kuramoto model type II**
 
     .. math::
             \\frac{d\\theta_i}{dt} &= \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha) 
@@ -243,6 +245,8 @@ class Kuramoto_II(Kuramoto_Base):
         if `True` allow to use OpenMP
     output : str
         output directory
+    verbose: boolian
+        if  `True` some information about the process will be desplayed.
 
     """
 
@@ -258,8 +262,7 @@ class Kuramoto_II(Kuramoto_Base):
         .. math::
             \\frac{d\\theta_i}{dt} &= \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha) 
 
-        Rreturn :
-            right hand side of the Kuramoto model
+        
         '''
 
         for i in range(self.N):
@@ -322,6 +325,8 @@ class Kuramoto_I(Kuramoto_Base):
         if `True` allow to use OpenMP
     output : str
         output directory
+    verbose: boolian
+        if  `True` some information about the process will be desplayed.
 
     """
 

@@ -1,21 +1,48 @@
 """
-Simulation of the Kuramoto model with delay.
+**Simulation of the Kuramoto model with delay.**
+
 The control parameter of the model is coupling.
 The output is plotting the Kuramoto order parameter vs time.
 
 
-Reference:
-- Yeung, M.S. and Strogatz, S.H., 1999. Time delay in the Kuramoto model of coupled oscillators. Physical Review Letters, 82(3), p.648. Figure 3.
+Start with importing required modules:
+
+.. literalinclude:: ../../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py    
+        :start-after: example-st\u0061rt
+        :lines: 1-6
+    
+setting the parameters of the model
+
+.. literalinclude:: ../../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py    
+        :start-after: example-st\u0061rt
+        :lines: 10-38
+        :dedent: 4
+
+.. literalinclude:: ../../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py        
+        :start-after: example-st\u0061rt
+        :lines: 40-53
+        :dedent: 4
+
+
+.. figure:: ../../jitcsim/examples/scripts/data/01_dde.png
+    :scale: 50 %
+
+    Kuramoto order parameter vs time for a complete network. The system of equations include delay.
+    
+
+
+
+**Reference:**
+    - Yeung, M.S. and Strogatz, S.H., 1999. Time delay in the Kuramoto model of coupled oscillators. Physical Review Letters, 82(3), p.648. Figure 3.
 """
 
-
+# example-start
 import numpy as np
 from numpy import pi
-import networkx as nx
-from numpy.random import uniform, normal
+from numpy.random import uniform
 from jitcsim.visualization import plot_order
 from jitcsim.models.kuramoto_dde import Kuramoto_II
-
+from jitcsim.networks import make_network
 
 if __name__ == "__main__":
 
@@ -25,9 +52,10 @@ if __name__ == "__main__":
     alpha0 = 0.0
     sigma0 = 0.05
     coupling0 = 1.5 / (N - 1)
-    omega0 = [0.5*pi] * N  # normal(0, 0.1, N)
+    omega0 = [0.5*pi] * N
     initial_state = uniform(-pi, pi, N)
-    adj = nx.to_numpy_array(nx.complete_graph(N), dtype=int)
+    net = make_network()
+    adj = net.complete(N)
     delays = adj * 2.0
 
     parameters = {
@@ -49,24 +77,18 @@ if __name__ == "__main__":
         "output": "data",                   # output directory
     }
 
-    # make an instance of the model
     sol = Kuramoto_II(parameters)
-    # compile the model
     sol.compile()
 
-    # run the simulation by setting the control parameters
     controls = [coupling0]
     data = sol.simulate(controls, disc="blind", rtol=0, atol=1e-5)
     x = data['x']
     t = data['t']
 
-    # calculate the Kuramoto order parameter
     order = sol.order_parameter(x)
-
-    # plot order parameter vs time
     plot_order(t,
                order,
-               filename="data/01_sde.png",
+               filename="data/01_dde.png",
                xlabel="time",
                ylabel="r(t)",
                close_fig=False)

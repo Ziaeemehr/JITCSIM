@@ -1,5 +1,8 @@
 """
-Simulation of the Kuramoto model.
+**Simulation of the Kuramoto model on complete network.**
+
+where :math:`\\theta_i` is phase of oscillator i, :math:`\\omega_i` the angular frequency of oscillator i, :math:`\\alpha` the frustration, :math:`N` the number of oscillators, :math:`a_{i,j}` is element of the adjacency matrix, :math:`a_{i,j}=1` if there is a directed link from the node j to i; otherwise :math:`a_{i,j}=0`. 
+
 The parameter of the model is coupling.
 The initial phase also could be changed in repeated simulations.
 The output is plotting the Kuramoto order parameter vs time.
@@ -12,6 +15,7 @@ import networkx as nx
 from numpy.random import uniform, normal
 from jitcsim.models.kuramoto import Kuramoto_II
 from jitcsim.visualization import plot_order
+from jitcsim.networks import make_network
 
 
 if __name__ == "__main__":
@@ -23,7 +27,10 @@ if __name__ == "__main__":
     coupling0 = 0.5 / (N - 1)
     omega0 = normal(0, 0.1, N)
     initial_state = uniform(-pi, pi, N)
-    adj = nx.to_numpy_array(nx.complete_graph(N), dtype=int)
+
+    # make complete network
+    net = make_network()
+    adj = net.complete(N)
 
     parameters = {
         'N': N,                             # number of nodes

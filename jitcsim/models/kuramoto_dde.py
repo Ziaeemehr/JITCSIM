@@ -12,6 +12,46 @@ os.environ["CC"] = "clang"
 
 class Kuramoto_Base:
 
+    """
+    Base class for the Kuramoto model.
+
+    Parameters
+    ----------
+
+    N: int
+        number of nodes
+    adj: 2d array
+        adjacency matrix
+    delays: 2d array
+        delay matrix
+    maxdelay: float
+        maximum value of delays matrix
+    t_initial: float, int
+        initial time of integration
+    t_final: float, int
+        final time of integration
+    t_transition: float, int
+        transition time
+    interval : float
+        time interval for sampling
+    alpha : flaot
+        frustration
+    omega : float
+        initial angular frequencies
+    initial_state : array of size N
+        initial phase of oscillators
+    control : list of str 
+        control parameters 
+    use_omp : boolian 
+        if `True` allow to use OpenMP
+    output : str
+        output directory
+    verbose: boolian
+        if  `True` some information about the process will be desplayed.
+
+    """
+
+
     def __init__(self, par) -> None:
 
         for item in par.items():
@@ -75,26 +115,36 @@ class Kuramoto_Base:
                  shift_ratio=1e-4,
                  **integrator_params
                  ):
-        '''!
+        '''
         integrate the system of equations and return the
         computed state of the system after integration and times
 
-        @param par values of control parameters
-        @param disc [string] type of discontinuities handling
-        the default value is blind
-            - step_on [step_on_discontinuities]
-            - blind   [integrate_blindly]
-            - adjust  [adjust_diff]
-        @param step [float] argument for integrate_blindly
-                        aspired step size. The actual step size may be slightly adapted to make it divide the integration time. If `None`, `0`, or otherwise falsy, the maximum step size as set with `max_step` of `set_integration_parameters` is used.
+        Parameters
+        ------------
 
-        @param propagations [int] argument for step_on_discontinuities:  how often the discontinuity has to propagate to before it’s considered smoothed.
-                @param min_distance [float]	argument for step_on_discontinuities: If two required steps are closer than this, they will be treated as one.
-                @param max_step [float]	argument for step_on_discontinuities: Retired parameter. Steps are now automatically adapted.
-        @param shift_ratio [float] argument for adjust_diff
-            - Performs a zero-amplitude (backwards) `jump` whose `width` is `shift_ratio` times the distance to the previous anchor into the past. See the documentation of `jump` for the caveats of this and see `discontinuities` for more information on why you almost certainly need to use this or an alternative way to address initial discontinuities.
+        par : list
+            values of control parameters in order of appearance in `control`
+        disc : str
+            type of discontinuities handling
+            the default value is blind
+                - step_on [step_on_discontinuities]
+                - blind   [integrate_blindly]
+                - adjust  [adjust_diff]
+        step : float
+            argument for integrate_blindly aspired step size. The actual step size may be slightly adapted to make it divide the integration time. If `None`, `0`, or otherwise falsy, the maximum step size as set with `max_step` of `set_integration_parameters` is used.
 
-        @return dict(t, x)
+        propagations : int 
+            argument for step_on_discontinuities:  how often the discontinuity has to propagate to before it’s considered smoothed.
+        min_distance : float
+        	argument for step_on_discontinuities: If two required steps are closer than this, they will be treated as one.
+        max_step : float
+            argument for step_on_discontinuities: Retired parameter. Steps are now automatically adapted.
+        shift_ratio : float
+            argument for adjust_diff.
+             Performs a zero-amplitude (backwards) `jump` whose `width` is `shift_ratio` times the distance to the previous anchor into the past. See the documentation of `jump` for the caveats of this and see `discontinuities` for more information on why you almost certainly need to use this or an alternative way to address initial discontinuities.
+
+
+        Return : dict(t, x)
             - **t** times
             - **x** coordinates.
         '''
@@ -153,14 +203,13 @@ class Kuramoto_II(Kuramoto_Base):
     # ---------------------------------------------------------------
 
     def rhs(self):
-        '''!
-        Kuramoto model of type II
+        
+        '''
+        **Kuramoto model of type II**
 
-        \f$
-        \frac{d\theta_i}{dt} = \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j(t - \tau_{ij}) - y_i - alpha)  \hspace{3.5cm} \text{for Type II}\\
-        \f$
-
-        @return right hand side of the Kuramoto model
+        .. math::
+            \\frac{d\\theta_i}{dt} = \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j(t - \\tau_{ij}) - y_i - \\alpha)
+        
         '''
 
         for i in range(self.N):

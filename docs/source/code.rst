@@ -13,3 +13,9 @@ Auto Generated Documentation
 
 .. automodule:: jitcsim.models.kuramoto
     :members:
+
+.. automodule:: jitcsim.models.kuramoto_sde
+    :members:
+
+.. automodule:: jitcsim.models.kuramoto_dde
+    :members:
