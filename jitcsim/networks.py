@@ -6,8 +6,10 @@ from jitcsim.utility import is_symmetric
 
 
 class make_network:
-    ''' make different graphs ans return their adjacency matrices
-    as a 1 dimensional double vector in stl library'''
+    ''' 
+    make different graphs ans return their adjacency matrices
+    as a 1 dimensional double vector in stl library
+    '''
 
     def __init__(self, seed=None):
         self.G = 0
@@ -19,7 +21,19 @@ class make_network:
             self.seed = None
 
     def complete(self, N):
-        ''' returns all to all graph '''
+        ''' 
+        make complete all to all adjacency matrix
+        
+        Parameters
+        ----------
+
+        N : int
+            number of nodes
+
+        Return : A
+            2D int numpy array, adjacency matrix 
+        
+        '''
 
         self.N = N
         self.G = nx.complete_graph(N)
@@ -29,8 +43,20 @@ class make_network:
 
     def erdos_renyi(self, N, p, directed=False):
         ''' 
-        returns Erdos Renyi network 
+        make Erdos Renyi network 
 
+        Parameters
+        ----------
+
+        N : int
+            number of nodes
+        p : float
+            Probability for edge creation.
+        directed : (bool, optional (default=False)) 
+            If `True`, this function returns a directed adjacency matrix.
+        Return : A
+            2D int numpy array, adjacency matrix 
+        
         '''
 
         self.N = N
@@ -41,7 +67,19 @@ class make_network:
 
     def barabasi(self, N, m):
         ''' 
-        returns BA network
+        Return random network using Barabási-Albert preferential attachment model.
+        A graph of n nodes is grown by attaching new nodes each with m edges that are preferentially attached to existing nodes with high degree.
+
+        This is `networkx.barabasi_albert_graph` module.
+
+        Parameters
+        -----------
+        n : int
+            Number of nodes
+        m : int
+            Number of edges to attach from a new node to existing nodes
+        Return : A
+            2D int numpy array, adjacency matrix 
 
         '''
 

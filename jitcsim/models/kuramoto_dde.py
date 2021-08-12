@@ -157,7 +157,7 @@ class Kuramoto_II(Kuramoto_Base):
         Kuramoto model of type II
 
         \f$
-        \frac{d\theta_i}{dt} = \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j(t - tau_{ij}) - y_i - alpha)  \hspace{3.5cm} \text{for Type II}\\
+        \frac{d\theta_i}{dt} = \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j(t - \tau_{ij}) - y_i - alpha)  \hspace{3.5cm} \text{for Type II}\\
         \f$
 
         @return right hand side of the Kuramoto model

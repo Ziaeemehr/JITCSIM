@@ -15,6 +15,29 @@ def plot_order(x, y,
                **kwargs):
     """
     plot y vs x with given x and y labels
+
+    Parameters
+    ----------
+
+    x : list or array
+        values of x axis
+    y : list or array
+        values of y axis
+    filename: name
+        filename for figure, need to end with .png, .jpg , ...
+    color : str
+        line color
+    xlabel : None or str
+        label of x axis
+    ylabel :  None or str
+        label of y axis
+    label: None or str
+        label of the curve
+    ax : None or matplotlib axis object
+    
+    close_fig : boolian
+        if `True` the figure object will be closed.
+
     """
 
     plt.style.use('ggplot')
@@ -55,6 +78,26 @@ def plot_matrix(A,
                 cmap='seismic',
                 filename="F.png"
                 ):
+
+    """
+    Plot given matrix using imshow module.
+    
+    Parameters
+    ----------
+
+    A : 2D numpy array
+    ax: None or matplotlib axis object
+    ticks : None or list of int or float
+    vmax : None, float or int
+    vmin : None, float or int
+    labelsize: int
+    colorbar: boolian,
+    aspect : {'equal', 'auto'} or float, default: rcParams["image.aspect"] (default: 'equal')
+    cmap cmapstr or Colormap, default: rcParams["image.cmap"] (default: 'seismic')
+        The Colormap instance or registered colormap name used to map scalar data to colors. This parameter is ignored for RGB(A) data.
+    filename: str, (default: F.png)
+        filename of the figure to be stored.
+    """
 
     savefig = False
 

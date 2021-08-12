@@ -7,8 +7,16 @@ def order_parameter(phases):
     """ 
     calculate the Kuramoto order parameter.
 
-    :param: phases [numpy 2d array] shape of the 2d array is [num_time_step by num_nodes];
-    :return: r [float] measured order parameter. 
+    Parameters
+    ----------
+    phases : numpy 2D array (num_time_step by num_nodes)
+        phase of oscillators
+    
+    Return
+    ------
+
+    r : float 
+        Kuramotoorder parameter.
     """
 
     n_steps, n_nodes = phases.shape
@@ -25,9 +33,18 @@ def local_order_parameter(phases, indices):
     """
     calculate the local order parameter of given indices
 
-    :param: phases [numpy 2d array] shape of the 2d array is [num_time_step by num_nodes];
-    :param: indices [array(list) of int] indices of nodes to measure their order parameters;
-    :return: r [float] measured order parameter. 
+    Parameters
+    ----------
+    
+    phases : numpy 2D array (num_time_step by num_nodes)
+        phase of each node
+    indices : array(list) of int 
+        indices of nodes to measure their order parameters;
+    Return
+    -------
+    
+    r : float 
+        Kuramoto order parameter. 
     """
 
     n_nodes = len(indices)
@@ -48,8 +65,12 @@ def flatten(t):
     """
     flatten a list of list
 
-    :param: t list of list
-    :return: * [float] flattend list
+    Parameters
+    ----------
+    t : list of list
+
+    Return: 
+        flattend list
     """
     return [item for sublist in t for item in sublist]
 
@@ -59,8 +80,15 @@ def kuramoto_correlation(x):
     """
     Calculate the Kuramoto correlation between phase of nodes
 
-    :param: x [numpy array, float] input phase of oscillators
-    :return: cor The correlation matrix.
+    Parameters
+    ----------
+
+    x : numpy array, float 
+        input phase of oscillators
+    Return
+    -------
+    cor : 2D numpy array
+        The correlation matrix.
     """
 
     n = len(x)
@@ -81,9 +109,13 @@ def is_symmetric(a, rtol=1e-05, atol=1e-08):
 
 def display_time(time):
     ''' 
-    print elaped time
+    print elaped time in hours, minutes and seconds.
 
-    :param: time difference in seconds.
+    Parameters
+    -----------
+    
+    time : float
+        Time elapsed in seconds.
 
     '''
     hour = time//3600
