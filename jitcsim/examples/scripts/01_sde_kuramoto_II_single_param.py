@@ -11,25 +11,24 @@ The initial phase also could be changed in repeated simulations.
 The output is plotting the Kuramoto order parameter vs time.
 
 Start with importing modules
-Only the difference with respect to the first example is represented and the full example is available from here.
 
 .. literalinclude:: ../../jitcsim/examples/scripts/01_sde_kuramoto_II_single_param.py    
         :start-after: example-st\u0061rt
         :lines: 1-6
         :caption:
 
-define the amplitude of the normal distribution of the noise.
+define the amplitude of the noise with normal distribution, set the parameters and runnig the simulation:
 
 .. literalinclude:: ../../jitcsim/examples/scripts/01_sde_kuramoto_II_single_param.py    
         :start-after: example-st\u0061rt
-        :lines: 14, 20-47
+        :lines: 10-47
         :dedent: 4
         
 and finally plotting the order parameter:
 
 .. literalinclude:: ../../jitcsim/examples/scripts/01_sde_kuramoto_II_single_param.py    
         :start-after: example-st\u0061rt
-        :lines: 14, 49-57
+        :lines: 49-57
         :dedent: 4
 
 .. figure:: ../../jitcsim/examples/scripts//data/01_sde.png

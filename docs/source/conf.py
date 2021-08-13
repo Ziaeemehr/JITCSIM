@@ -12,9 +12,9 @@
 #
 import os
 import sys
-import stanford_theme
 
-# sys.path.insert(0, os.path.abspath('../../jitcsim'))
+sys.path.insert(0, os.path.abspath('../../jitcsim/examples/scripts'))
+sys.path.insert(0, os.path.abspath('../../jitcsim/models'))
 sys.path.insert(0, os.path.abspath('../../jitcsim'))
 
 # -- Project information -----------------------------------------------------
@@ -41,7 +41,8 @@ extensions = ['sphinx.ext.todo',
               'sphinx.ext.coverage',
               'sphinx.ext.napoleon',
               'sphinx.ext.imgmath',
-              'sphinx.ext.mathjax'
+              'sphinx.ext.mathjax',
+            #   'sphinx.ext.autosectionlabel'
               ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -60,8 +61,7 @@ master_doc = 'index'
 # a list of builtin themes.
 #
 # html_theme = 'alabaster'
-html_theme = 'nature' #'stanford_theme'
-# html_theme_path = [stanford_theme.get_html_theme_path()]
+html_theme = 'nature'
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -93,3 +93,7 @@ latex_elements = {
 # \pagenumbering{arabic}
 # ''',
 }
+
+
+# Enable numref
+numfig = True    

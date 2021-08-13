@@ -1,9 +1,47 @@
 """
-Simulate explosive synchronization and hysteresis loop
-in order parameter on a random network with Kuramoto model.
+
+Consider the Kuramoto model on a Frequency Gap-conditioned (FGC) random network.
+To construct such a network which is proper to see explosive synchronization, we make a link from node i to j only if
+:math:`|\\omega_i - \\omega_j|> \\gamma`, where :math:`\\gamma` is frequency threshold [Leyva2013]_ .
+
+Start with importing modules
+
+.. literalinclude:: ../../jitcsim/examples/scripts/07_ode_explosive_synchronization.py
+        :start-after: example-st\u0061rt
+        :lines: 1-12
+        :caption:
+
+start with a low coupling strength, run the simulation and calculate the time average of order parameter and keep the last state of oscillators and use it for the next simulation with slightly increasing the coupling strength. We define a function to do this:
+
+.. literalinclude:: ../../jitcsim/examples/scripts/07_ode_explosive_synchronization.py
+        :start-after: example-st\u0061rt
+        :lines: 15-40
+        
+then we need to make our network
+
+.. literalinclude:: ../../jitcsim/examples/scripts/07_ode_explosive_synchronization.py
+        :start-after: example-st\u0061rt
+        :lines: 55-61
+        :dedent: 4
+
+define a variable which determine the direction of movement toward larger or smaller couplings and run our 
+`simulateHalfLoop` function with 2 processors.
+
+.. literalinclude:: ../../jitcsim/examples/scripts/07_ode_explosive_synchronization.py
+        :start-after: example-st\u0061rt
+        :lines: 85-90
+        :dedent: 4
+
+.. figure:: ../../jitcsim/examples/scripts/data/expl.png
+    :scale: 50 %
+
+    Time average of the Kuramoto order parameter in forward and backward direction and appearence of the hysteresis loop in explosive synchronization.
+
+
+.. [Leyva2013] Leyva, I., Navas, A., Sendina-Nadal, I., Almendral, J.A., Buldu, J.M., Zanin, M., Papo, D. and Boccaletti, S., 2013. Explosive transitions to synchronization in networks of phase oscillators. Scientific reports, 3(1), pp.1-5.
 """
 
-
+# example-start
 import sys
 import numpy as np
 import pylab as plt
@@ -61,7 +99,7 @@ if __name__ == "__main__":
     ki = 20
     gamma = 0.45
     alpha = 0.0
-    num_processes = 1
+    num_processes = 2
 
     net = make_network()
     adj = net.fgc(N=N, k=ki, omega=omega, gamma=gamma)

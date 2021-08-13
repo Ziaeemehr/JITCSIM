@@ -115,6 +115,7 @@ class Kuramoto_Base:
                  shift_ratio=1e-4,
                  **integrator_params
                  ):
+
         '''
         integrate the system of equations and return the
         computed state of the system after integration and times
@@ -125,8 +126,7 @@ class Kuramoto_Base:
         par : list
             values of control parameters in order of appearance in `control`
         disc : str
-            type of discontinuities handling
-            the default value is blind
+            type of discontinuities handling. The default value is blind
                 - step_on [step_on_discontinuities]
                 - blind   [integrate_blindly]
                 - adjust  [adjust_diff]
@@ -140,9 +140,7 @@ class Kuramoto_Base:
         max_step : float
             argument for step_on_discontinuities: Retired parameter. Steps are now automatically adapted.
         shift_ratio : float
-            argument for adjust_diff.
-             Performs a zero-amplitude (backwards) `jump` whose `width` is `shift_ratio` times the distance to the previous anchor into the past. See the documentation of `jump` for the caveats of this and see `discontinuities` for more information on why you almost certainly need to use this or an alternative way to address initial discontinuities.
-
+            argument for adjust_diff. Performs a zero-amplitude (backwards) `jump` whose `width` is `shift_ratio` times the distance to the previous anchor into the past. See the documentation of `jump` for the caveats of this and see `discontinuities` for more information on why you almost certainly need to use this or an alternative way to address initial discontinuities.
 
         Return : dict(t, x)
             - **t** times

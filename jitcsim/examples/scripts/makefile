@@ -1,4 +1,4 @@
 .phoney: clean
 
-clean:
-	rm -rf data/*
+# clean:
+# 	rm -rf data/*

@@ -1,6 +1,11 @@
 """
 **Simulation of the Kuramoto model with delay.**
 
+The system of equations reads [Yeung1999]_ :
+
+.. math::
+    \\frac{d\\theta_i}{dt} = \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j(t - \\tau_{ij}) - y_i - \\alpha)
+
 The control parameter of the model is coupling.
 The output is plotting the Kuramoto order parameter vs time.
 
@@ -11,12 +16,14 @@ Start with importing required modules:
         :start-after: example-st\u0061rt
         :lines: 1-6
     
-setting the parameters of the model
+setting the parameters of the model. The new item here is definition of delay matrix.
 
 .. literalinclude:: ../../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py    
         :start-after: example-st\u0061rt
         :lines: 10-38
         :dedent: 4
+
+compiling and run the simulation. We can also determine type of `Dealing with initial discontinuities <https://jitcdde.readthedocs.io/en/stable/#discontinuities>`_.
 
 .. literalinclude:: ../../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py        
         :start-after: example-st\u0061rt
@@ -32,8 +39,8 @@ setting the parameters of the model
 
 
 
-**Reference:**
-    - Yeung, M.S. and Strogatz, S.H., 1999. Time delay in the Kuramoto model of coupled oscillators. Physical Review Letters, 82(3), p.648. Figure 3.
+
+.. [Yeung1999] Yeung, M.S. and Strogatz, S.H., 1999. Time delay in the Kuramoto model of coupled oscillators. Physical Review Letters, 82(3), p.648. Figure 3.
 """
 
 # example-start

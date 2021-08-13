@@ -1,36 +1,56 @@
 """
-Simulation of the Kuramoto model.
+In this example we use **multiprocessing** to speed up the computation by runnig the programm in parallel.
 The parameter of the model is coupling.
-The initial phase also could be changed in repeated simulations.
-The output is plotting the time average of the Kuramoto order parameter vs coupling.
-This is exampel is run in parallel using multiprocessing.
 
-see also: example : 01, 02 and 03*.py
+The output is plotting the time average of the Kuramoto order parameter vs coupling.
+
+The only difference with respect to the previous examples is as follows:
+
+.. literalinclude:: ../../jitcsim/examples/scripts/03_ode_kuramoto_II_single_param_parallel.py
+        :start-after: example-st\u0061rt
+        :lines: 4
+        :caption:
+
+.. literalinclude:: ../../jitcsim/examples/scripts/03_ode_kuramoto_II_single_param_parallel.py
+        :start-after: example-st\u0061rt
+        :lines: 15-17, 42-52
+        :dedent: 4
+
+after compiling we need to provide the `par` and make a pool:
+
+.. literalinclude:: ../../jitcsim/examples/scripts/03_ode_kuramoto_II_single_param_parallel.py
+        :start-after: example-st\u0061rt
+        :lines: 65-72
+        :dedent: 4
+
+
 
 """
 
-
+# example-start
 import numpy as np
 from numpy import pi
-import networkx as nx
 from time import time
 from multiprocessing import Pool
 from numpy.random import uniform, normal
 from jitcsim.visualization import plot_order
 from jitcsim.models.kuramoto import Kuramoto_II
+from jitcsim.networks import make_network
 
 
 if __name__ == "__main__":
 
     np.random.seed(1)
 
-    N = 50
+    N = 30
     num_ensembles = 100
-    num_processes = 4
+    num_processes = 4                       # number of processes
     alpha0 = 0.0
     omega0 = normal(0, 0.1, N)
     initial_state = uniform(-pi, pi, N)
-    adj = nx.to_numpy_array(nx.complete_graph(N))
+    
+    net = make_network()
+    adj = net.complete(N)
 
     parameters = {
         'N': N,
@@ -67,7 +87,6 @@ if __name__ == "__main__":
     sol.compile()
     print("Compile time : {:.3f} secondes.".format(time() - compile_time))
 
-    # define an array for the strength of couplings
     couplings = np.arange(0, 0.8, 0.05) / (N-1)
 
     start_time = time()

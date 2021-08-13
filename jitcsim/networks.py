@@ -1,8 +1,8 @@
 import numpy as np
-import pylab as plt
 import networkx as nx
-from copy import copy
-from jitcsim.utility import is_symmetric
+# import pylab as plt
+# from copy import copy
+# from jitcsim.utility import is_symmetric
 
 
 class make_network:
