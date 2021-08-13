@@ -20,5 +20,3 @@ pip3 install -e .
 pip3 install jitcsim
 ```
 
-
-This is a new project, so the changes will be considerable until v 1.0.
