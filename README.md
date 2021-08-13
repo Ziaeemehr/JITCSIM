@@ -15,7 +15,7 @@ cd JITCSIM # directory where you have setup.py
 pip3 install -e .
 ```
 
-### install from pip (v 0.0.1)
+### install from pip (v 0.1)
 ```sh
 pip3 install jitcsim
 ```
