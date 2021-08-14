@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jitcsim.models.kuramoto &#8212; jitcsim 0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">jitcsim 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">jitcsim.models.kuramoto</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for jitcsim.models.kuramoto</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">jitcode</span> <span class="kn">import</span> <span class="n">jitcode</span><span class="p">,</span> <span class="n">jitcode_lyap</span><span class="p">,</span> <span class="n">y</span>
+<span class="kn">from</span> <span class="nn">symengine</span> <span class="kn">import</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">symarray</span>
+<span class="kn">from</span> <span class="nn">jitcsim.utility</span> <span class="kn">import</span> <span class="p">(</span><span class="n">order_parameter</span> <span class="k">as</span> <span class="n">_order</span><span class="p">,</span>
+                             <span class="n">local_order_parameter</span> <span class="k">as</span> <span class="n">_local_order</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CC&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;clang&quot;</span>
+
+
+<div class="viewcode-block" id="Kuramoto_Base"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_Base">[docs]</a><span class="k">class</span> <span class="nc">Kuramoto_Base</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for the Kuramoto model.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    N: int</span>
+<span class="sd">        number of nodes</span>
+<span class="sd">    adj: 2d array</span>
+<span class="sd">        adjacency matrix</span>
+<span class="sd">    t_initial: float, int</span>
+<span class="sd">        initial time of integration</span>
+<span class="sd">    t_final: float, int</span>
+<span class="sd">        final time of integration</span>
+<span class="sd">    t_transition: float, int</span>
+<span class="sd">        transition time</span>
+<span class="sd">    interval : float</span>
+<span class="sd">        time interval for sampling</span>
+<span class="sd">    alpha : flaot</span>
+<span class="sd">        frustration</span>
+<span class="sd">    omega : float</span>
+<span class="sd">        initial angular frequencies</span>
+<span class="sd">    initial_state : array of size N</span>
+<span class="sd">        initial phase of oscillators</span>
+<span class="sd">    integration_method : str</span>
+<span class="sd">            name of the integrator</span>
+<span class="sd">			One of the following (or a new method supported by either backend):</span>
+<span class="sd">			</span>
+<span class="sd">			* `&quot;dopri5&quot;` – Dormand’s and Prince’s explicit fifth-order method via `ode`</span>
+<span class="sd">			* `&quot;RK45&quot;` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`</span>
+<span class="sd">			* `&quot;dop853&quot;` – DoP853 (explicit) via `ode`</span>
+<span class="sd">			* `&quot;DOP853&quot;` – DoP853 (explicit) via `solve_ivp`</span>
+<span class="sd">			* `&quot;RK23&quot;` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`</span>
+<span class="sd">			* `&quot;BDF&quot;` – Implicit backward-differentiation formula via `solve_ivp`</span>
+<span class="sd">			* `&quot;lsoda&quot;` – LSODA (implicit) via `ode`</span>
+<span class="sd">			* `&quot;LSODA&quot;` – LSODA (implicit) via `solve_ivp`</span>
+<span class="sd">			* `&quot;Radau&quot;` – The implicit Radau method via `solve_ivp`</span>
+<span class="sd">			* `&quot;vode&quot;` – VODE (implicit) via `ode`</span>
+<span class="sd">			</span>
+<span class="sd">			The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `&quot;dopri5&quot;`.</span>
+
+<span class="sd">    control : list of str </span>
+<span class="sd">        control parameters </span>
+<span class="sd">    use_omp : boolian </span>
+<span class="sd">        if `True` allow to use OpenMP</span>
+<span class="sd">    output : str</span>
+<span class="sd">        output directory</span>
+<span class="sd">    verbose: boolian</span>
+<span class="sd">        if  `True` some information about the process will be desplayed.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">par</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">par</span><span class="p">[</span><span class="s1">&#39;control&#39;</span><span class="p">]:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="s2">&quot;omega&quot;</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">symarray</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;modulename&quot;</span> <span class="ow">in</span> <span class="n">par</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span> <span class="o">=</span> <span class="s2">&quot;km&quot;</span>
+
+    <span class="c1"># ---------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Kuramoto_Base.compile"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_Base.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        compile model and produce shared library.</span>
+<span class="sd">        translates the derivative to C code using SymEngine’s `C-code printer &lt;https://github.com/symengine/symengine/pull/1054&gt;`_.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">          kwargs : (key, value)</span>
+<span class="sd">                used in generate_f_C including</span>
+<span class="sd">                    - simplify : boolean or None </span>
+<span class="sd">                    - do_cse: boolian, </span>
+<span class="sd">                        Whether SymPy’s `common-subexpression detection &lt;http://docs.sympy.org/dev/modules/rewriting.html#module-sympy.simplify.cse_main&gt;`_ should be applied before translating to C code. It is almost always better to let the compiler do this (unless you want to set the compiler optimisation to `-O2` or lower): For simple differential equations this should not make any difference to the compiler’s optimisations. For large ones, it may make a difference but also take long. As this requires all entries of `f` at once, it may void advantages gained from using generator functions as an input. Also, this feature uses SymPy and not SymEngine.</span>
+<span class="sd">                    - chunk_size: int </span>
+<span class="sd">                        If the number of instructions in the final C code exceeds this number, it will be split into chunks of this size. See `Handling very large differential equations &lt;http://jitcde-common.readthedocs.io/#handling-very-large-differential-equations&gt;`_ on why this is useful and how to best choose this value.</span>
+<span class="sd">                        It also used for paralleling using OpenMP to determine task scheduling.</span>
+<span class="sd">			If smaller than 1, no chunking will happen.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span>
+                    <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">generate_f_C</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">compile_C</span><span class="p">(</span><span class="n">omp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_omp</span><span class="p">,</span> <span class="n">modulename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modulename</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">save_compiled</span><span class="p">(</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span></div>
+    <span class="c1"># ---------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">set_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">):</span>
+
+        <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span> <span class="o">=</span> <span class="n">x0</span>
+    <span class="c1"># ---------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Kuramoto_Base.simulate"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_Base.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_params</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        integrate the system of equations and return the</span>
+<span class="sd">        coordinates and times</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        </span>
+<span class="sd">        par : list</span>
+<span class="sd">            list of values for control parameters in order of appearence in control</span>
+
+<span class="sd">        Return : dict(t, x)</span>
+<span class="sd">                - t times</span>
+<span class="sd">                - x coordinates.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcode</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span>
+                    <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">,</span>
+                    <span class="n">module_location</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span><span class="o">+</span><span class="s2">&quot;.so&quot;</span><span class="p">))</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_integrator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integration_method</span><span class="p">,</span>
+                         <span class="o">**</span><span class="n">integrator_params</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_parameters</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_initial_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">t_initial</span><span class="p">)</span>
+
+        <span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_transition</span> <span class="o">+</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_initial</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_final</span> <span class="o">-</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">t_transition</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
+        <span class="n">phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
+            <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">times</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">phases</span><span class="p">}</span></div>
+    <span class="c1"># ---------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Kuramoto_Base.order_parameter"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_Base.order_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">order_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phases</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate the Kuramoto order parameter</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+
+<span class="sd">        phases : 2D numpy array [nstep by N]</span>
+<span class="sd">            phase of oscillators </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">_order</span><span class="p">(</span><span class="n">phases</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">order</span></div>
+    <span class="c1"># ---------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Kuramoto_Base.local_order_parameter"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_Base.local_order_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">local_order_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phases</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        calculate local Kuramoto order parameter for given node indices</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        phases : float numpy array</span>
+<span class="sd">            phase of each oscillator.</span>
+<span class="sd">        indices : int numpy array </span>
+<span class="sd">            indices of given nodes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">_local_order</span><span class="p">(</span><span class="n">phases</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">order</span></div></div>
+
+    <span class="c1"># ---------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="Kuramoto_II"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_II">[docs]</a><span class="k">class</span> <span class="nc">Kuramoto_II</span><span class="p">(</span><span class="n">Kuramoto_Base</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    **Kuramoto model type II**</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \\frac{d\\theta_i}{dt} &amp;= \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha) </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    N: int</span>
+<span class="sd">        number of nodes</span>
+<span class="sd">    adj: 2d array</span>
+<span class="sd">        adjacency matrix</span>
+<span class="sd">    t_initial: float, int</span>
+<span class="sd">        initial time of integration</span>
+<span class="sd">    t_final: float, int</span>
+<span class="sd">        final time of integration</span>
+<span class="sd">    t_transition: float, int</span>
+<span class="sd">        transition time</span>
+<span class="sd">    interval : float</span>
+<span class="sd">        time interval for sampling</span>
+<span class="sd">    alpha : flaot</span>
+<span class="sd">        frustration</span>
+<span class="sd">    omega : float</span>
+<span class="sd">        initial angular frequencies</span>
+<span class="sd">    initial_state : array of size N</span>
+<span class="sd">        initial phase of oscillators</span>
+<span class="sd">    integration_method : str</span>
+<span class="sd">            name of the integrator</span>
+<span class="sd">			One of the following (or a new method supported by either backend):</span>
+<span class="sd">			</span>
+<span class="sd">			* `&quot;dopri5&quot;` – Dormand’s and Prince’s explicit fifth-order method via `ode`</span>
+<span class="sd">			* `&quot;RK45&quot;` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`</span>
+<span class="sd">			* `&quot;dop853&quot;` – DoP853 (explicit) via `ode`</span>
+<span class="sd">			* `&quot;DOP853&quot;` – DoP853 (explicit) via `solve_ivp`</span>
+<span class="sd">			* `&quot;RK23&quot;` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`</span>
+<span class="sd">			* `&quot;BDF&quot;` – Implicit backward-differentiation formula via `solve_ivp`</span>
+<span class="sd">			* `&quot;lsoda&quot;` – LSODA (implicit) via `ode`</span>
+<span class="sd">			* `&quot;LSODA&quot;` – LSODA (implicit) via `solve_ivp`</span>
+<span class="sd">			* `&quot;Radau&quot;` – The implicit Radau method via `solve_ivp`</span>
+<span class="sd">			* `&quot;vode&quot;` – VODE (implicit) via `ode`</span>
+<span class="sd">			</span>
+<span class="sd">			The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `&quot;dopri5&quot;`.</span>
+<span class="sd">            </span>
+<span class="sd">    control : list of str </span>
+<span class="sd">        control parameters </span>
+<span class="sd">    use_omp : boolian </span>
+<span class="sd">        if `True` allow to use OpenMP</span>
+<span class="sd">    output : str</span>
+<span class="sd">        output directory</span>
+<span class="sd">    verbose: boolian</span>
+<span class="sd">        if  `True` some information about the process will be desplayed.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+
+    <span class="c1"># ---------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Kuramoto_II.rhs"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_II.rhs">[docs]</a>    <span class="k">def</span> <span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        **Kuramoto model of type II**</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            \\frac{d\\theta_i}{dt} &amp;= \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha) </span>
+
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">sumj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+                          <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">coupling</span> <span class="o">*</span> <span class="n">sumj</span></div></div>
+    <span class="c1"># ---------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="Kuramoto_I"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_I">[docs]</a><span class="k">class</span> <span class="nc">Kuramoto_I</span><span class="p">(</span><span class="n">Kuramoto_Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    **Kuramot model type I**</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \\frac{d\\theta_i}{dt} = \\omega_i + 0.5 * \\sum_{j=0}^{N-1} a_{i,j} \\Big(1 - \\cos(y_j - y_i - \\alpha) \\Big)</span>
+<span class="sd">        </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    N: int</span>
+<span class="sd">        number of nodes</span>
+<span class="sd">    adj: 2d array</span>
+<span class="sd">        adjacency matrix</span>
+<span class="sd">    t_initial: float, int</span>
+<span class="sd">        initial time of integration</span>
+<span class="sd">    t_final: float, int</span>
+<span class="sd">        final time of integration</span>
+<span class="sd">    t_transition: float, int</span>
+<span class="sd">        transition time</span>
+<span class="sd">    interval : float</span>
+<span class="sd">        time interval for sampling</span>
+<span class="sd">    alpha : flaot</span>
+<span class="sd">        frustration</span>
+<span class="sd">    omega : float</span>
+<span class="sd">        initial angular frequencies</span>
+<span class="sd">    initial_state : array of size N</span>
+<span class="sd">        initial phase of oscillators</span>
+<span class="sd">    integration_method : str</span>
+<span class="sd">            name of the integrator</span>
+<span class="sd">			One of the following (or a new method supported by either backend):</span>
+<span class="sd">			</span>
+<span class="sd">			* `&quot;dopri5&quot;` – Dormand’s and Prince’s explicit fifth-order method via `ode`</span>
+<span class="sd">			* `&quot;RK45&quot;` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`</span>
+<span class="sd">			* `&quot;dop853&quot;` – DoP853 (explicit) via `ode`</span>
+<span class="sd">			* `&quot;DOP853&quot;` – DoP853 (explicit) via `solve_ivp`</span>
+<span class="sd">			* `&quot;RK23&quot;` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`</span>
+<span class="sd">			* `&quot;BDF&quot;` – Implicit backward-differentiation formula via `solve_ivp`</span>
+<span class="sd">			* `&quot;lsoda&quot;` – LSODA (implicit) via `ode`</span>
+<span class="sd">			* `&quot;LSODA&quot;` – LSODA (implicit) via `solve_ivp`</span>
+<span class="sd">			* `&quot;Radau&quot;` – The implicit Radau method via `solve_ivp`</span>
+<span class="sd">			* `&quot;vode&quot;` – VODE (implicit) via `ode`</span>
+<span class="sd">			</span>
+<span class="sd">			The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `&quot;dopri5&quot;`.</span>
+<span class="sd">            </span>
+<span class="sd">    control : list of str </span>
+<span class="sd">        control parameters </span>
+<span class="sd">    use_omp : boolian </span>
+<span class="sd">        if `True` allow to use OpenMP</span>
+<span class="sd">    output : str</span>
+<span class="sd">        output directory</span>
+<span class="sd">    verbose: boolian</span>
+<span class="sd">        if  `True` some information about the process will be desplayed.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Kuramoto_I.rhs"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.Kuramoto_I.rhs">[docs]</a>    <span class="k">def</span> <span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        **Kuramoto model of type I**</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            \\frac{d\\theta_i}{dt} = \\omega_i + 0.5 * \\sum_{j=0}^{N-1} a_{i,j} \\Big(1 - \\cos(y_j - y_i - \\alpha) \\Big)</span>
+<span class="sd">        </span>
+
+<span class="sd">        Return :  </span>
+<span class="sd">            right hand side of the Kuramoto model</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">sumj</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">cos</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+                                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">coupling</span> <span class="o">*</span> <span class="n">sumj</span></div></div>
+
+
+<div class="viewcode-block" id="SOKM_SingleLayer"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.SOKM_SingleLayer">[docs]</a><span class="k">class</span> <span class="nc">SOKM_SingleLayer</span><span class="p">(</span><span class="n">Kuramoto_Base</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    **Second order Kuramoto Model for single layer network**</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        m \\frac{d^2 \\theta_i(t)}{dt^2}+\\frac{d\\theta_i(t)}{dt} = \\omega_i + \\frac{\\lambda}{\\langle k \\rangle} \\sum_{j=1}^N \\sin \\Big[ \\theta_j(t) - \\theta_i(t) \\Big]</span>
+
+
+<span class="sd">    Reference: </span>
+
+<span class="sd">    Kachhvah, A.D. and Jalan, S., 2017. Multiplexing induced explosive synchronization in Kuramoto oscillators with inertia. EPL (Europhysics Letters), 119(6), p.60005.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">sumj</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+                       <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+                       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">coupling</span> <span class="o">*</span> <span class="n">sumj</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv_m</span>
+
+<div class="viewcode-block" id="SOKM_SingleLayer.compile"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.SOKM_SingleLayer.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span>
+                    <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">generate_f_C</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">compile_C</span><span class="p">(</span><span class="n">omp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_omp</span><span class="p">,</span> <span class="n">modulename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modulename</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">save_compiled</span><span class="p">(</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">set_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">):</span>
+
+        <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span> <span class="o">=</span> <span class="n">x0</span>
+
+<div class="viewcode-block" id="SOKM_SingleLayer.simulate"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto.SOKM_SingleLayer.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_params</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Integrate the system of equations and return the</span>
+<span class="sd">        coordinates and times</span>
+
+<span class="sd">        Return : dict(t, x)</span>
+<span class="sd">            - **t** times</span>
+<span class="sd">            - **x** coordinates.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcode</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span>
+                    <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">,</span>
+                    <span class="n">module_location</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span><span class="o">+</span><span class="s2">&quot;.so&quot;</span><span class="p">))</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_integrator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integration_method</span><span class="p">,</span>
+                         <span class="o">**</span><span class="n">integrator_params</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_parameters</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_initial_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">t_initial</span><span class="p">)</span>
+
+        <span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_transition</span> <span class="o">+</span> \
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_initial</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_final</span> <span class="o">-</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">t_transition</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
+        <span class="n">phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
+            <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">]</span> <span class="o">=</span> <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">]</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">times</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">phases</span><span class="p">}</span></div></div>
+
+
+<div class="viewcode-block" id="Lyap_Kuramoto_II"><a class="viewcode-back" href="../../../code.html#jitcsim.models.kuramoto.Lyap_Kuramoto_II">[docs]</a><span class="k">class</span> <span class="nc">Lyap_Kuramoto_II</span><span class="p">(</span><span class="n">Kuramoto_Base</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;modulename&quot;</span> <span class="ow">in</span> <span class="n">par</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span> <span class="o">=</span> <span class="s2">&quot;lyap_km&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">par</span><span class="p">[</span><span class="s1">&#39;verbose&#39;</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Lyap_Kuramoto_II.rhs"><a class="viewcode-back" href="../../../code.html#jitcsim.models.kuramoto.Lyap_Kuramoto_II.rhs">[docs]</a>    <span class="k">def</span> <span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        **Kuramoto model of type II**</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            \\frac{d\\theta_i}{dt} = \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha)  </span>
+<span class="sd">        </span>
+
+<span class="sd">        Return :</span>
+<span class="sd">            right hand side of the Kuramoto model.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
+            <span class="n">sumj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">j</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+                          <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">adj</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">omega</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">coupling</span> <span class="o">*</span> <span class="n">sumj</span></div>
+
+<div class="viewcode-block" id="Lyap_Kuramoto_II.compile"><a class="viewcode-back" href="../../../code.html#jitcsim.models.kuramoto.Lyap_Kuramoto_II.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcode_lyap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">n_lyap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_lyap</span><span class="p">,</span>
+                         <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">generate_f_C</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">compile_C</span><span class="p">(</span><span class="n">omp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_omp</span><span class="p">,</span> <span class="n">modulename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modulename</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">save_compiled</span><span class="p">(</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Lyap_Kuramoto_II.simulate"><a class="viewcode-back" href="../../../code.html#jitcsim.models.kuramoto.Lyap_Kuramoto_II.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="o">**</span><span class="n">integrator_params</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        integrate the system of equations and calculate the Lyapunov exponents.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        -----------</span>
+<span class="sd">        </span>
+<span class="sd">        par : [list of int, float] </span>
+<span class="sd">            values for control parameter(s).</span>
+
+<span class="sd">        Return : dict(t, x)</span>
+<span class="sd">            - **t** times</span>
+<span class="sd">            - **x** coordinates.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcode_lyap</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">n_lyap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_lyap</span><span class="p">,</span>
+                         <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">,</span>
+                         <span class="n">module_location</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span><span class="o">+</span><span class="s2">&quot;.so&quot;</span><span class="p">))</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_integrator</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">integration_method</span><span class="p">,</span>
+                         <span class="o">**</span><span class="n">integrator_params</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_parameters</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_initial_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">t_initial</span><span class="p">)</span>
+
+        <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_initial</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_final</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
+        <span class="n">lyaps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lyap</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
+            <span class="n">lyaps</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">times</span><span class="p">,</span> <span class="s2">&quot;lyap&quot;</span><span class="p">:</span> <span class="n">lyaps</span><span class="p">}</span></div></div>
+    <span class="c1"># ---------------------------------------------------------------</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">jitcsim 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">jitcsim.models.kuramoto</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Abolfazl Ziaeemehr.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+    </div>
+  </body>
+</html>
