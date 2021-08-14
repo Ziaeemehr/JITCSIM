@@ -1,4 +1,4 @@
-# JITCSIM
+# JiTCSim
 
 Just-in time compilation of differential equations for simulation of complex network dynamics.
 
