@@ -13,8 +13,8 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../../jitcsim/examples/scripts'))
-sys.path.insert(0, os.path.abspath('../../jitcsim/models'))
+# sys.path.insert(0, os.path.abspath('../../jitcsim/examples/scripts'))
+# sys.path.insert(0, os.path.abspath('../../jitcsim/models'))
 sys.path.insert(0, os.path.abspath('../../jitcsim'))
 
 # -- Project information -----------------------------------------------------

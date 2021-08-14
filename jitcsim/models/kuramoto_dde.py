@@ -51,7 +51,6 @@ class Kuramoto_Base:
 
     """
 
-
     def __init__(self, par) -> None:
 
         for item in par.items():
@@ -115,7 +114,6 @@ class Kuramoto_Base:
                  shift_ratio=1e-4,
                  **integrator_params
                  ):
-
         '''
         integrate the system of equations and return the
         computed state of the system after integration and times
@@ -136,7 +134,7 @@ class Kuramoto_Base:
         propagations : int 
             argument for step_on_discontinuities:  how often the discontinuity has to propagate to before it’s considered smoothed.
         min_distance : float
-        	argument for step_on_discontinuities: If two required steps are closer than this, they will be treated as one.
+                argument for step_on_discontinuities: If two required steps are closer than this, they will be treated as one.
         max_step : float
             argument for step_on_discontinuities: Retired parameter. Steps are now automatically adapted.
         shift_ratio : float
@@ -169,10 +167,9 @@ class Kuramoto_Base:
         I.set_parameters(par)
         # I.set_initial_value(self.initial_state, time=self.t_initial)
 
-        # times = self.t_transition + \
-        #     np.arange(self.t_initial, self.t_final -
-        #               self.t_transition, self.interval)
-        times = I.t + np.arange(0, self.t_final, self.interval)
+        trans = max(self.t_transition, I.t)
+        times = trans + \
+            np.arange(self.t_initial, self.t_final - trans, self.interval)
 
         phases = np.zeros((len(times), self.N))
         for i in range(len(times)):
@@ -201,13 +198,12 @@ class Kuramoto_II(Kuramoto_Base):
     # ---------------------------------------------------------------
 
     def rhs(self):
-        
         '''
         **Kuramoto model of type II**
 
         .. math::
             \\frac{d\\theta_i}{dt} = \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j(t - \\tau_{ij}) - y_i - \\alpha)
-        
+
         '''
 
         for i in range(self.N):
