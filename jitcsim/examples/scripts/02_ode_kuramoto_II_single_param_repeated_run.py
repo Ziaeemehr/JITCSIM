@@ -29,7 +29,7 @@ and an zero array to record the order parameter at different couplings:
         :lines: 46-47
         :dedent: 4
 
-we need a loop over each coupling and repeat the simulation `num_ensembles` times. The initial state of the oscillators can also be changed for each simulation using :py:mod:`set_initial_state`.
+we need a loop over each coupling and repeat the simulation `num_ensembles` times. The initial state of the oscillators can also be changed for each simulation using :py:meth:`set_initial_state`.
 
 .. literalinclude:: ../../jitcsim/examples/scripts/02_ode_kuramoto_II_single_param_repeated_run.py    
         :start-after: example-st\u0061rt

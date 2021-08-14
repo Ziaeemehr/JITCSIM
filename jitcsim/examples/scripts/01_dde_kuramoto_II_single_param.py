@@ -24,6 +24,7 @@ setting the parameters of the model. The new item here is definition of delay ma
         :dedent: 4
 
 compiling and run the simulation. We can also determine type of `Dealing with initial discontinuities <https://jitcdde.readthedocs.io/en/stable/#discontinuities>`_.
+To suppress warning messages use :code:`python -W ignore script.py`.
 
 .. literalinclude:: ../../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py        
         :start-after: example-st\u0061rt
@@ -71,7 +72,7 @@ if __name__ == "__main__":
         'delays': delays,                   # matrix of delays
         't_initial': 0.,                    # initial time of integration
         "t_final": 100,                     # final time of integration
-        't_transition': 0.0,                # transition time
+        't_transition': 10.0,               # transition time
         "interval": 0.2,                    # time interval for sampling
 
         "alpha": alpha0,                    # frustration

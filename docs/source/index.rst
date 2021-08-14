@@ -18,24 +18,20 @@ What are JiTC*DE:
 Where the latter take a Python function as an argument, JiTCODE takes an iterable (or generator function or dictionary) of symbolic expressions, which it translates to **C** code, compiles on the fly, and uses as the function to feed into SciPy ODE or Solve IVP.
 Symbolic expressions are mostly handled by `SymEngine <https://github.com/symengine/symengine>`_, `SymPy <http://www.sympy.org/>`_'s compiled-backend-to-be (see `SymPy vs. SymEngine <https://jitcde-common.readthedocs.io/#sympy-vs-symengine>`_ for details).
 
-`JiTCDDE <https://jitcdde.readthedocs.io/en/stable/>`_ (just-in-time compilation for delay differential equations) is a standalone Python implementation of the DDE integration method proposed by Shampine and Thompson [1]_, which in turn employs the Bogacki–Shampine Runge–Kutta pair [2]_.
+`JiTCDDE <https://jitcdde.readthedocs.io/en/stable/>`_ (just-in-time compilation for delay differential equations) is a standalone Python implementation of the DDE integration method proposed by Shampine and Thompson [Shampine2001]_, which in turn employs the Bogacki–Shampine Runge–Kutta pair [Bogacki1989]_.
 
 
-`JiTCSDE <https://jitcsde.readthedocs.io/en/latest/>`_ (just-in-time compilation for stochastic differential equations) is a standalone Python implementation of the adaptive integration method proposed by Rackauckas and Nie [3]_, which in turn employs Rößler-type stochastic Runge–Kutta methods [4]_. It can handle both Itō and Stratonovich SDEs, converting the latter internally. JiTCSDE is designed in analogy to JiTCODE.
-
-.. _references:
-
-References
-------------
+`JiTCSDE <https://jitcsde.readthedocs.io/en/latest/>`_ (just-in-time compilation for stochastic differential equations) is a standalone Python implementation of the adaptive integration method proposed by Rackauckas and Nie [Rackauckas2017]_, which in turn employs Rößler-type stochastic Runge–Kutta methods [Robler2010]_. It can handle both Itō and Stratonovich SDEs, converting the latter internally. JiTCSDE is designed in analogy to JiTCODE.
 
 
-.. [1] Shampine, L.F. and Thompson, S., 2001. Solving ddes in matlab. Applied Numerical Mathematics, 37(4), pp.441-458., `10.1016/S0168-9274(00)00055-6 <http://dx.doi.org/10.1016/S0168-9274(00)00055-6>`_.
 
-.. [2] Bogacki, P. and Shampine, L.F., 1989. A 3 (2) pair of Runge-Kutta formulas. Applied Mathematics Letters, 2(4), pp.321-325. `10.1016/0893-9659(89)90079-7 <http://dx.doi.org/10.1016/0893-9659(89)90079-7>`_.
+.. [Shampine2001] Shampine, L.F. and Thompson, S., 2001. Solving ddes in matlab. Applied Numerical Mathematics, 37(4), pp.441-458., `10.1016/S0168-9274(00)00055-6 <http://dx.doi.org/10.1016/S0168-9274(00)00055-6>`_.
 
-.. [3] Rackauckas, C. and Nie, Q., 2017. Adaptive methods for stochastic differential equations via natural embeddings and rejection sampling with memory. Discrete and continuous dynamical systems. Series B, 22(7), p.2731, `10.3934/dcdsb.2017133 <http://dx.doi.org/10.3934/dcdsb.2017133>`_.
+.. [Bogacki1989] Bogacki, P. and Shampine, L.F., 1989. A 3 (2) pair of Runge-Kutta formulas. Applied Mathematics Letters, 2(4), pp.321-325. `10.1016/0893-9659(89)90079-7 <http://dx.doi.org/10.1016/0893-9659(89)90079-7>`_.
 
-.. [4] Rößler, A., 2010. Runge–Kutta methods for the strong approximation of solutions of stochastic differential equations. SIAM Journal on Numerical Analysis, 48(3), pp.922-952. `10.1137/09076636X <http://dx.doi.org/10.1137/09076636X>`_.
+.. [Rackauckas2017] Rackauckas, C. and Nie, Q., 2017. Adaptive methods for stochastic differential equations via natural embeddings and rejection sampling with memory. Discrete and continuous dynamical systems. Series B, 22(7), p.2731, `10.3934/dcdsb.2017133 <http://dx.doi.org/10.3934/dcdsb.2017133>`_.
+
+.. [Robler2010] Rößler, A., 2010. Runge–Kutta methods for the strong approximation of solutions of stochastic differential equations. SIAM Journal on Numerical Analysis, 48(3), pp.922-952. `10.1137/09076636X <http://dx.doi.org/10.1137/09076636X>`_.
 
 .. toctree::
    :maxdepth: 2
@@ -123,7 +119,7 @@ The main class for the ODE Kuramot model
 -----------------------------------------
 
 .. autoclass:: jitcsim.models.kuramoto.Kuramoto_Base
-	:members:
+    :members:
 
 -------------------------------------------------------    
 
@@ -171,7 +167,7 @@ The main class for the DDE Kuramot model
     :members:
     :inherited-members:
 
--------------------------------------------------------    	
+-------------------------------------------------------     
 
 .. autoclass:: jitcsim.models.kuramoto_dde.Kuramoto_II
     :members:
