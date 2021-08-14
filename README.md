@@ -13,7 +13,7 @@ For a quick review of what you can use **jitcsim** for, look at the [notebooks](
 I appreciate *Gerrit Ansmann* for preparing `JiTC*DE` packages and many helps at resolving issues.
 
 
-### installation tha latest changes
+### installation the latest changes
 
 ```sh
 cd JITCSIM # directory where you have setup.py
