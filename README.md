@@ -6,7 +6,7 @@ It mainly use [JiTC*DE](https://github.com/neurophysik/jitcode) packages for sol
 Check `JITC*DE` [documentation](https://jitcode.readthedocs.io/en/latest/) for more details.
 
 
-The JiTCSim documentation in pdf is available [here](https://github.com/Ziaeemehr/JITCSIM/raw/master/docs/jitcsim.pdf).
+The JiTCSim [documentation](https://ziaeemehr.github.io/JITCSIM/) page or [pdf](https://github.com/Ziaeemehr/JITCSIM/raw/master/docs/jitcsim.pdf) file. 
 
 For a quick review of what you can use **jitcsim** for, look at the [notebooks](https://github.com/Ziaeemehr/JITCSIM/tree/master/jitcsim/examples/notebooks).
 

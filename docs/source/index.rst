@@ -100,6 +100,19 @@ Lyapunov exponents
 .. automodule:: jitcsim.examples.scripts.08_ode_lyapunov_exponents
 
 
+Adding new models
+##################
+
+One the main purpose of JiTCSim is flexiblity and ease of development for users with medium knowledge about Python. No exprience on C/C++ is required.
+Process of adding new model is strightforward as we see in the following.
+The system of equations need to be provided in Python syntax, considering requirements of JiTC*DE, and 
+also using available models (using ODE/DDE/SDE sovlers) as template.
+
+Damp oscillator
+*****************
+
+this is a test.
+
 
 Auto Generated Documentation 
 ##############################
