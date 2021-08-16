@@ -1,7 +1,9 @@
 numpy
 scipy
 cython
+numba
 jitcode
 jitcdde
 jitcsde
+networkx
 matplotlib
