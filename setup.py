@@ -22,6 +22,6 @@ setuptools.setup(
     ],
     python_requires='>=3.5',
     # package_data={'sbi_nmms': ['DampOscillator.so']},
-    # install_requires=requirements,
+    install_requires=requirements,
     # include_package_data=True,
 )
