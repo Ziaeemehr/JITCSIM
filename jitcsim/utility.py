@@ -11,7 +11,7 @@ def order_parameter(phases):
     ----------
     phases : numpy 2D array (num_time_step by num_nodes)
         phase of oscillators
-    
+
     Return
     ------
 
@@ -35,14 +35,14 @@ def local_order_parameter(phases, indices):
 
     Parameters
     ----------
-    
+
     phases : numpy 2D array (num_time_step by num_nodes)
         phase of each node
     indices : array(list) of int 
         indices of nodes to measure their order parameters;
     Return
     -------
-    
+
     r : float 
         Kuramoto order parameter. 
     """
@@ -113,7 +113,7 @@ def display_time(time):
 
     Parameters
     -----------
-    
+
     time : float
         Time elapsed in seconds.
 
@@ -123,3 +123,13 @@ def display_time(time):
     second = time - (3600.0 * hour + 60.0 * minute)
     print("Done in %d hours %d minutes %.4f seconds"
           % (hour, minute, second))
+
+
+def get_step_current(t_start, t_end, amplitude):
+
+    return {
+        "current_type": "step",
+        "current_t_end": t_end,
+        "current_t_start": t_start,
+        "current_amplitude": amplitude
+    }

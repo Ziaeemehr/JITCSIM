@@ -1,5 +1,7 @@
+wheel
 numpy
 scipy
+sympy
 cython
 numba
 jitcode

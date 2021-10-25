@@ -267,7 +267,7 @@ class Kuramoto_II(Kuramoto_Base):
 
         for i in range(self.N):
             sumj = np.sum(sin(y(j)-y(i) - self.alpha)
-                          for j in range(self.N) if self.adj[i, j])
+                          for j in range(self.N) if self.adj[j, i])
 
             yield self.omega[i] + self.coupling * sumj
     # ---------------------------------------------------------------

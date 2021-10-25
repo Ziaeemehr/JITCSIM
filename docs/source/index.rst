@@ -186,5 +186,12 @@ The main class for the DDE Kuramot model
     :members:
     :inherited-members:
 
-    
+.. automodule:: jitcsim.utility
+    :members:
+
+.. automodule:: jitcsim.networks
+    :members:
+
+.. automodule:: jitcsim.visualization
+    :members:
   

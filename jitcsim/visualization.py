@@ -12,6 +12,7 @@ def plot_order(x, y,
                label=None,
                ax=None,
                close_fig=True,
+               figsize=(6,4),
                **kwargs):
     """
     plot y vs x with given x and y labels
@@ -44,7 +45,7 @@ def plot_order(x, y,
 
     savefig = False
     if ax is None:
-        fig, ax = plt.subplots(1, figsize=(6, 4))
+        fig, ax = plt.subplots(1, figsize=figsize)
         savefig = True
 
     ax.plot(x, y, lw=1, color=color, label=label, **kwargs)

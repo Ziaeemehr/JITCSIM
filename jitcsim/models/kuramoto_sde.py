@@ -77,6 +77,8 @@ class Kuramoto_Base:
 
         if not "modulename" in par.keys():
             self.modulename = "km"
+        
+        self.integtaror_params_set = False
 
     # ---------------------------------------------------------------
 
@@ -90,13 +92,30 @@ class Kuramoto_Base:
                         destination=join(self.output, self.modulename))
     # ---------------------------------------------------------------
 
+    def set_integrator_parameters(self,
+                                  atol=1e-5,
+                                  rtol=1e-2,
+                                  min_step=1e-5,
+                                  max_step=10.0):
+        """!
+        set properties for integrator        
+        """
+
+        self.integrator_params = {"atol": atol,
+                                  "rtol": rtol,
+                                  "min_step": min_step,
+                                  "max_step": max_step
+                                  }
+        self.integtaror_params_set = True
+    # ---------------------------------------------------------------
+
     def set_initial_state(self, x0):
 
         assert(len(x0) == self.N)
         self.initial_state = x0
     # ---------------------------------------------------------------
 
-    def simulate(self, par):
+    def simulate(self, par, mode_2pi=True):
         '''
         integrate the system of equations and return the
         coordinates and times
@@ -112,19 +131,26 @@ class Kuramoto_Base:
                 - x coordinates.
         '''
 
-        I = jitcsde(n=self.N,
+        I = jitcsde(n=self.N, verbose=False,
                     control_pars=self.control_pars,
                     module_location=join(self.output, self.modulename+".so"))
 
         I.set_initial_value(self.initial_state, time=self.t_initial)
         I.set_parameters(par)
 
+        if not self.integtaror_params_set:
+            self.set_integrator_parameters()
+        I.set_integration_parameters(**self.integrator_params)
+
         times = self.t_transition + \
             np.arange(self.t_initial, self.t_final -
                       self.t_transition, self.interval)
         phases = np.zeros((len(times), self.N))
         for i in range(len(times)):
-            phases[i, :] = I.integrate(times[i]) % (2*np.pi)
+            if mode_2pi:
+                phases[i, :] = I.integrate(times[i]) % (2*np.pi)
+            else:
+                phases[i, :] = I.integrate(times[i])
 
         return {"t": times, "x": phases}
     # ---------------------------------------------------------------
