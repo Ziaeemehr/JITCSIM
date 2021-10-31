@@ -100,3 +100,5 @@ if __name__ == "__main__":
                xlabel="time",
                ylabel="r(t)",
                close_fig=False)
+    
+    print(np.mean(order))

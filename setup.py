@@ -7,7 +7,7 @@ with open("requirements.txt") as f:
 
 setuptools.setup(
     name='jitcsim',
-    version='0.1',
+    version='0.3',
     author="...",
     author_email="a.ziaeemehr@gmail.com",
     description="Simulation of networks with Ordinary/Delay/Stochastic differential equations (just-in-time compilation",

@@ -38,20 +38,20 @@ class Kuramoto_Base:
         initial phase of oscillators
     integration_method : str
             name of the integrator
-			One of the following (or a new method supported by either backend):
-			
-			* `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
-			* `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
-			* `"dop853"` – DoP853 (explicit) via `ode`
-			* `"DOP853"` – DoP853 (explicit) via `solve_ivp`
-			* `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
-			* `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
-			* `"lsoda"` – LSODA (implicit) via `ode`
-			* `"LSODA"` – LSODA (implicit) via `solve_ivp`
-			* `"Radau"` – The implicit Radau method via `solve_ivp`
-			* `"vode"` – VODE (implicit) via `ode`
-			
-			The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
+                        One of the following (or a new method supported by either backend):
+
+                        * `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
+                        * `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
+                        * `"dop853"` – DoP853 (explicit) via `ode`
+                        * `"DOP853"` – DoP853 (explicit) via `solve_ivp`
+                        * `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
+                        * `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
+                        * `"lsoda"` – LSODA (implicit) via `ode`
+                        * `"LSODA"` – LSODA (implicit) via `solve_ivp`
+                        * `"Radau"` – The implicit Radau method via `solve_ivp`
+                        * `"vode"` – VODE (implicit) via `ode`
+
+                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
 
     control : list of str 
         control parameters 
@@ -95,7 +95,6 @@ class Kuramoto_Base:
     # ---------------------------------------------------------------
 
     def compile(self, **kwargs):
-
         """
         compile model and produce shared library.
         translates the derivative to C code using SymEngine’s `C-code printer <https://github.com/symengine/symengine/pull/1054>`_.
@@ -110,7 +109,7 @@ class Kuramoto_Base:
                     - chunk_size: int 
                         If the number of instructions in the final C code exceeds this number, it will be split into chunks of this size. See `Handling very large differential equations <http://jitcde-common.readthedocs.io/#handling-very-large-differential-equations>`_ on why this is useful and how to best choose this value.
                         It also used for paralleling using OpenMP to determine task scheduling.
-			If smaller than 1, no chunking will happen.
+                        If smaller than 1, no chunking will happen.
         """
 
         I = jitcode(self.rhs, n=self.N,
@@ -133,7 +132,7 @@ class Kuramoto_Base:
 
         Parameters
         ----------
-        
+
         par : list
             list of values for control parameters in order of appearence in control
 
@@ -224,21 +223,21 @@ class Kuramoto_II(Kuramoto_Base):
         initial phase of oscillators
     integration_method : str
             name of the integrator
-			One of the following (or a new method supported by either backend):
-			
-			* `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
-			* `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
-			* `"dop853"` – DoP853 (explicit) via `ode`
-			* `"DOP853"` – DoP853 (explicit) via `solve_ivp`
-			* `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
-			* `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
-			* `"lsoda"` – LSODA (implicit) via `ode`
-			* `"LSODA"` – LSODA (implicit) via `solve_ivp`
-			* `"Radau"` – The implicit Radau method via `solve_ivp`
-			* `"vode"` – VODE (implicit) via `ode`
-			
-			The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
-            
+                        One of the following (or a new method supported by either backend):
+
+                        * `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
+                        * `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
+                        * `"dop853"` – DoP853 (explicit) via `ode`
+                        * `"DOP853"` – DoP853 (explicit) via `solve_ivp`
+                        * `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
+                        * `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
+                        * `"lsoda"` – LSODA (implicit) via `ode`
+                        * `"LSODA"` – LSODA (implicit) via `solve_ivp`
+                        * `"Radau"` – The implicit Radau method via `solve_ivp`
+                        * `"vode"` – VODE (implicit) via `ode`
+
+                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
+
     control : list of str 
         control parameters 
     use_omp : boolian 
@@ -262,12 +261,12 @@ class Kuramoto_II(Kuramoto_Base):
         .. math::
             \\frac{d\\theta_i}{dt} &= \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha) 
 
-        
+
         '''
 
         for i in range(self.N):
-            sumj = np.sum(sin(y(j)-y(i) - self.alpha)
-                          for j in range(self.N) if self.adj[i, j])
+            sumj = sum(sin(y(j)-y(i) - self.alpha)
+                       for j in range(self.N) if self.adj[i, j])
 
             yield self.omega[i] + self.coupling * sumj
     # ---------------------------------------------------------------
@@ -279,7 +278,7 @@ class Kuramoto_I(Kuramoto_Base):
 
     .. math::
             \\frac{d\\theta_i}{dt} = \\omega_i + 0.5 * \\sum_{j=0}^{N-1} a_{i,j} \\Big(1 - \\cos(y_j - y_i - \\alpha) \\Big)
-        
+
 
     Parameters
     ----------
@@ -304,21 +303,21 @@ class Kuramoto_I(Kuramoto_Base):
         initial phase of oscillators
     integration_method : str
             name of the integrator
-			One of the following (or a new method supported by either backend):
-			
-			* `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
-			* `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
-			* `"dop853"` – DoP853 (explicit) via `ode`
-			* `"DOP853"` – DoP853 (explicit) via `solve_ivp`
-			* `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
-			* `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
-			* `"lsoda"` – LSODA (implicit) via `ode`
-			* `"LSODA"` – LSODA (implicit) via `solve_ivp`
-			* `"Radau"` – The implicit Radau method via `solve_ivp`
-			* `"vode"` – VODE (implicit) via `ode`
-			
-			The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
-            
+                        One of the following (or a new method supported by either backend):
+
+                        * `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
+                        * `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
+                        * `"dop853"` – DoP853 (explicit) via `ode`
+                        * `"DOP853"` – DoP853 (explicit) via `solve_ivp`
+                        * `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
+                        * `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
+                        * `"lsoda"` – LSODA (implicit) via `ode`
+                        * `"LSODA"` – LSODA (implicit) via `solve_ivp`
+                        * `"Radau"` – The implicit Radau method via `solve_ivp`
+                        * `"vode"` – VODE (implicit) via `ode`
+
+                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
+
     control : list of str 
         control parameters 
     use_omp : boolian 
@@ -339,20 +338,20 @@ class Kuramoto_I(Kuramoto_Base):
 
         .. math::
             \\frac{d\\theta_i}{dt} = \\omega_i + 0.5 * \\sum_{j=0}^{N-1} a_{i,j} \\Big(1 - \\cos(y_j - y_i - \\alpha) \\Big)
-        
+
 
         Return :  
             right hand side of the Kuramoto model
         '''
 
         for i in range(self.N):
-            sumj = 0.5 * np.sum(1-cos(y(j)-y(i) - self.alpha)
-                                for j in range(self.N) if self.adj[j, i])
+            sumj = 0.5 * sum(1-cos(y(j)-y(i) - self.alpha)
+                             for j in range(self.N) if self.adj[j, i])
             yield self.omega[i] + self.coupling * sumj
 
 
 class SOKM_SingleLayer(Kuramoto_Base):
-    
+
     """
     **Second order Kuramoto Model for single layer network**
 
@@ -443,15 +442,15 @@ class Lyap_Kuramoto_II(Kuramoto_Base):
 
         .. math::
             \\frac{d\\theta_i}{dt} = \\omega_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha)  
-        
+
 
         Return :
             right hand side of the Kuramoto model.
         '''
 
         for i in range(self.N):
-            sumj = np.sum(sin(y(j)-y(i) - self.alpha)
-                          for j in range(self.N) if self.adj[j, i])
+            sumj = sum(sin(y(j)-y(i) - self.alpha)
+                       for j in range(self.N) if self.adj[j, i])
 
             yield self.omega[i] + self.coupling * sumj
 
@@ -470,7 +469,7 @@ class Lyap_Kuramoto_II(Kuramoto_Base):
 
         Parameters
         -----------
-        
+
         par : [list of int, float] 
             values for control parameter(s).
 

@@ -10,7 +10,7 @@ import numpy as np
 from numpy import pi
 import networkx as nx
 from numpy.random import uniform, normal
-from jitcsim.models.kuramoto import Kuramoto_II
+from jitcsim.models.kuramoto_ode import Kuramoto_II
 from jitcsim.visualization import plot_order, plot_matrix
 from jitcsim.utility import kuramoto_correlation
 

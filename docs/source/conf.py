@@ -12,6 +12,7 @@
 #
 import os
 import sys
+# from setuptools_scm import get_version
 
 # sys.path.insert(0, os.path.abspath('../../jitcsim/examples/scripts'))
 # sys.path.insert(0, os.path.abspath('../../jitcsim/models'))
@@ -24,7 +25,8 @@ copyright = '2021, Abolfazl Ziaeemehr'
 author = 'Abolfazl Ziaeemehr'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.3'
+# release = version = get_version(root='..', relative_to=__file__)
 
 
 # -- General configuration ---------------------------------------------------
@@ -42,7 +44,7 @@ extensions = ['sphinx.ext.todo',
               'sphinx.ext.napoleon',
               'sphinx.ext.imgmath',
               'sphinx.ext.mathjax',
-            #   'sphinx.ext.autosectionlabel'
+              #   'sphinx.ext.autosectionlabel'
               ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -77,23 +79,23 @@ latex_elements = {
     # The font size ('10pt', '11pt' or '12pt').
     'pointsize': '12pt',
 
-#     'fontpkg': r"""
-# \PassOptionsToPackage{bookmarksnumbered}{hyperref}
-# """,
+    #     'fontpkg': r"""
+    # \PassOptionsToPackage{bookmarksnumbered}{hyperref}
+    # """,
 
     # Additional stuff for the LaTeX preamble.
     'preamble': r"""
 \usepackage{setspace}
 """,
 
-#     'footer': r"""
-# """,
+    #     'footer': r"""
+    # """,
 
-#     'maketitle': r'''
-# \pagenumbering{arabic}
-# ''',
+    #     'maketitle': r'''
+    # \pagenumbering{arabic}
+    # ''',
 }
 
 
 # Enable numref
-numfig = True    
+numfig = True
