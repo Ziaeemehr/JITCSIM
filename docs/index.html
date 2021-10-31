@@ -1110,8 +1110,15 @@ coordinates and times</p>
 </dd>
 </dl>
 <dl class="py method">
+<dt id="jitcsim.models.kuramoto_sde.Kuramoto_Base.set_integrator_parameters">
+<code class="sig-name descname"><span class="pre">set_integrator_parameters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base.set_integrator_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base.set_integrator_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>!
+set properties for integrator</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 coordinates and times</p>
 <dl class="field-list simple">
@@ -1172,8 +1179,15 @@ coordinates and times</p>
 </div></dd></dl>
 
 <dl class="py method">
+<dt id="jitcsim.models.kuramoto_sde.Kuramoto_II.set_integrator_parameters">
+<code class="sig-name descname"><span class="pre">set_integrator_parameters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.set_integrator_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>!
+set properties for integrator</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="jitcsim.models.kuramoto_sde.Kuramoto_II.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.simulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 coordinates and times</p>
 <dl class="field-list simple">
@@ -1301,6 +1315,59 @@ computed state of the system after integration and times</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+</div>
+<div class="section" id="module-jitcsim.visualization">
+<span id="visualization"></span><h4>Visualization<a class="headerlink" href="#module-jitcsim.visualization" title="Permalink to this headline">¶</a></h4>
+<dl class="py function">
+<dt id="jitcsim.visualization.plot_lyaps">
+<code class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_lyaps</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'k'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_lyaps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_lyaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot y vs x with given x and y labels</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="jitcsim.visualization.plot_matrix">
+<code class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">14</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'equal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'seismic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'F.png'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot given matrix using imshow module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> (<em>2D numpy array</em>) – </p></li>
+<li><p><strong>ax</strong> (<em>None</em><em> or </em><em>matplotlib axis object</em>) – </p></li>
+<li><p><strong>ticks</strong> (<em>None</em><em> or </em><em>list of int</em><em> or </em><em>float</em>) – </p></li>
+<li><p><strong>vmax</strong> (<em>None</em><em>, </em><em>float</em><em> or </em><em>int</em>) – </p></li>
+<li><p><strong>vmin</strong> (<em>None</em><em>, </em><em>float</em><em> or </em><em>int</em>) – </p></li>
+<li><p><strong>labelsize</strong> (<em>int</em>) – </p></li>
+<li><p><strong>colorbar</strong> (<em>boolian</em><em>,</em>) – </p></li>
+<li><p><strong>aspect</strong> (<em>{'equal'</em><em>, </em><em>'auto'}</em><em> or </em><em>float</em><em>, </em><em>default: rcParams</em><em>[</em><em>&quot;image.aspect&quot;</em><em>] </em><em>(</em><em>default: 'equal'</em><em>)</em>) – </p></li>
+<li><p><strong>cmapstr</strong><strong> or </strong><strong>Colormap</strong> (<em>cmap</em>) – The Colormap instance or registered colormap name used to map scalar data to colors. This parameter is ignored for RGB(A) data.</p></li>
+<li><p><strong>default</strong> (<em>rcParams</em><em>[</em><em>&quot;image.cmap&quot;</em><em>] </em><em>(</em><em>default: 'seismic'</em><em>)</em>) – The Colormap instance or registered colormap name used to map scalar data to colors. This parameter is ignored for RGB(A) data.</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>(</em><em>default: F.png</em><em>)</em>) – filename of the figure to be stored.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="jitcsim.visualization.plot_order">
+<code class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_order</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'k'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6,</span> <span class="pre">4)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot y vs x with given x and y labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>list</em><em> or </em><em>array</em>) – values of x axis</p></li>
+<li><p><strong>y</strong> (<em>list</em><em> or </em><em>array</em>) – values of y axis</p></li>
+<li><p><strong>filename</strong> (<em>name</em>) – filename for figure, need to end with .png, .jpg , …</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – line color</p></li>
+<li><p><strong>xlabel</strong> (<em>None</em><em> or </em><em>str</em>) – label of x axis</p></li>
+<li><p><strong>ylabel</strong> (<em>None</em><em> or </em><em>str</em>) – label of y axis</p></li>
+<li><p><strong>label</strong> (<em>None</em><em> or </em><em>str</em>) – label of the curve</p></li>
+<li><p><strong>ax</strong> (<em>None</em><em> or </em><em>matplotlib axis object</em>) – </p></li>
+<li><p><strong>close_fig</strong> (<em>boolian</em>) – if <cite>True</cite> the figure object will be closed.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1517,6 +1584,7 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 <li><a class="reference internal" href="#the-main-class-for-the-ode-kuramot-model">The main class for the ODE Kuramot model</a></li>
 <li><a class="reference internal" href="#the-main-class-for-the-sde-kuramot-model">The main class for the SDE Kuramot model</a></li>
 <li><a class="reference internal" href="#the-main-class-for-the-dde-kuramot-model">The main class for the DDE Kuramot model</a></li>
+<li><a class="reference internal" href="#module-jitcsim.visualization">Visualization</a></li>
 <li><a class="reference internal" href="#module-jitcsim.networks">Networks</a></li>
 <li><a class="reference internal" href="#module-jitcsim.utility">Utility</a></li>
 </ul>

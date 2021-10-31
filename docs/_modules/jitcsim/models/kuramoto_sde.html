@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>jitcsim.models.kuramoto_sde &#8212; jitcsim 0.1 documentation</title>
+    <title>jitcsim.models.kuramoto_sde &#8212; jitcsim 0.3 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">jitcsim 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">jitcsim 0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">jitcsim.models.kuramoto_sde</a></li> 
       </ul>
@@ -116,10 +116,16 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;modulename&quot;</span> <span class="ow">in</span> <span class="n">par</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span> <span class="o">=</span> <span class="s2">&quot;km&quot;</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">integtaror_params_set</span> <span class="o">=</span> <span class="kc">False</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">SET_SEED</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># ---------------------------------------------------------------</span>
+
+    <span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SEED</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
 
     <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
@@ -131,9 +137,21 @@
                         <span class="n">destination</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span><span class="p">))</span>
     <span class="c1"># ---------------------------------------------------------------</span>
 
-    <span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SET_SEED</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+<div class="viewcode-block" id="Kuramoto_Base.set_integrator_parameters"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_Base.set_integrator_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">set_integrator_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                  <span class="n">atol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+                                  <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span>
+                                  <span class="n">min_step</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+                                  <span class="n">max_step</span><span class="o">=</span><span class="mf">10.0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;!</span>
+<span class="sd">        set properties for integrator        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">integrator_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;atol&quot;</span><span class="p">:</span> <span class="n">atol</span><span class="p">,</span>
+                                  <span class="s2">&quot;rtol&quot;</span><span class="p">:</span> <span class="n">rtol</span><span class="p">,</span>
+                                  <span class="s2">&quot;min_step&quot;</span><span class="p">:</span> <span class="n">min_step</span><span class="p">,</span>
+                                  <span class="s2">&quot;max_step&quot;</span><span class="p">:</span> <span class="n">max_step</span>
+                                  <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integtaror_params_set</span> <span class="o">=</span> <span class="kc">True</span></div>
     <span class="c1"># ---------------------------------------------------------------</span>
 
     <span class="k">def</span> <span class="nf">set_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="p">):</span>
@@ -142,7 +160,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span> <span class="o">=</span> <span class="n">x0</span>
     <span class="c1"># ---------------------------------------------------------------</span>
 
-<div class="viewcode-block" id="Kuramoto_Base.simulate"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">):</span>
+<div class="viewcode-block" id="Kuramoto_Base.simulate"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">mode_2pi</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        integrate the system of equations and return the</span>
 <span class="sd">        coordinates and times</span>
@@ -158,7 +176,7 @@
 <span class="sd">                - x coordinates.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
-        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcsde</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span>
+        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcsde</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                     <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">,</span>
                     <span class="n">module_location</span><span class="o">=</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span><span class="o">+</span><span class="s2">&quot;.so&quot;</span><span class="p">))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">SET_SEED</span><span class="p">:</span>
@@ -167,12 +185,19 @@
         <span class="n">I</span><span class="o">.</span><span class="n">set_initial_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">t_initial</span><span class="p">)</span>
         <span class="n">I</span><span class="o">.</span><span class="n">set_parameters</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">integtaror_params_set</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_integrator_parameters</span><span class="p">()</span>
+        <span class="n">I</span><span class="o">.</span><span class="n">set_integration_parameters</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">integrator_params</span><span class="p">)</span>
+
         <span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_transition</span> <span class="o">+</span> \
             <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_initial</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_final</span> <span class="o">-</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">t_transition</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
         <span class="n">phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
-            <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mode_2pi</span><span class="p">:</span>
+                <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">phases</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">I</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="n">times</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">phases</span><span class="p">}</span></div>
     <span class="c1"># ---------------------------------------------------------------</span>
@@ -452,7 +477,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">jitcsim 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">jitcsim 0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">jitcsim.models.kuramoto_sde</a></li> 
       </ul>

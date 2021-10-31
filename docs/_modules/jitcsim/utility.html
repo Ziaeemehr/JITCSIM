@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>jitcsim.utility &#8212; jitcsim 0.1 documentation</title>
+    <title>jitcsim.utility &#8212; jitcsim 0.3 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">jitcsim 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">jitcsim 0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">jitcsim.utility</a></li> 
       </ul>
@@ -50,7 +50,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    phases : numpy 2D array (num_time_step by num_nodes)</span>
 <span class="sd">        phase of oscillators</span>
-<span class="sd">    </span>
+
 <span class="sd">    Return</span>
 <span class="sd">    ------</span>
 
@@ -74,14 +74,14 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    </span>
+
 <span class="sd">    phases : numpy 2D array (num_time_step by num_nodes)</span>
 <span class="sd">        phase of each node</span>
 <span class="sd">    indices : array(list) of int </span>
 <span class="sd">        indices of nodes to measure their order parameters;</span>
 <span class="sd">    Return</span>
 <span class="sd">    -------</span>
-<span class="sd">    </span>
+
 <span class="sd">    r : float </span>
 <span class="sd">        Kuramoto order parameter. </span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -152,7 +152,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    -----------</span>
-<span class="sd">    </span>
+
 <span class="sd">    time : float</span>
 <span class="sd">        Time elapsed in seconds.</span>
 
@@ -162,6 +162,16 @@
     <span class="n">second</span> <span class="o">=</span> <span class="n">time</span> <span class="o">-</span> <span class="p">(</span><span class="mf">3600.0</span> <span class="o">*</span> <span class="n">hour</span> <span class="o">+</span> <span class="mf">60.0</span> <span class="o">*</span> <span class="n">minute</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done in </span><span class="si">%d</span><span class="s2"> hours </span><span class="si">%d</span><span class="s2"> minutes </span><span class="si">%.4f</span><span class="s2"> seconds&quot;</span>
           <span class="o">%</span> <span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="p">))</span></div>
+
+
+<span class="k">def</span> <span class="nf">get_step_current</span><span class="p">(</span><span class="n">t_start</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">):</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;current_type&quot;</span><span class="p">:</span> <span class="s2">&quot;step&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;current_t_end&quot;</span><span class="p">:</span> <span class="n">t_end</span><span class="p">,</span>
+        <span class="s2">&quot;current_t_start&quot;</span><span class="p">:</span> <span class="n">t_start</span><span class="p">,</span>
+        <span class="s2">&quot;current_amplitude&quot;</span><span class="p">:</span> <span class="n">amplitude</span>
+    <span class="p">}</span>
 </pre></div>
 
             <div class="clearer"></div>
@@ -193,7 +203,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">jitcsim 0.1 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">jitcsim 0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">jitcsim.utility</a></li> 
       </ul>
