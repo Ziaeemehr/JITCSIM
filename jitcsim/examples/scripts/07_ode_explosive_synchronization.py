@@ -51,7 +51,7 @@ from time import time
 from multiprocessing import Pool
 from numpy.random import uniform
 from jitcsim.visualization import plot_order
-from jitcsim.models.kuramoto import Kuramoto_II
+from jitcsim.models.kuramoto_ode import Kuramoto_II
 from jitcsim.utility import display_time
 from jitcsim.networks import make_network
 

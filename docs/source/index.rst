@@ -111,7 +111,11 @@ also using available models (using ODE/DDE/SDE sovlers) as template.
 Damp oscillator
 *****************
 
-this is a test.
+.. automodule:: jitcsim.models.damp_oscillator
+
+
+
+
 
 
 Auto Generated Documentation 
@@ -131,24 +135,24 @@ The following are the main classes for the Kuramoto model including:
 The main class for the ODE Kuramot model
 -----------------------------------------
 
-.. autoclass:: jitcsim.models.kuramoto.Kuramoto_Base
+.. autoclass:: jitcsim.models.kuramoto_ode.Kuramoto_Base
     :members:
 
 -------------------------------------------------------    
 
-.. autoclass:: jitcsim.models.kuramoto.Kuramoto_II
+.. autoclass:: jitcsim.models.kuramoto_ode.Kuramoto_II
   :members:
   :inherited-members:
 
 -------------------------------------------------------    
 
-.. autoclass:: jitcsim.models.kuramoto.Kuramoto_I
+.. autoclass:: jitcsim.models.kuramoto_ode.Kuramoto_I
   :members:
   :inherited-members:
 
 -------------------------------------------------------    
 
-.. autoclass:: jitcsim.models.kuramoto.SOKM_SingleLayer
+.. autoclass:: jitcsim.models.kuramoto_ode.SOKM_SingleLayer
   :members:
   :inherited-members:
 
@@ -186,12 +190,26 @@ The main class for the DDE Kuramot model
     :members:
     :inherited-members:
 
-.. automodule:: jitcsim.utility
-    :members:
 
-.. automodule:: jitcsim.networks
-    :members:
+Visualization
+-------------------
 
 .. automodule:: jitcsim.visualization
     :members:
   
+    
+Networks 
+------------
+
+.. automodule:: jitcsim.networks
+  :members:
+
+
+Utility
+--------------
+
+.. automodule:: jitcsim.utility 
+  :members:
+
+
+

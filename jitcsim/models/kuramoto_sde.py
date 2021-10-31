@@ -49,7 +49,6 @@ class Kuramoto_Base:
 
     """
 
-
     def __init__(self, par) -> None:
 
         for item in par.items():
@@ -79,6 +78,9 @@ class Kuramoto_Base:
             self.modulename = "km"
         
         self.integtaror_params_set = False
+
+        self.SET_SEED = False
+        self.seed = None
 
     # ---------------------------------------------------------------
 
@@ -134,6 +136,8 @@ class Kuramoto_Base:
         I = jitcsde(n=self.N, verbose=False,
                     control_pars=self.control_pars,
                     module_location=join(self.output, self.modulename+".so"))
+        if self.SET_SEED:
+            I.set_seed(self.seed)
 
         I.set_initial_value(self.initial_state, time=self.t_initial)
         I.set_parameters(par)
@@ -174,7 +178,7 @@ class Kuramoto_II(Kuramoto_Base):
 
     .. math::
             \\frac{d\\theta_i}{dt} = \\omega_i + \\xi_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha)  
-    
+
     Parameters
     ----------
 
@@ -228,12 +232,12 @@ class Kuramoto_II(Kuramoto_Base):
         .. math::
             \\frac{d\\theta_i}{dt} = \\omega_i + \\xi_i + \\sum_{j=0}^{N-1} a_{i,j} \\sin(y_j - y_i - \\alpha)  
 
-        
+
         '''
 
         for i in range(self.N):
-            sumj = np.sum(sin(y(j)-y(i) - self.alpha)
-                          for j in range(self.N) if self.adj[j, i])
+            sumj = sum(sin(y(j)-y(i) - self.alpha)
+                       for j in range(self.N) if self.adj[j, i])
 
             yield self.omega[i] + self.coupling * sumj
     # ---------------------------------------------------------------

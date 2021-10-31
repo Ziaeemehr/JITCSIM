@@ -83,7 +83,7 @@ if __name__ == "__main__":
     }
 
     sol = Kuramoto_II(parameters)
-    sol.compile()
+    sol.compile(); sol.set_seed(2)
 
     controls = [coupling0]
     data = sol.simulate(controls)
@@ -99,3 +99,4 @@ if __name__ == "__main__":
                filename="data/01_sde.png",
                xlabel="time", 
                ylabel="r(t)")
+    print(np.mean(order))

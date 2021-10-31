@@ -40,7 +40,7 @@ import numpy as np
 from numpy import pi
 import pylab as plt
 from numpy.random import uniform, normal
-from jitcsim.models.kuramoto import Lyap_Kuramoto_II
+from jitcsim.models.kuramoto_ode import Lyap_Kuramoto_II
 from jitcsim.visualization import plot_lyaps
 
 

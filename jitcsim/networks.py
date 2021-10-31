@@ -30,8 +30,10 @@ class make_network:
         N : int
             number of nodes
 
-        Return : A
-            2D int numpy array, adjacency matrix 
+        Return 
+        ---------
+        A : 2D int numpy array
+            adjacency matrix 
         
         '''
 
@@ -54,8 +56,10 @@ class make_network:
             Probability for edge creation.
         directed : (bool, optional (default=False)) 
             If `True`, this function returns a directed adjacency matrix.
-        Return : A
-            2D int numpy array, adjacency matrix 
+        Return
+        -----------
+        A : 2D int numpy array
+            adjacency matrix 
         
         '''
 
@@ -78,8 +82,10 @@ class make_network:
             Number of nodes
         m : int
             Number of edges to attach from a new node to existing nodes
-        Return : A
-            2D int numpy array, adjacency matrix 
+        Return
+        ---------
+        A : 2D int numpy array
+            adjacency matrix 
 
         '''
 
@@ -96,9 +102,20 @@ class make_network:
             gamma=0.4):
         """
         Frequency Gap-conditioned (FGC) network
-        :param: N [int] the number of oscillators in the system
-        :param: k [int] degree of the network
-        :param: gamma [float] minimal frequency gap
+        
+        Parameters
+        -------------
+        N : int 
+            the number of oscillators in the system
+        k : int 
+            degree of the network
+        gamma : float 
+            minimal frequency gap
+        
+        Return
+        ---------
+        A : 2D int numpy array
+            adjacency matrix 
         """
 
         # the number of links in the network

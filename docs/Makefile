@@ -15,6 +15,7 @@ help:
 github:
 	@make html
 	@cp -a build/html/. .
+	@ cp -a build/latex/jitcsim.pdf .
 
 .PHONY: help Makefile github
 

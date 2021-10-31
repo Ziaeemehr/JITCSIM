@@ -58,9 +58,9 @@ to calculate and plot the order parameter of the system vs time:
 import numpy as np
 from numpy import pi
 from numpy.random import uniform, normal
-from jitcsim.models.kuramoto import Kuramoto_II
-from jitcsim.visualization import plot_order
-from jitcsim.networks import make_network
+from jitcsim.models.kuramoto_ode import Kuramoto_II
+from jitcsim import plot_order
+from jitcsim import make_network
 
 
 if __name__ == "__main__":

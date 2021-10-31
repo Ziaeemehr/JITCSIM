@@ -1,11 +1,11 @@
 """
 
 If you try to run a simulation multiple times and for each simulation change a parameter, it will be more efficient to avoid multiple compiling the model and use control parameter.
-I in next example we have considered the `coupling` as a control parameter:
+In next example we consider the `coupling` as a control parameter:
 
 The initial phase also could be changed in repeated simulations.
 The output is plotting the time average of the Kuramoto order parameter vs coupling.
-Only difference with respect to the previous examples is represented:
+Only difference with respect to the previous examples is shown:
 
 .. literalinclude:: ../../jitcsim/examples/scripts/02_ode_kuramoto_II_single_param_repeated_run.py    
         :start-after: example-st\u0061rt
@@ -66,7 +66,7 @@ from numpy import pi
 from time import time
 from numpy.random import uniform, normal
 from jitcsim.visualization import plot_order
-from jitcsim.models.kuramoto import Kuramoto_II
+from jitcsim.models.kuramoto_ode import Kuramoto_II
 from jitcsim.networks import make_network
 
 

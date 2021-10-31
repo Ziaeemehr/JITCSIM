@@ -44,7 +44,7 @@
 <span class="c1"># from jitcsim.utility import is_symmetric</span>
 
 
-<div class="viewcode-block" id="make_network"><a class="viewcode-back" href="../../code.html#jitcsim.networks.make_network">[docs]</a><span class="k">class</span> <span class="nc">make_network</span><span class="p">:</span>
+<div class="viewcode-block" id="make_network"><a class="viewcode-back" href="../../index.html#jitcsim.networks.make_network">[docs]</a><span class="k">class</span> <span class="nc">make_network</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39; </span>
 <span class="sd">    make different graphs ans return their adjacency matrices</span>
 <span class="sd">    as a 1 dimensional double vector in stl library</span>
@@ -59,7 +59,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="make_network.complete"><a class="viewcode-back" href="../../code.html#jitcsim.networks.make_network.complete">[docs]</a>    <span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+<div class="viewcode-block" id="make_network.complete"><a class="viewcode-back" href="../../index.html#jitcsim.networks.make_network.complete">[docs]</a>    <span class="k">def</span> <span class="nf">complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; </span>
 <span class="sd">        make complete all to all adjacency matrix</span>
 <span class="sd">        </span>
@@ -69,8 +69,10 @@
 <span class="sd">        N : int</span>
 <span class="sd">            number of nodes</span>
 
-<span class="sd">        Return : A</span>
-<span class="sd">            2D int numpy array, adjacency matrix </span>
+<span class="sd">        Return </span>
+<span class="sd">        ---------</span>
+<span class="sd">        A : 2D int numpy array</span>
+<span class="sd">            adjacency matrix </span>
 <span class="sd">        </span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
@@ -80,7 +82,7 @@
 
         <span class="k">return</span> <span class="n">A</span></div>
 
-<div class="viewcode-block" id="make_network.erdos_renyi"><a class="viewcode-back" href="../../code.html#jitcsim.networks.make_network.erdos_renyi">[docs]</a>    <span class="k">def</span> <span class="nf">erdos_renyi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="make_network.erdos_renyi"><a class="viewcode-back" href="../../index.html#jitcsim.networks.make_network.erdos_renyi">[docs]</a>    <span class="k">def</span> <span class="nf">erdos_renyi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; </span>
 <span class="sd">        make Erdos Renyi network </span>
 
@@ -93,8 +95,10 @@
 <span class="sd">            Probability for edge creation.</span>
 <span class="sd">        directed : (bool, optional (default=False)) </span>
 <span class="sd">            If `True`, this function returns a directed adjacency matrix.</span>
-<span class="sd">        Return : A</span>
-<span class="sd">            2D int numpy array, adjacency matrix </span>
+<span class="sd">        Return</span>
+<span class="sd">        -----------</span>
+<span class="sd">        A : 2D int numpy array</span>
+<span class="sd">            adjacency matrix </span>
 <span class="sd">        </span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
@@ -104,7 +108,7 @@
 
         <span class="k">return</span> <span class="n">A</span></div>
 
-<div class="viewcode-block" id="make_network.barabasi"><a class="viewcode-back" href="../../code.html#jitcsim.networks.make_network.barabasi">[docs]</a>    <span class="k">def</span> <span class="nf">barabasi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<div class="viewcode-block" id="make_network.barabasi"><a class="viewcode-back" href="../../index.html#jitcsim.networks.make_network.barabasi">[docs]</a>    <span class="k">def</span> <span class="nf">barabasi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; </span>
 <span class="sd">        Return random network using Barabási-Albert preferential attachment model.</span>
 <span class="sd">        A graph of n nodes is grown by attaching new nodes each with m edges that are preferentially attached to existing nodes with high degree.</span>
@@ -117,8 +121,10 @@
 <span class="sd">            Number of nodes</span>
 <span class="sd">        m : int</span>
 <span class="sd">            Number of edges to attach from a new node to existing nodes</span>
-<span class="sd">        Return : A</span>
-<span class="sd">            2D int numpy array, adjacency matrix </span>
+<span class="sd">        Return</span>
+<span class="sd">        ---------</span>
+<span class="sd">        A : 2D int numpy array</span>
+<span class="sd">            adjacency matrix </span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
 
@@ -128,16 +134,27 @@
 
         <span class="k">return</span> <span class="n">A</span></div>
 
-<div class="viewcode-block" id="make_network.fgc"><a class="viewcode-back" href="../../code.html#jitcsim.networks.make_network.fgc">[docs]</a>    <span class="k">def</span> <span class="nf">fgc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="make_network.fgc"><a class="viewcode-back" href="../../index.html#jitcsim.networks.make_network.fgc">[docs]</a>    <span class="k">def</span> <span class="nf">fgc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">N</span><span class="p">,</span>
             <span class="n">k</span><span class="p">,</span>
             <span class="n">omega</span><span class="p">,</span>
             <span class="n">gamma</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Frequency Gap-conditioned (FGC) network</span>
-<span class="sd">        :param: N [int] the number of oscillators in the system</span>
-<span class="sd">        :param: k [int] degree of the network</span>
-<span class="sd">        :param: gamma [float] minimal frequency gap</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        -------------</span>
+<span class="sd">        N : int </span>
+<span class="sd">            the number of oscillators in the system</span>
+<span class="sd">        k : int </span>
+<span class="sd">            degree of the network</span>
+<span class="sd">        gamma : float </span>
+<span class="sd">            minimal frequency gap</span>
+<span class="sd">        </span>
+<span class="sd">        Return</span>
+<span class="sd">        ---------</span>
+<span class="sd">        A : 2D int numpy array</span>
+<span class="sd">            adjacency matrix </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># the number of links in the network</span>
