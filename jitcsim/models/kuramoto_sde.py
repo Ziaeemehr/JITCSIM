@@ -76,13 +76,17 @@ class Kuramoto_Base:
 
         if not "modulename" in par.keys():
             self.modulename = "km"
-        
+
         self.integtaror_params_set = False
 
         self.SET_SEED = False
         self.seed = None
 
     # ---------------------------------------------------------------
+
+    def set_seed(self, seed):
+        self.SET_SEED = True
+        self.seed = seed
 
     def compile(self, **kwargs):
 
