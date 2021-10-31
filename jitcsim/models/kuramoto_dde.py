@@ -112,6 +112,7 @@ class Kuramoto_Base:
                  min_distance=1e-5,
                  max_step=None,
                  shift_ratio=1e-4,
+                 mode_2pi=True,
                  **integrator_params
                  ):
         '''
@@ -173,7 +174,10 @@ class Kuramoto_Base:
 
         phases = np.zeros((len(times), self.N))
         for i in range(len(times)):
-            phases[i, :] = I.integrate(times[i]) % (2*pi)
+            if mode_2pi:
+                phases[i, :] = I.integrate(times[i]) % (2*pi)
+            else:
+                phases[i, :] = I.integrate(times[i])
 
         return {"t": times, "x": phases}
     # ---------------------------------------------------------------
