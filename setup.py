@@ -20,7 +20,7 @@ setuptools.setup(
          "License :: OSI Approved :: MIT License",
          "Operating System :: OS Independent",
     ],
-    python_requires='>=3.8',
+    # python_requires='>=3.8',
     # package_data={'sbi_nmms': ['DampOscillator.so']},
     install_requires=requirements,
     # include_package_data=True,
