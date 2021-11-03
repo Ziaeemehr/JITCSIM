@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import pi, sqrt
 from numpy.random import uniform, normal
-from jitcsim.models.montbrio import Montbrio_c
+from jitcsim.models.montbrio import Montbrio_f
 from jitcsim.utility import get_step_current
 
 if __name__ == "__main__":
@@ -34,12 +34,12 @@ if __name__ == "__main__":
         "output": "data",                   # output directory
     }
 
-    current = get_step_current(10, 30, 3)
-    sol = Montbrio_c(parameters)
+    current = get_step_current(20, None, 3)
+    sol = Montbrio_f(parameters)
     sol.set_current(current)
     sol.compile()
 
-    data = sol.simulate([])
+    data = sol.simulate([3])
     x = data['x']
     t = data['t']
 

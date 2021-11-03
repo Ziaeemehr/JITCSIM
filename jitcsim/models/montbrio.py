@@ -1,11 +1,12 @@
 import os
 import os.path
 import numpy as np
+import symengine
 from numpy import pi
 from os.path import join
 from symengine import Symbol
 from jitcode import jitcode, y, t
-import symengine
+from jitcxde_common.symbolic import conditional
 
 
 class Montbrio_Base:
@@ -36,6 +37,8 @@ class Montbrio_Base:
             self.modulename = "mb"
         if not "verbose" in par.keys():
             self.verbose = False
+        if not "N" in par.keys():
+            self.N = 1
 
         self.APPLY_CURRENT_SET = False
     # ---------------------------------------------------------------
@@ -121,7 +124,7 @@ class Montbrio_Base:
 # -------------------------------------------------------------------
 
 
-class Montbrio(Montbrio_Base):
+class Montbrio_c(Montbrio_Base):
 
     """
 
@@ -190,8 +193,55 @@ class Montbrio(Montbrio_Base):
         yield self.Delta / (self.tau * pi * y(0)) + 2 * y(0)*y(1) / self.tau
         yield 1.0/self.tau * (y(1)**2 + self.eta + self.Iapp(t) + self.J * 
                               self.tau * y(0) - (pi*self.tau * y(0))**2)
-        # 3 -> self.Iapp(t)
     # ---------------------------------------------------------------
+
+class Montbrio_f(Montbrio_Base):
+    def __init__(self, par) -> None:
+        super().__init__(par)
+
+        self.I_app = Symbol("I_app")
+        self.control_pars.append(self.I_app)
+        # self.zero_amp = Symbol("zero_amp")
+
+    # ---------------------------------------------------------------
+
+    # def _set_I_app(self, y, t0):
+
+    #     if (t0 < self.current_t_start) or (t0 > self.current_t_end):
+    #         return 0
+    #     else:
+    #         return self.current_amplitude
+        
+    # ---------------------------------------------------------------
+
+    def rhs(self):
+        """
+        single population Montbrio model without frequency addaptation
+        """
+
+        yield self.Delta / (self.tau * pi * y(0)) + 2 * y(0)*y(1) / self.tau
+        # yield 1.0/self.tau * (y(1)**2 + self.eta + self.Iapp(t) + self.J * 
+        #                       self.tau * y(0) - (pi*self.tau * y(0))**2) 
+        value_if = 1.0/self.tau * (y(1)**2 + self.eta + self.current_amplitude + self.J *
+                                self.tau * y(0) - (pi*self.tau * y(0))**2)
+        value_else  =  1.0/self.tau * (y(1)**2 + self.eta + 0 + self.J *
+                                self.tau * y(0) - (pi*self.tau * y(0))**2)                              
+        yield conditional(t, self.current_t_start, value_if=value_if, 
+                          value_else=value_else)
+
+    # ---------------------------------------------------------------
+
+    # def Iapp_symbolic(self, y, t0):
+
+    #     if self.current_type == "step":
+    #         if (t0 < self.current_t_start) or (t0 > self.current_t_end):
+    #             return 0
+    #         else:
+    #             return self.current_amplitude
+    #     else:
+    #         return 0
+
+
 
 class Montbrio_Adap(Montbrio_Base):
 
