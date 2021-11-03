@@ -10,15 +10,15 @@ if __name__ == "__main__":
 
     Delta = 2.0
     tau = 1
-    eta = -5 #* Delta
-    J = 15  #*sqrt(Delta)
-    initial_state = [1.5, -2.0]
+    eta = -5 * Delta
+    J = 15  * sqrt(Delta)
+    initial_state = [0.01, -2.0]
     
     parameters = {
         't_initial': 0.,                    # initial time of integration
-        "t_final": 80,                     # final time of integration
+        "t_final": 40.0,                     # final time of integration
         't_transition': 0.0,                # transition time
-        "interval": 0.01,                    # time interval for sampling
+        "interval": 0.1,                    # time interval for sampling
 
         "dimension": 2,
         "J": J,
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         "output": "data",                   # output directory
     }
 
-    current = get_step_current(10, 70, 3)
+    current = get_step_current(10, 30, 3)
     sol = Montbrio(parameters)
     sol.set_current(current)
     sol.compile()

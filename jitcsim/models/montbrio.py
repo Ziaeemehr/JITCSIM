@@ -153,7 +153,7 @@ class Montbrio(Montbrio_Base):
     def simulate(self, par, **integrator_params):
 
         I = jitcode(n=self.N * self.dimension,
-                    callback_functions=[(self.Iapp, self.Iapp_callback, 0)],
+                    callback_functions=[(self.Iapp, self.Iapp_callback, 1)],
                     control_pars=self.control_pars,
                     module_location=join(self.output, self.modulename+".so"))
         I.set_integrator(name=self.integration_method,
@@ -175,9 +175,9 @@ class Montbrio(Montbrio_Base):
 
         if self.current_type == "step":
             if (t0 < self.current_t_start) or (t0 > self.current_t_end):
-                return self.current_amplitude
-            else:
                 return 0
+            else:
+                return self.current_amplitude
         else:
             return 0
     # ---------------------------------------------------------------
