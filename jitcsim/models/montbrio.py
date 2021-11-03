@@ -226,7 +226,9 @@ class Montbrio_f(Montbrio_Base):
                                 self.tau * y(0) - (pi*self.tau * y(0))**2)
         value_else  =  1.0/self.tau * (y(1)**2 + self.eta + 0 + self.J *
                                 self.tau * y(0) - (pi*self.tau * y(0))**2)                              
-        yield conditional(t, self.current_t_start, value_if=value_if, 
+        yield conditional(t, 
+                          self.current_t_start, 
+                          value_if=value_if, 
                           value_else=value_else)
 
     # ---------------------------------------------------------------
