@@ -1,8 +1,7 @@
 import numpy as np
 from numpy import pi, sqrt
 from numpy.random import uniform, normal
-from jitcsim.models.montbrio import Montbrio_f
-from jitcsim.utility import get_step_current
+from jitcsim.models.montbrio import Montbrio_fast
 
 if __name__ == "__main__":
 
@@ -34,12 +33,11 @@ if __name__ == "__main__":
         "output": "data",                   # output directory
     }
 
-    current = get_step_current(20, None, 3)
-    sol = Montbrio_f(parameters)
-    sol.set_current(current)
+    sol = Montbrio_fast(parameters)
+    sol.set_step_current(t_start=20, amplitude=3)
     sol.compile()
 
-    data = sol.simulate([3])
+    data = sol.simulate([])
     x = data['x']
     t = data['t']
 
@@ -51,6 +49,7 @@ if __name__ == "__main__":
     ax[1].plot(t, x[:, 1], label="v")
     ax[0].legend()
     ax[1].legend()
+    plt.savefig("data/01_montbrio.png", dpi=150)
 
     plt.show()
 

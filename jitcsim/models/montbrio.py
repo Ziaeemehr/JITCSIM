@@ -124,7 +124,7 @@ class Montbrio_Base:
 # -------------------------------------------------------------------
 
 
-class Montbrio_c(Montbrio_Base):
+class Montbrio_call(Montbrio_Base):
 
     """
 
@@ -195,23 +195,59 @@ class Montbrio_c(Montbrio_Base):
                               self.tau * y(0) - (pi*self.tau * y(0))**2)
     # ---------------------------------------------------------------
 
-class Montbrio_f(Montbrio_Base):
+# -------------------------------------------------------------------
+# -------------------------------------------------------------------
+# -------------------------------------------------------------------
+
+class Montbrio_fast(Montbrio_Base):
     def __init__(self, par) -> None:
         super().__init__(par)
 
-        self.I_app = Symbol("I_app")
-        self.control_pars.append(self.I_app)
-        # self.zero_amp = Symbol("zero_amp")
+        self._current_amplitude = Symbol("_current_amplitude")
+        # self.control_pars.append(self._current_amplitude)
+        self._set_step_current = False
 
     # ---------------------------------------------------------------
 
-    # def _set_I_app(self, y, t0):
+    def set_step_current(self, t_start, amplitude):
 
-    #     if (t0 < self.current_t_start) or (t0 > self.current_t_end):
-    #         return 0
-    #     else:
-    #         return self.current_amplitude
+        self.current_t_start = t_start
+        self.current_amplitude = amplitude
+        self.control_pars.append(self._current_amplitude)
+        self._set_step_current = True
+    
+    # ---------------------------------------------------------------
+
+    def compile(self, **kwargs):
+
+        I = jitcode(self.rhs, n=self.N * self.dimension,
+                    control_pars=self.control_pars)
+        I.generate_f_C(**kwargs)
+        I.compile_C(omp=self.use_omp, modulename=self.modulename)
+        I.save_compiled(overwrite=True, destination=join(self.output, ''))
+    # ---------------------------------------------------------------
+
+    def simulate(self, par, **integrator_params):
         
+        if self._set_step_current:
+            par.append(self.current_amplitude) 
+
+        I = jitcode(n=self.N * self.dimension,
+                    control_pars=self.control_pars,
+                    module_location=join(self.output, self.modulename+".so"))
+        I.set_integrator(name=self.integration_method,
+                         **integrator_params)
+        I.set_parameters(par)
+        I.set_initial_value(self.initial_state, time=self.t_initial)
+
+        times = self.t_transition + \
+            np.arange(self.t_initial, self.t_final -
+                      self.t_transition, self.interval)
+        x = np.zeros((len(times), self.N * self.dimension))
+        for i in range(len(times)):
+            x[i, :] = I.integrate(times[i])
+
+        return {"t": times, "x": x}
     # ---------------------------------------------------------------
 
     def rhs(self):
@@ -220,17 +256,31 @@ class Montbrio_f(Montbrio_Base):
         """
 
         yield self.Delta / (self.tau * pi * y(0)) + 2 * y(0)*y(1) / self.tau
-        # yield 1.0/self.tau * (y(1)**2 + self.eta + self.Iapp(t) + self.J * 
-        #                       self.tau * y(0) - (pi*self.tau * y(0))**2) 
-        value_if = 1.0/self.tau * (y(1)**2 + self.eta + self.current_amplitude + self.J *
+        
+        value_else = 1.0/self.tau * (y(1)**2 + self.eta + self._current_amplitude + self.J *
                                 self.tau * y(0) - (pi*self.tau * y(0))**2)
-        value_else  =  1.0/self.tau * (y(1)**2 + self.eta + 0 + self.J *
+        value_if  =  1.0/self.tau * (y(1)**2 + self.eta + 0 + self.J *
                                 self.tau * y(0) - (pi*self.tau * y(0))**2)                              
-        yield conditional(t, 
-                          self.current_t_start, 
+        yield conditional(observable=t, 
+                          threshold=self.current_t_start, 
                           value_if=value_if, 
                           value_else=value_else)
+        '''
+        if observable<threshold:
+            return value_if
+        else:
+            return value_else
+        '''
+    # ---------------------------------------------------------------
 
+    # def _set_I_app(self, y, t0):
+
+    #     if (t0 < self.current_t_start) or (t0 > self.current_t_end):
+    #         return 0
+    #     else:
+    #         return self.current_amplitude
+    
+    
     # ---------------------------------------------------------------
 
     # def Iapp_symbolic(self, y, t0):
@@ -244,21 +294,20 @@ class Montbrio_f(Montbrio_Base):
     #         return 0
 
 
+# class Montbrio_Adap(Montbrio_Base):
 
-class Montbrio_Adap(Montbrio_Base):
+#     N = 1
 
-    N = 1
+#     def __init__(self, par) -> None:
+#         super().__init__(par)
 
-    def __init__(self, par) -> None:
-        super().__init__(par)
+#     def rhs(self):
+#         """
+#         single population Montbrio model without frequency addaptation
+#         """
 
-    def rhs(self):
-        """
-        single population Montbrio model without frequency addaptation
-        """
-
-        yield self.Delta / (self.tau * pi * y(0)) + 2 * y(0)*y(1) / self.tau
-        yield 1.0/self.tau * (y(1)**2 + self.eta + self.Iapp + self.J *
-                              self.tau * y(0)*(1.0 - y(2)) - (pi*self.tau * y(0))**2)
-        yield 1.0/self.tau_a * y(3)
-        yield 1.0/self.tau_a * (self.alpha * y(0) - 2.0*y(3)-y(2))
+#         yield self.Delta / (self.tau * pi * y(0)) + 2 * y(0)*y(1) / self.tau
+#         yield 1.0/self.tau * (y(1)**2 + self.eta + self.Iapp + self.J *
+#                               self.tau * y(0)*(1.0 - y(2)) - (pi*self.tau * y(0))**2)
+#         yield 1.0/self.tau_a * y(3)
+#         yield 1.0/self.tau_a * (self.alpha * y(0) - 2.0*y(3)-y(2))
