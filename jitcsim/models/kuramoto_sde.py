@@ -78,7 +78,6 @@ class Kuramoto_Base:
             self.modulename = "km"
 
         self.integtaror_params_set = False
-
         self.SET_SEED = False
         self.seed = None
 
@@ -90,8 +89,8 @@ class Kuramoto_Base:
 
     def compile(self, **kwargs):
 
-        I = jitcsde(self.rhs, self.g_sym, n=self.N,
-                    control_pars=self.control_pars)
+        I = jitcsde(self.f_sym, self.g_sym, n=self.N,
+                    control_pars=self.control_pars, additive=True)
         # I.generate_f_C(**kwargs)
         I.compile_C(omp=self.use_omp, **kwargs)
         I.save_compiled(overwrite=True,
@@ -229,7 +228,7 @@ class Kuramoto_II(Kuramoto_Base):
         for i in range(self.N):
             yield self.sigma
 
-    def rhs(self):
+    def f_sym(self):
         '''
         **Kuramoto model of type II**
 
