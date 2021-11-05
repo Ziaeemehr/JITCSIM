@@ -7,6 +7,7 @@ from os.path import join
 from symengine import Symbol
 from jitcode import jitcode, y, t
 from jitcxde_common.symbolic import conditional
+from jitcsim.utility import binarize
 
 
 class Montbrio_Base:
@@ -124,14 +125,18 @@ class Montbrio_Base:
 # -------------------------------------------------------------------
 
 
-class Montbrio_call(Montbrio_Base):
+class Montbrio_call_single(Montbrio_Base):
 
     """
+
+    Montbrio model with callback arbitrary current applied for single node.
 
     Reference
     -----------
 
-    Montbrio, E., Pazo, D. and Roxin, A., 2015. Macroscopic description for networks of spiking neurons. Physical Review X, 5(2), p.021028.
+    Montbrio, E., Pazo, D. and Roxin, A., 2015. 
+    Macroscopic description for networks of spiking neurons. 
+    Physical Review X, 5(2), p.021028.
     """
 
     N = 1
@@ -190,7 +195,7 @@ class Montbrio_call(Montbrio_Base):
         single population Montbrio model without frequency addaptation
         """
 
-        yield self.Delta / (self.tau * pi * y(0)) + 2 * y(0)*y(1) / self.tau
+        yield self.Delta / (self.tau * pi) + 2 * y(0)*y(1) / self.tau
         yield 1.0/self.tau * (y(1)**2 + self.eta + self.Iapp(t) + self.J * 
                               self.tau * y(0) - (pi*self.tau * y(0))**2)
     # ---------------------------------------------------------------
@@ -199,7 +204,17 @@ class Montbrio_call(Montbrio_Base):
 # -------------------------------------------------------------------
 # -------------------------------------------------------------------
 
-class Montbrio_fast(Montbrio_Base):
+class Montbrio_single(Montbrio_Base):
+
+    '''
+    Single node Montrbrio model with step current.
+
+    Reference: 
+    --------------
+        - Montbrio, E., Pazo, D. and Roxin, A., 2015. 
+    Macroscopic description for networks of spiking neurons. 
+    Physical Review X, 5(2), p.021028.
+    '''
     def __init__(self, par) -> None:
         super().__init__(par)
 
@@ -255,7 +270,7 @@ class Montbrio_fast(Montbrio_Base):
         single population Montbrio model without frequency addaptation
         """
 
-        yield self.Delta / (self.tau * pi * y(0)) + 2 * y(0)*y(1) / self.tau
+        yield self.Delta / (self.tau * pi) + 2 * y(0)*y(1) / self.tau
         
         value_else = 1.0/self.tau * (y(1)**2 + self.eta + self._current_amplitude + self.J *
                                 self.tau * y(0) - (pi*self.tau * y(0))**2)
@@ -311,3 +326,48 @@ class Montbrio_fast(Montbrio_Base):
 #                               self.tau * y(0)*(1.0 - y(2)) - (pi*self.tau * y(0))**2)
 #         yield 1.0/self.tau_a * y(3)
 #         yield 1.0/self.tau_a * (self.alpha * y(0) - 2.0*y(3)-y(2))
+
+
+class Montbrio_n(Montbrio_Base):
+    def __init__(self, par) -> None:
+        super().__init__(par)
+
+        assert(hasattr(self, "adj"))
+        self.adj_bin = binarize(self.adj)
+    
+    # ---------------------------------------------------------------
+
+    def simulate(self, par, **integrator_params):
+
+        I = jitcode(n=self.N * self.dimension,
+                    control_pars=self.control_pars,
+                    module_location=join(self.output, self.modulename+".so"))
+        I.set_integrator(name=self.integration_method,
+                         **integrator_params)
+        I.set_parameters(par)
+        I.set_initial_value(self.initial_state, time=self.t_initial)
+
+        times = self.t_transition + \
+            np.arange(self.t_initial, self.t_final -
+                      self.t_transition, self.interval)
+        x = np.zeros((len(times), self.N * self.dimension))
+        for i in range(len(times)):
+            x[i, :] = I.integrate(times[i])
+
+        return {"t": times, "r": x[:, 0::2], 'v':x[:, 1::2]}
+    # ---------------------------------------------------------------
+
+    def rhs(self):
+        """
+        Montbrio model on network
+        """
+        for i in range(self.N):
+            sumj = sum(self.adj[j,i] * y(2*j) for j in range(self.N) if self.adj_bin[j,i])
+            yield self.Delta / (self.tau * pi) + 2 * y(2*i)*y(2*i+1) / self.tau
+            yield 1.0/self.tau * (y(2*i+1)**2 + self.eta + self.I_app + self.J *
+                                self.tau * y(2*i) - (pi*self.tau * y(2*i))**2) + self.coupling * sumj
+        
+    # ---------------------------------------------------------------
+
+
+    

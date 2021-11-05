@@ -1,7 +1,13 @@
+'''
+Montbrio model for single node without noise.
+It use slow callback function for arbitrary apllied current.
+'''
+
 import numpy as np
 from numpy import pi, sqrt
 from numpy.random import uniform, normal
-from jitcsim.models.montbrio import Montbrio_fast
+from jitcsim.models.montbrio_ode import Montbrio_call_single
+from jitcsim.utility import get_step_current
 
 if __name__ == "__main__":
 
@@ -33,8 +39,9 @@ if __name__ == "__main__":
         "output": "data",                   # output directory
     }
 
-    sol = Montbrio_fast(parameters)
-    sol.set_step_current(t_start=20, amplitude=3)
+    current = get_step_current(10, 30, 3)
+    sol = Montbrio_call_single(parameters)
+    sol.set_current(current)
     sol.compile()
 
     data = sol.simulate([])
@@ -49,7 +56,6 @@ if __name__ == "__main__":
     ax[1].plot(t, x[:, 1], label="v")
     ax[0].legend()
     ax[1].legend()
-    plt.savefig("data/01_montbrio.png", dpi=150)
-
+    plt.savefig("data/00_montbrio.png", dpi=150)
     plt.show()
 

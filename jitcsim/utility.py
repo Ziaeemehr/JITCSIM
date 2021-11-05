@@ -133,3 +133,10 @@ def get_step_current(t_start, t_end, amplitude):
         "current_t_start": t_start,
         "current_amplitude": amplitude
     }
+
+@jit
+def binarize(data, threshold=1e-8):
+    data = np.asarray(data)
+    upper, lower = 1, 0
+    data = np.where(data >= threshold, upper, lower)
+    return data
