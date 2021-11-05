@@ -90,7 +90,7 @@ class Kuramoto_Base:
 
     def compile(self, **kwargs):
 
-        I = jitcsde(self.rhs, self.g_, n=self.N,
+        I = jitcsde(self.rhs, self.g_sym, n=self.N,
                     control_pars=self.control_pars)
         # I.generate_f_C(**kwargs)
         I.compile_C(omp=self.use_omp, **kwargs)
@@ -121,7 +121,7 @@ class Kuramoto_Base:
         self.initial_state = x0
     # ---------------------------------------------------------------
 
-    def simulate(self, par, mode_2pi=True):
+    def simulate(self, par=[], mode_2pi=True):
         '''
         integrate the system of equations and return the
         coordinates and times
@@ -222,7 +222,7 @@ class Kuramoto_II(Kuramoto_Base):
 
     # ---------------------------------------------------------------
 
-    def g_(self):
+    def g_sym(self):
         """
         to do.
         """
