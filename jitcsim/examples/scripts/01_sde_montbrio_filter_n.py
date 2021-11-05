@@ -1,8 +1,10 @@
 import numpy as np
 import networkx as nx
 from numpy import pi, sqrt
-from numpy.random import uniform, normal
-from jitcsim.models.montbrio import Montbrio_n
+from scipy.ndimage import gaussian_filter1d
+from numpy.random import uniform, normal, rand
+from jitcsim.models.montbrio_sde import MontbrioNetwork
+
 
 if __name__ == "__main__":
 
@@ -15,9 +17,9 @@ if __name__ == "__main__":
     eta = -5 * Delta
     J = 15  * sqrt(Delta)
     adj = nx.to_numpy_array(nx.complete_graph(N), dtype=int) 
-    adj = np.random.rand(N, N) - .5
+    adj = rand(N, N) - .5
     # initial_state = [0.01, -2.0, 0.05, -1] # for 2 nodes
-    initial_state = np.random.rand(2 * N) * 2
+    initial_state = [rand(), rand()] * N
     
     parameters = {
         "N" : N,
@@ -28,27 +30,27 @@ if __name__ == "__main__":
 
         "adj" : adj,
         "dimension": 2,
-        "I_app": 1,
+        "I_app": 2,
         "J": J,
         "tau": tau,
         "eta": eta,
         "Delta": Delta,
         "coupling" : coupling,
         'initial_state': initial_state,     # initial phase of oscillators
-        "sigma_r": 0.005,                       # noise amplitude on firing rate
+        "sigma_r": 0.01,                        # noise amplitude on firing rate
         "sigma_v": 0.01,                        # noise amplitude on membraine potenrial
         
-        # Baloon model parameters
-        "E0": 0.4,                              #!! review the parameters value
-        "V0": 4.0,
-        "k1": 2.77264,
-        "k2": 0.572,
-        "k3": -0.43,
-        "alpha": 5.0,
-        "taus": 1.25,
-        "tauf": 2.5,
-        "tauo": 1.02040816327,
-        "epsilon": 0.5,
+        # # Baloon model parameters
+        # "E0": 0.4,                              #!! review the parameters value
+        # "V0": 4.0,
+        # "k1": 2.77264,
+        # "k2": 0.572,
+        # "k3": -0.43,
+        # "alpha": 0.5,
+        # "tau_s": 1.25,
+        # "tau_f": 2.5,
+        # "tau_o": 1.02040816327,
+        # "epsilon": 0.5,
 
         'integration_method': 'dopri5',     # integration method
         'control': [],                      # control parameters
@@ -56,24 +58,38 @@ if __name__ == "__main__":
         "use_omp": False,                   # use OpenMP
         "output": "data",                   # output directory
     }
-
-    sol = Montbrio_n(parameters)
+    sol = MontbrioNetwork(parameters)
     sol.compile()
-
-    data = sol.simulate([])
+    data = sol.simulate()
     r = data['r']
     v = data['v']
     t = data['t']
+    filter1d = gaussian_filter1d(v, sigma=4, axis=0)
 
     import pylab as plt 
     fig, ax = plt.subplots(2, sharex=True)
 
-    for i in range(N):
-        ax[0].plot(t, r[:, i], label="r")
-        ax[1].plot(t, v[:, i], label="v")
-    ax[0].legend()
+    for i in range(1):
+        ax[0].plot(t, r[:, i])
+        ax[1].plot(t, v[:, i], alpha=0.4, label="v", ls="--")
+        ax[1].plot(t, filter1d[:, i], alpha=0.4, label="f")
+    ax[0].set_ylabel("r")
+    ax[1].set_ylabel("v")
     ax[1].legend()
-    plt.savefig("data/01_montbrio_fast_n.png", dpi=150)
 
+    plt.savefig("data/01_sde_montbrio_filter_n.png", dpi=150)
     plt.show()
 
+
+
+
+# "E0": 0.4,                              #!! review the parameters value
+# "V0": 4.0,
+# "k1": 2.8,
+# "k2": 0.8,
+# "k3": 0.5,
+# "alpha": 0.32,
+# "tau_s": 1.54,
+# "tau_f": 1.44,
+# "tau_o": 0.98,
+# "epsilon": 0.5,

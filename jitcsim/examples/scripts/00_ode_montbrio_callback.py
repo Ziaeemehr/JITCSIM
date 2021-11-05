@@ -17,7 +17,7 @@ if __name__ == "__main__":
     tau = 1
     eta = -5 * Delta
     J = 15  * sqrt(Delta)
-    initial_state = [0.01, -2.0]
+    initial_state = [0.1, -2.0]
     
     parameters = {
         't_initial': 0.,                    # initial time of integration
@@ -39,7 +39,7 @@ if __name__ == "__main__":
         "output": "data",                   # output directory
     }
 
-    current = get_step_current(10, 30, 3)
+    current = get_step_current(10, 30, 4)
     sol = Montbrio_call_single(parameters)
     sol.set_current(current)
     sol.compile()

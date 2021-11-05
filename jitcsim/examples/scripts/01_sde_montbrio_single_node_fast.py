@@ -1,28 +1,31 @@
 import numpy as np
 from numpy import pi, sqrt
 from numpy.random import uniform, normal
-from jitcsim.models.montbrio_ode import Montbrio_single
+from jitcsim.models.montbrio_sde import MontbrioSingleNode
 
 if __name__ == "__main__":
 
-    # np.random.seed(2)
-
-    Delta = 2.0
+    N = 1
     tau = 1
+    Delta = 2.0
     eta = -5 * Delta
     J = 15  * sqrt(Delta)
     initial_state = [0.01, -2.0]
     
     parameters = {
+        "N":1,
         't_initial': 0.,                    # initial time of integration
-        "t_final": 40.0,                     # final time of integration
+        "t_final": 50.0,                     # final time of integration
         't_transition': 0.0,                # transition time
         "interval": 0.1,                    # time interval for sampling
 
         "dimension": 2,
+        "I_app" : 4,
         "J": J,
         "tau": tau,
         "eta": eta,
+        "sigma_r": 0.01,
+        "sigma_v": 0.01,
         "Delta": Delta,
         'initial_state': initial_state,     # initial phase of oscillators
 
@@ -33,14 +36,12 @@ if __name__ == "__main__":
         "output": "data",                   # output directory
     }
 
-    sol = Montbrio_single(parameters)
-    sol.set_step_current(t_start=20, amplitude=3)
+    sol = MontbrioSingleNode(parameters)
     sol.compile()
 
-    data = sol.simulate([])
+    data = sol.simulate()
     x = data['x']
     t = data['t']
-
 
     import pylab as plt 
     fig, ax = plt.subplots(2, sharex=True)
@@ -49,7 +50,7 @@ if __name__ == "__main__":
     ax[1].plot(t, x[:, 1], label="v")
     ax[0].legend()
     ax[1].legend()
-    plt.savefig("data/01_montbrio.png", dpi=150)
+    plt.savefig("data/01_sde_montbrio_single_node.png", dpi=150)
 
     plt.show()
 

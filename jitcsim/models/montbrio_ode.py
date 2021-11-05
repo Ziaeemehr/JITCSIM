@@ -88,7 +88,7 @@ class Montbrio_Base:
         self.APPLY_CURRENT_SET = True
     # ---------------------------------------------------------------
 
-    def simulate(self, par, **integrator_params):
+    def simulate(self, par=[], **integrator_params):
         '''
         integrate the system of equations and return the
         coordinates and times
@@ -158,7 +158,7 @@ class Montbrio_call_single(Montbrio_Base):
         I.save_compiled(overwrite=True, destination=join(self.output, ''))
     # ---------------------------------------------------------------
 
-    def simulate(self, par, **integrator_params):
+    def simulate(self, par=[], **integrator_params):
 
         I = jitcode(n=self.N * self.dimension,
                     callback_functions=[(self.Iapp, self.Iapp_callback, 1)],
@@ -242,7 +242,7 @@ class Montbrio_single(Montbrio_Base):
         I.save_compiled(overwrite=True, destination=join(self.output, ''))
     # ---------------------------------------------------------------
 
-    def simulate(self, par, **integrator_params):
+    def simulate(self, par=[], **integrator_params):
         
         if self._set_step_current:
             par.append(self.current_amplitude) 
@@ -337,7 +337,7 @@ class Montbrio_n(Montbrio_Base):
     
     # ---------------------------------------------------------------
 
-    def simulate(self, par, **integrator_params):
+    def simulate(self, par=[], **integrator_params):
 
         I = jitcode(n=self.N * self.dimension,
                     control_pars=self.control_pars,
