@@ -8,3 +8,4 @@ jitcsim.egg-info/
 *.png
 *.so
 .DS_Store
+_e/
