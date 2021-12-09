@@ -15,7 +15,7 @@ import numpy as np
 from numpy import pi
 from numpy.random import uniform, normal
 from jitcsim.visualization import plot_order
-from jitcsim.models.kuramoto import Kuramoto_I
+from jitcsim.models.kuramoto_ode import Kuramoto_I
 
 
 if __name__ == "__main__":
