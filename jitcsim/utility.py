@@ -1,6 +1,23 @@
 import numpy as np
 from numba import jit
+import time
 
+def timer(func):
+    '''
+    decorator to measure elapsed time
+    Parameters
+    -----------
+    func: function
+        function to be decorated
+    '''
+
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        display_time(end-start, message="{:s}".format(func.__name__))
+        return result
+    return wrapper
 
 @jit(nopython=True)
 def order_parameter(phases):
@@ -107,22 +124,20 @@ def is_symmetric(a, rtol=1e-05, atol=1e-08):
     return np.allclose(a, a.T, rtol=rtol, atol=atol)
 
 
-def display_time(time):
-    ''' 
-    print elaped time in hours, minutes and seconds.
-
+def display_time(time, message=""):
+    '''
+    display elapsed time in hours, minutes, seconds
     Parameters
     -----------
-
-    time : float
-        Time elapsed in seconds.
-
+    time: float
+        elaspsed time in seconds
     '''
-    hour = time//3600
-    minute = int(time % 3600) // 60
-    second = time - (3600.0 * hour + 60.0 * minute)
-    print("Done in %d hours %d minutes %.4f seconds"
-          % (hour, minute, second))
+
+    hour = int(time/3600)
+    minute = (int(time % 3600))//60
+    second = time-(3600.*hour+60.*minute)
+    print("{:s} Done in {:d} hours {:d} minutes {:09.6f} seconds".format(
+        message, hour, minute, second))
 
 
 def get_step_current(t_start, t_end, amplitude):
