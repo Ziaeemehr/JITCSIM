@@ -40,18 +40,18 @@ class Kuramoto_Base:
             name of the integrator
                         One of the following (or a new method supported by either backend):
 
-                        * `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
-                        * `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
-                        * `"dop853"` – DoP853 (explicit) via `ode`
-                        * `"DOP853"` – DoP853 (explicit) via `solve_ivp`
-                        * `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
-                        * `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
-                        * `"lsoda"` – LSODA (implicit) via `ode`
-                        * `"LSODA"` – LSODA (implicit) via `solve_ivp`
-                        * `"Radau"` – The implicit Radau method via `solve_ivp`
-                        * `"vode"` – VODE (implicit) via `ode`
+                        * `"dopri5"` - Dormand's and Prince's explicit fifth-order method via `ode`
+                        * `"RK45"` - Dormand's and Prince's explicit fifth-order method via `solve_ivp`
+                        * `"dop853"` - DoP853 (explicit) via `ode`
+                        * `"DOP853"` - DoP853 (explicit) via `solve_ivp`
+                        * `"RK23"` - Bogacki's and Shampine's explicit third-order method via `solve_ivp`
+                        * `"BDF"` - Implicit backward-differentiation formula via `solve_ivp`
+                        * `"lsoda"` - LSODA (implicit) via `ode`
+                        * `"LSODA"` - LSODA (implicit) via `solve_ivp`
+                        * `"Radau"` - The implicit Radau method via `solve_ivp`
+                        * `"vode"` - VODE (implicit) via `ode`
 
-                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
+                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don't know what to choose, start with `"dopri5"`.
 
     control : list of str 
         control parameters 
@@ -94,10 +94,14 @@ class Kuramoto_Base:
 
     # ---------------------------------------------------------------
 
-    def compile(self, **kwargs):
+    def set_modulename(self, modulename):
+        self.modulename = modulename
+    
+
+    def compile(self, modulename="km", **kwargs):
         """
         compile model and produce shared library.
-        translates the derivative to C code using SymEngine’s `C-code printer <https://github.com/symengine/symengine/pull/1054>`_.
+        translates the derivative to C code using SymEngine's `C-code printer <https://github.com/symengine/symengine/pull/1054>`_.
 
         Parameters
         ----------
@@ -105,12 +109,14 @@ class Kuramoto_Base:
                 used in generate_f_C including
                     - simplify : boolean or None 
                     - do_cse: boolian, 
-                        Whether SymPy’s `common-subexpression detection <http://docs.sympy.org/dev/modules/rewriting.html#module-sympy.simplify.cse_main>`_ should be applied before translating to C code. It is almost always better to let the compiler do this (unless you want to set the compiler optimisation to `-O2` or lower): For simple differential equations this should not make any difference to the compiler’s optimisations. For large ones, it may make a difference but also take long. As this requires all entries of `f` at once, it may void advantages gained from using generator functions as an input. Also, this feature uses SymPy and not SymEngine.
+                        Whether SymPy's `common-subexpression detection <http://docs.sympy.org/dev/modules/rewriting.html#module-sympy.simplify.cse_main>`_ should be applied before translating to C code. It is almost always better to let the compiler do this (unless you want to set the compiler optimisation to `-O2` or lower): For simple differential equations this should not make any difference to the compiler's optimisations. For large ones, it may make a difference but also take long. As this requires all entries of `f` at once, it may void advantages gained from using generator functions as an input. Also, this feature uses SymPy and not SymEngine.
                     - chunk_size: int 
                         If the number of instructions in the final C code exceeds this number, it will be split into chunks of this size. See `Handling very large differential equations <http://jitcde-common.readthedocs.io/#handling-very-large-differential-equations>`_ on why this is useful and how to best choose this value.
                         It also used for paralleling using OpenMP to determine task scheduling.
                         If smaller than 1, no chunking will happen.
         """
+        
+        self.set_modulename(modulename)
 
         I = jitcode(self.rhs, n=self.N,
                     control_pars=self.control_pars)
@@ -225,18 +231,18 @@ class Kuramoto_II(Kuramoto_Base):
             name of the integrator
                         One of the following (or a new method supported by either backend):
 
-                        * `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
-                        * `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
-                        * `"dop853"` – DoP853 (explicit) via `ode`
-                        * `"DOP853"` – DoP853 (explicit) via `solve_ivp`
-                        * `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
-                        * `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
-                        * `"lsoda"` – LSODA (implicit) via `ode`
-                        * `"LSODA"` – LSODA (implicit) via `solve_ivp`
-                        * `"Radau"` – The implicit Radau method via `solve_ivp`
-                        * `"vode"` – VODE (implicit) via `ode`
+                        * `"dopri5"` - Dormand's and Prince's explicit fifth-order method via `ode`
+                        * `"RK45"` - Dormand's and Prince's explicit fifth-order method via `solve_ivp`
+                        * `"dop853"` - DoP853 (explicit) via `ode`
+                        * `"DOP853"` - DoP853 (explicit) via `solve_ivp`
+                        * `"RK23"` - Bogacki's and Shampine's explicit third-order method via `solve_ivp`
+                        * `"BDF"` - Implicit backward-differentiation formula via `solve_ivp`
+                        * `"lsoda"` - LSODA (implicit) via `ode`
+                        * `"LSODA"` - LSODA (implicit) via `solve_ivp`
+                        * `"Radau"` - The implicit Radau method via `solve_ivp`
+                        * `"vode"` - VODE (implicit) via `ode`
 
-                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
+                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don't know what to choose, start with `"dopri5"`.
 
     control : list of str 
         control parameters 
@@ -305,18 +311,18 @@ class Kuramoto_I(Kuramoto_Base):
             name of the integrator
                         One of the following (or a new method supported by either backend):
 
-                        * `"dopri5"` – Dormand’s and Prince’s explicit fifth-order method via `ode`
-                        * `"RK45"` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`
-                        * `"dop853"` – DoP853 (explicit) via `ode`
-                        * `"DOP853"` – DoP853 (explicit) via `solve_ivp`
-                        * `"RK23"` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`
-                        * `"BDF"` – Implicit backward-differentiation formula via `solve_ivp`
-                        * `"lsoda"` – LSODA (implicit) via `ode`
-                        * `"LSODA"` – LSODA (implicit) via `solve_ivp`
-                        * `"Radau"` – The implicit Radau method via `solve_ivp`
-                        * `"vode"` – VODE (implicit) via `ode`
+                        * `"dopri5"` - Dormand's and Prince's explicit fifth-order method via `ode`
+                        * `"RK45"` - Dormand's and Prince's explicit fifth-order method via `solve_ivp`
+                        * `"dop853"` - DoP853 (explicit) via `ode`
+                        * `"DOP853"` - DoP853 (explicit) via `solve_ivp`
+                        * `"RK23"` - Bogacki's and Shampine's explicit third-order method via `solve_ivp`
+                        * `"BDF"` - Implicit backward-differentiation formula via `solve_ivp`
+                        * `"lsoda"` - LSODA (implicit) via `ode`
+                        * `"LSODA"` - LSODA (implicit) via `solve_ivp`
+                        * `"Radau"` - The implicit Radau method via `solve_ivp`
+                        * `"vode"` - VODE (implicit) via `ode`
 
-                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `"dopri5"`.
+                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don't know what to choose, start with `"dopri5"`.
 
     control : list of str 
         control parameters 

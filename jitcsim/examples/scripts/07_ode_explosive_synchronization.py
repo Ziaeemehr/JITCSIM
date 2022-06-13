@@ -118,12 +118,12 @@ if __name__ == "__main__":
 
         'integration_method': 'dopri5',
         'control': ['coupling'],
-        "use_omp": False,
+        "use_omp": True,
         "output": "data",
     }
 
     I = Kuramoto_II(parameters)
-    I.compile()
+    I.compile(chunk_size=17)
 
     start = time()
     args = ["forward", "backward"]
