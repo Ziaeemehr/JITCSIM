@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>jitcsim.models.kuramoto_ode &#8212; jitcsim 0.3 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/nature.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -79,18 +80,18 @@
 <span class="sd">            name of the integrator</span>
 <span class="sd">                        One of the following (or a new method supported by either backend):</span>
 
-<span class="sd">                        * `&quot;dopri5&quot;` – Dormand’s and Prince’s explicit fifth-order method via `ode`</span>
-<span class="sd">                        * `&quot;RK45&quot;` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;dop853&quot;` – DoP853 (explicit) via `ode`</span>
-<span class="sd">                        * `&quot;DOP853&quot;` – DoP853 (explicit) via `solve_ivp`</span>
-<span class="sd">                        * `&quot;RK23&quot;` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;BDF&quot;` – Implicit backward-differentiation formula via `solve_ivp`</span>
-<span class="sd">                        * `&quot;lsoda&quot;` – LSODA (implicit) via `ode`</span>
-<span class="sd">                        * `&quot;LSODA&quot;` – LSODA (implicit) via `solve_ivp`</span>
-<span class="sd">                        * `&quot;Radau&quot;` – The implicit Radau method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;vode&quot;` – VODE (implicit) via `ode`</span>
+<span class="sd">                        * `&quot;dopri5&quot;` - Dormand&#39;s and Prince&#39;s explicit fifth-order method via `ode`</span>
+<span class="sd">                        * `&quot;RK45&quot;` - Dormand&#39;s and Prince&#39;s explicit fifth-order method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;dop853&quot;` - DoP853 (explicit) via `ode`</span>
+<span class="sd">                        * `&quot;DOP853&quot;` - DoP853 (explicit) via `solve_ivp`</span>
+<span class="sd">                        * `&quot;RK23&quot;` - Bogacki&#39;s and Shampine&#39;s explicit third-order method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;BDF&quot;` - Implicit backward-differentiation formula via `solve_ivp`</span>
+<span class="sd">                        * `&quot;lsoda&quot;` - LSODA (implicit) via `ode`</span>
+<span class="sd">                        * `&quot;LSODA&quot;` - LSODA (implicit) via `solve_ivp`</span>
+<span class="sd">                        * `&quot;Radau&quot;` - The implicit Radau method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;vode&quot;` - VODE (implicit) via `ode`</span>
 
-<span class="sd">                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `&quot;dopri5&quot;`.</span>
+<span class="sd">                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don&#39;t know what to choose, start with `&quot;dopri5&quot;`.</span>
 
 <span class="sd">    control : list of str </span>
 <span class="sd">        control parameters </span>
@@ -133,10 +134,14 @@
 
     <span class="c1"># ---------------------------------------------------------------</span>
 
-<div class="viewcode-block" id="Kuramoto_Base.compile"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_ode.Kuramoto_Base.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">set_modulename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modulename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span> <span class="o">=</span> <span class="n">modulename</span>
+    
+
+<div class="viewcode-block" id="Kuramoto_Base.compile"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_ode.Kuramoto_Base.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modulename</span><span class="o">=</span><span class="s2">&quot;km&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        compile model and produce shared library.</span>
-<span class="sd">        translates the derivative to C code using SymEngine’s `C-code printer &lt;https://github.com/symengine/symengine/pull/1054&gt;`_.</span>
+<span class="sd">        translates the derivative to C code using SymEngine&#39;s `C-code printer &lt;https://github.com/symengine/symengine/pull/1054&gt;`_.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -144,12 +149,14 @@
 <span class="sd">                used in generate_f_C including</span>
 <span class="sd">                    - simplify : boolean or None </span>
 <span class="sd">                    - do_cse: boolian, </span>
-<span class="sd">                        Whether SymPy’s `common-subexpression detection &lt;http://docs.sympy.org/dev/modules/rewriting.html#module-sympy.simplify.cse_main&gt;`_ should be applied before translating to C code. It is almost always better to let the compiler do this (unless you want to set the compiler optimisation to `-O2` or lower): For simple differential equations this should not make any difference to the compiler’s optimisations. For large ones, it may make a difference but also take long. As this requires all entries of `f` at once, it may void advantages gained from using generator functions as an input. Also, this feature uses SymPy and not SymEngine.</span>
+<span class="sd">                        Whether SymPy&#39;s `common-subexpression detection &lt;http://docs.sympy.org/dev/modules/rewriting.html#module-sympy.simplify.cse_main&gt;`_ should be applied before translating to C code. It is almost always better to let the compiler do this (unless you want to set the compiler optimisation to `-O2` or lower): For simple differential equations this should not make any difference to the compiler&#39;s optimisations. For large ones, it may make a difference but also take long. As this requires all entries of `f` at once, it may void advantages gained from using generator functions as an input. Also, this feature uses SymPy and not SymEngine.</span>
 <span class="sd">                    - chunk_size: int </span>
 <span class="sd">                        If the number of instructions in the final C code exceeds this number, it will be split into chunks of this size. See `Handling very large differential equations &lt;http://jitcde-common.readthedocs.io/#handling-very-large-differential-equations&gt;`_ on why this is useful and how to best choose this value.</span>
 <span class="sd">                        It also used for paralleling using OpenMP to determine task scheduling.</span>
 <span class="sd">                        If smaller than 1, no chunking will happen.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_modulename</span><span class="p">(</span><span class="n">modulename</span><span class="p">)</span>
 
         <span class="n">I</span> <span class="o">=</span> <span class="n">jitcode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span>
                     <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">)</span>
@@ -264,18 +271,18 @@
 <span class="sd">            name of the integrator</span>
 <span class="sd">                        One of the following (or a new method supported by either backend):</span>
 
-<span class="sd">                        * `&quot;dopri5&quot;` – Dormand’s and Prince’s explicit fifth-order method via `ode`</span>
-<span class="sd">                        * `&quot;RK45&quot;` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;dop853&quot;` – DoP853 (explicit) via `ode`</span>
-<span class="sd">                        * `&quot;DOP853&quot;` – DoP853 (explicit) via `solve_ivp`</span>
-<span class="sd">                        * `&quot;RK23&quot;` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;BDF&quot;` – Implicit backward-differentiation formula via `solve_ivp`</span>
-<span class="sd">                        * `&quot;lsoda&quot;` – LSODA (implicit) via `ode`</span>
-<span class="sd">                        * `&quot;LSODA&quot;` – LSODA (implicit) via `solve_ivp`</span>
-<span class="sd">                        * `&quot;Radau&quot;` – The implicit Radau method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;vode&quot;` – VODE (implicit) via `ode`</span>
+<span class="sd">                        * `&quot;dopri5&quot;` - Dormand&#39;s and Prince&#39;s explicit fifth-order method via `ode`</span>
+<span class="sd">                        * `&quot;RK45&quot;` - Dormand&#39;s and Prince&#39;s explicit fifth-order method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;dop853&quot;` - DoP853 (explicit) via `ode`</span>
+<span class="sd">                        * `&quot;DOP853&quot;` - DoP853 (explicit) via `solve_ivp`</span>
+<span class="sd">                        * `&quot;RK23&quot;` - Bogacki&#39;s and Shampine&#39;s explicit third-order method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;BDF&quot;` - Implicit backward-differentiation formula via `solve_ivp`</span>
+<span class="sd">                        * `&quot;lsoda&quot;` - LSODA (implicit) via `ode`</span>
+<span class="sd">                        * `&quot;LSODA&quot;` - LSODA (implicit) via `solve_ivp`</span>
+<span class="sd">                        * `&quot;Radau&quot;` - The implicit Radau method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;vode&quot;` - VODE (implicit) via `ode`</span>
 
-<span class="sd">                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `&quot;dopri5&quot;`.</span>
+<span class="sd">                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don&#39;t know what to choose, start with `&quot;dopri5&quot;`.</span>
 
 <span class="sd">    control : list of str </span>
 <span class="sd">        control parameters </span>
@@ -344,18 +351,18 @@
 <span class="sd">            name of the integrator</span>
 <span class="sd">                        One of the following (or a new method supported by either backend):</span>
 
-<span class="sd">                        * `&quot;dopri5&quot;` – Dormand’s and Prince’s explicit fifth-order method via `ode`</span>
-<span class="sd">                        * `&quot;RK45&quot;` – Dormand’s and Prince’s explicit fifth-order method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;dop853&quot;` – DoP853 (explicit) via `ode`</span>
-<span class="sd">                        * `&quot;DOP853&quot;` – DoP853 (explicit) via `solve_ivp`</span>
-<span class="sd">                        * `&quot;RK23&quot;` – Bogacki’s and Shampine’s explicit third-order method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;BDF&quot;` – Implicit backward-differentiation formula via `solve_ivp`</span>
-<span class="sd">                        * `&quot;lsoda&quot;` – LSODA (implicit) via `ode`</span>
-<span class="sd">                        * `&quot;LSODA&quot;` – LSODA (implicit) via `solve_ivp`</span>
-<span class="sd">                        * `&quot;Radau&quot;` – The implicit Radau method via `solve_ivp`</span>
-<span class="sd">                        * `&quot;vode&quot;` – VODE (implicit) via `ode`</span>
+<span class="sd">                        * `&quot;dopri5&quot;` - Dormand&#39;s and Prince&#39;s explicit fifth-order method via `ode`</span>
+<span class="sd">                        * `&quot;RK45&quot;` - Dormand&#39;s and Prince&#39;s explicit fifth-order method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;dop853&quot;` - DoP853 (explicit) via `ode`</span>
+<span class="sd">                        * `&quot;DOP853&quot;` - DoP853 (explicit) via `solve_ivp`</span>
+<span class="sd">                        * `&quot;RK23&quot;` - Bogacki&#39;s and Shampine&#39;s explicit third-order method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;BDF&quot;` - Implicit backward-differentiation formula via `solve_ivp`</span>
+<span class="sd">                        * `&quot;lsoda&quot;` - LSODA (implicit) via `ode`</span>
+<span class="sd">                        * `&quot;LSODA&quot;` - LSODA (implicit) via `solve_ivp`</span>
+<span class="sd">                        * `&quot;Radau&quot;` - The implicit Radau method via `solve_ivp`</span>
+<span class="sd">                        * `&quot;vode&quot;` - VODE (implicit) via `ode`</span>
 
-<span class="sd">                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with `&quot;dopri5&quot;`.</span>
+<span class="sd">                        The `solve_ivp` methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don&#39;t know what to choose, start with `&quot;dopri5&quot;`.</span>
 
 <span class="sd">    control : list of str </span>
 <span class="sd">        control parameters </span>
@@ -545,12 +552,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -571,7 +578,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Abolfazl Ziaeemehr.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>
