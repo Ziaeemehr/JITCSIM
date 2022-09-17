@@ -7,3 +7,5 @@ jitcsim.egg-info/
 *.txt
 *.png
 *.so
+.DS_Store
+_e/
