@@ -51,37 +51,27 @@ Indices and tables
 
 .. _tutorial:
 
-Tutorial
-***************
-Considering the Kuramoto model. The following examples simulate a network of coupled Kuramoto oscillators with frustration, delay and noise.
-
-ODE
---------------------------
-
-.. automodule:: jitcsim.examples.scripts.00_ode_kuramoto_II
-
 .. _repeated:
 
 Control parameters
 -------------------------------------
 
-.. automodule:: jitcsim.examples.scripts.02_ode_kuramoto_II_single_param_repeated_run
+.. automodule:: jitcsim.examples.scripts.examples_kuramoto.02_ode_kuramoto_II_single_param_repeated_run
 
 SDE
 --------------------------
 
-.. automodule:: jitcsim.examples.scripts.01_sde_kuramoto_II_single_param
+.. automodule:: jitcsim.examples.scripts.examples_kuramoto.01_sde_kuramoto_II_single_param
 
 DDE
 --------------------------
 
-.. automodule:: jitcsim.examples.scripts.01_dde_kuramoto_II_single_param
-
+.. automodule:: jitcsim.examples.scripts.examples_kuramoto.01_dde_kuramoto_II_single_param
 
 Parallel using Multiprocessing
 --------------------------------
 
-.. automodule:: jitcsim.examples.scripts.03_ode_kuramoto_II_single_param_parallel 
+.. automodule:: jitcsim.examples.scripts.examples_kuramoto.03_ode_kuramoto_II_single_param_parallel 
 
 
 Explosive synchronization and hysteresis loop
@@ -113,21 +103,17 @@ Damp oscillator
 
 .. automodule:: jitcsim.models.damp_oscillator
 
-
-
-
-
-
 Auto Generated Documentation 
 ##############################
 
-Kuramoto Model
-*****************
-The following are the main classes for the Kuramoto model including:
 
 | :ref:`ODE Kuramoto model class <KM_ODE>` 
 | :ref:`SDE Kuramoto model class <KM_SDE>`
 | :ref:`DDE Kuramoto model class <KM_DDE>`
+
+Kuramoto Model
+*****************
+The following are the main classes for the Kuramoto model including:
 
 
 .. _KM_ODE:
@@ -156,8 +142,6 @@ The main class for the ODE Kuramot model
   :members:
   :inherited-members:
 
--------------------------------------------------------    
-
 .. _KM_SDE:
 
 The main class for the SDE Kuramot model
@@ -174,6 +158,15 @@ The main class for the SDE Kuramot model
    :inherited-members:
 
 -------------------------------------------------------         
+
+Tutorial
+***************
+Considering the Kuramoto model. The following examples simulate a network of coupled Kuramoto oscillators with frustration, delay and noise.
+
+ODE
+--------------------------
+
+.. automodule:: jitcsim.examples.scripts.examples_kuramoto.00_ode_kuramoto_II
 
 .. _KM_DDE:
 

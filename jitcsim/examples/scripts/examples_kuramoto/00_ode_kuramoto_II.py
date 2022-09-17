@@ -13,14 +13,14 @@ The output of the example is plotting the Kuramoto order parameter vs time.
 
 Starting with a few imports
 
-.. literalinclude:: ../../jitcsim/examples/scripts/00_ode_kuramoto_II.py    
+.. literalinclude:: ../../jitcsim/examples/scripts/examples_kuramoto/00_ode_kuramoto_II.py    
         :start-after: example-st\u0061rt
         :lines: 1-6
         :caption:
 
 then we set the parameters of the system. We consier a complete network with :math:`N` oscillators.
         
-.. literalinclude:: ../../jitcsim/examples/scripts/00_ode_kuramoto_II.py    
+.. literalinclude:: ../../jitcsim/examples/scripts/examples_kuramoto/00_ode_kuramoto_II.py    
         :start-after: example-st\u0061rt
         :lines: 11-38
         :dedent: 4
@@ -28,27 +28,27 @@ then we set the parameters of the system. We consier a complete network with :ma
 make an instance of the model and pass the parameters to it. 
 Then compile the model.
 
-.. literalinclude:: ../../jitcsim/examples/scripts/00_ode_kuramoto_II.py    
+.. literalinclude:: ../../jitcsim/examples/scripts/examples_kuramoto/00_ode_kuramoto_II.py    
         :start-after: example-st\u0061rt
         :lines: 40-41
         :dedent: 4
 
 and run the simulation
 
-.. literalinclude:: ../../jitcsim/examples/scripts/00_ode_kuramoto_II.py    
+.. literalinclude:: ../../jitcsim/examples/scripts/examples_kuramoto/00_ode_kuramoto_II.py    
         :start-after: example-st\u0061rt
         :lines: 43-45
         :dedent: 4
 
 to calculate and plot the order parameter of the system vs time:
 
-.. literalinclude:: ../../jitcsim/examples/scripts/00_ode_kuramoto_II.py    
+.. literalinclude:: ../../jitcsim/examples/scripts/examples_kuramoto/00_ode_kuramoto_II.py    
         :start-after: example-st\u0061rt
         :lines: 47-53
         :dedent: 4
 
 
-.. figure:: ../../jitcsim/examples/scripts//data/00.png
+.. figure:: ../../jitcsim/examples/scripts/examples_kuramoto/data/00.png
     :scale: 50 %
 
     Kuramoto order parameter vs time, for a complete network at a fixed coupling strength.

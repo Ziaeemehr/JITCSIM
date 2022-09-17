@@ -5,11 +5,6 @@ from jitcsim.models.montbrio_sde import MontbrioSingleNode
 
 if __name__ == "__main__":
 
-    N = 1
-    tau = 1
-    Delta = 2.0
-    eta = -5 * Delta
-    J = 15  * sqrt(Delta)
     initial_state = [0.01, -2.0]
     
     parameters = {
@@ -21,19 +16,19 @@ if __name__ == "__main__":
 
         "dimension": 2,
         "I_app" : 4,
-        "J": J,
-        "tau": tau,
-        "eta": eta,
-        "sigma_r": 0.01,
-        "sigma_v": 0.01,
-        "Delta": Delta,
+        "J": 14.5,
+        "tau": 1.0,
+        "eta": -4.6,
+        "sigma_r": 0.02,
+        "sigma_v": 0.04,
+        "Delta": 0.7,
         'initial_state': initial_state,     # initial phase of oscillators
 
         'integration_method': 'dopri5',     # integration method
         'control': [],                      # control parameters
 
         "use_omp": False,                   # use OpenMP
-        "output": "data",                   # output directory
+        "output": "output",                   # output directory
     }
 
     sol = MontbrioSingleNode(parameters)
@@ -48,9 +43,10 @@ if __name__ == "__main__":
 
     ax[0].plot(t, x[:, 0], label="r")
     ax[1].plot(t, x[:, 1], label="v")
+    ax[1].set_xlabel("time [ms]")
     ax[0].legend()
     ax[1].legend()
-    plt.savefig("data/01_sde_montbrio_single_node.png", dpi=150)
+    plt.savefig("output/01_sde_montbrio_single_node.png", dpi=150)
 
     plt.show()
 
