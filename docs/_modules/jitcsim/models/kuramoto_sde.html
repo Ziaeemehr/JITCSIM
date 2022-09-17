@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>jitcsim.models.kuramoto_sde &#8212; jitcsim 0.3 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/nature.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -117,7 +118,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">modulename</span> <span class="o">=</span> <span class="s2">&quot;km&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">integtaror_params_set</span> <span class="o">=</span> <span class="kc">False</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">SET_SEED</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -129,8 +129,8 @@
 
     <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
-        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcsde</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span>
-                    <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">)</span>
+        <span class="n">I</span> <span class="o">=</span> <span class="n">jitcsde</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f_sym</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_sym</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">,</span>
+                    <span class="n">control_pars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">control_pars</span><span class="p">,</span> <span class="n">additive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="c1"># I.generate_f_C(**kwargs)</span>
         <span class="n">I</span><span class="o">.</span><span class="n">compile_C</span><span class="p">(</span><span class="n">omp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_omp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">I</span><span class="o">.</span><span class="n">save_compiled</span><span class="p">(</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -160,7 +160,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span> <span class="o">=</span> <span class="n">x0</span>
     <span class="c1"># ---------------------------------------------------------------</span>
 
-<div class="viewcode-block" id="Kuramoto_Base.simulate"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">mode_2pi</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Kuramoto_Base.simulate"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="o">=</span><span class="p">[],</span> <span class="n">mode_2pi</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        integrate the system of equations and return the</span>
 <span class="sd">        coordinates and times</span>
@@ -261,14 +261,14 @@
 
     <span class="c1"># ---------------------------------------------------------------</span>
 
-<div class="viewcode-block" id="Kuramoto_II.g_"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_II.g_">[docs]</a>    <span class="k">def</span> <span class="nf">g_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Kuramoto_II.g_sym"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_II.g_sym">[docs]</a>    <span class="k">def</span> <span class="nf">g_sym</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        to do.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span><span class="p">):</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span></div>
 
-<div class="viewcode-block" id="Kuramoto_II.rhs"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_II.rhs">[docs]</a>    <span class="k">def</span> <span class="nf">rhs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Kuramoto_II.f_sym"><a class="viewcode-back" href="../../../index.html#jitcsim.models.kuramoto_sde.Kuramoto_II.f_sym">[docs]</a>    <span class="k">def</span> <span class="nf">f_sym</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        **Kuramoto model of type II**</span>
 
@@ -458,12 +458,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -484,7 +484,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Abolfazl Ziaeemehr.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>

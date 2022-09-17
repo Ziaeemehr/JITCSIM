@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>jitcsim.utility &#8212; jitcsim 0.3 documentation</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nature.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -39,7 +40,24 @@
   <h1>Source code for jitcsim.utility</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
+<div class="viewcode-block" id="timer"><a class="viewcode-back" href="../../index.html#jitcsim.utility.timer">[docs]</a><span class="k">def</span> <span class="nf">timer</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    decorator to measure elapsed time</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    -----------</span>
+<span class="sd">    func: function</span>
+<span class="sd">        function to be decorated</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">display_time</span><span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span></div>
 
 <div class="viewcode-block" id="order_parameter"><a class="viewcode-back" href="../../index.html#jitcsim.utility.order_parameter">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">order_parameter</span><span class="p">(</span><span class="n">phases</span><span class="p">):</span>
@@ -146,22 +164,20 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="display_time"><a class="viewcode-back" href="../../index.html#jitcsim.utility.display_time">[docs]</a><span class="k">def</span> <span class="nf">display_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39; </span>
-<span class="sd">    print elaped time in hours, minutes and seconds.</span>
-
+<div class="viewcode-block" id="display_time"><a class="viewcode-back" href="../../index.html#jitcsim.utility.display_time">[docs]</a><span class="k">def</span> <span class="nf">display_time</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    display elapsed time in hours, minutes, seconds</span>
 <span class="sd">    Parameters</span>
 <span class="sd">    -----------</span>
-
-<span class="sd">    time : float</span>
-<span class="sd">        Time elapsed in seconds.</span>
-
+<span class="sd">    time: float</span>
+<span class="sd">        elaspsed time in seconds</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">hour</span> <span class="o">=</span> <span class="n">time</span><span class="o">//</span><span class="mi">3600</span>
-    <span class="n">minute</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">//</span> <span class="mi">60</span>
-    <span class="n">second</span> <span class="o">=</span> <span class="n">time</span> <span class="o">-</span> <span class="p">(</span><span class="mf">3600.0</span> <span class="o">*</span> <span class="n">hour</span> <span class="o">+</span> <span class="mf">60.0</span> <span class="o">*</span> <span class="n">minute</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Done in </span><span class="si">%d</span><span class="s2"> hours </span><span class="si">%d</span><span class="s2"> minutes </span><span class="si">%.4f</span><span class="s2"> seconds&quot;</span>
-          <span class="o">%</span> <span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="p">))</span></div>
+
+    <span class="n">hour</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">/</span><span class="mi">3600</span><span class="p">)</span>
+    <span class="n">minute</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">))</span><span class="o">//</span><span class="mi">60</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="n">time</span><span class="o">-</span><span class="p">(</span><span class="mf">3600.</span><span class="o">*</span><span class="n">hour</span><span class="o">+</span><span class="mf">60.</span><span class="o">*</span><span class="n">minute</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:s}</span><span class="s2"> Done in </span><span class="si">{:d}</span><span class="s2"> hours </span><span class="si">{:d}</span><span class="s2"> minutes </span><span class="si">{:09.6f}</span><span class="s2"> seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">message</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="p">))</span></div>
 
 
 <span class="k">def</span> <span class="nf">get_step_current</span><span class="p">(</span><span class="n">t_start</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">amplitude</span><span class="p">):</span>
@@ -172,6 +188,13 @@
         <span class="s2">&quot;current_t_start&quot;</span><span class="p">:</span> <span class="n">t_start</span><span class="p">,</span>
         <span class="s2">&quot;current_amplitude&quot;</span><span class="p">:</span> <span class="n">amplitude</span>
     <span class="p">}</span>
+
+<span class="nd">@jit</span>
+<span class="k">def</span> <span class="nf">binarize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">upper</span><span class="p">,</span> <span class="n">lower</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">lower</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
 </pre></div>
 
             <div class="clearer"></div>
@@ -184,12 +207,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -210,7 +233,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Abolfazl Ziaeemehr.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>

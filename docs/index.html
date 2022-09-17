@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome to JiTCSim’s documentation! &#8212; jitcsim 0.3 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -36,12 +37,12 @@
           <div class="body" role="main">
             
   <div class="section" id="welcome-to-jitcsim-s-documentation">
-<h1>Welcome to JiTCSim’s documentation!<a class="headerlink" href="#welcome-to-jitcsim-s-documentation" title="Permalink to this headline">¶</a></h1>
+<h1>Welcome to JiTCSim’s documentation!<a class="headerlink" href="#welcome-to-jitcsim-s-documentation" title="Permalink to this heading">¶</a></h1>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>JiTCSim is a python package for simulation of complex network dynamics, mainly based on  <a class="reference external" href="https://jitcode.readthedocs.io/en/latest/">JITC*DE</a>  packages for integration of ordinary/stochastic and delay differential equations.</p>
 <div class="section" id="what-are-jitc-de">
-<h3>What are JiTC*DE:<a class="headerlink" href="#what-are-jitc-de" title="Permalink to this headline">¶</a></h3>
+<h3>What are JiTC*DE:<a class="headerlink" href="#what-are-jitc-de" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference external" href="https://jitcode.readthedocs.io/en/latest/">JiTCODE</a> (just-in-time compilation for ordinary differential equations) is an extension of SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.ode.html">ODE</a> (<strong>scipy.integrate.ode</strong>) or
 <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">Solve IVP</a> (<strong>scipy.integrate.solve_ivp</strong>).
 Where the latter take a Python function as an argument, JiTCODE takes an iterable (or generator function or dictionary) of symbolic expressions, which it translates to <strong>C</strong> code, compiles on the fly, and uses as the function to feed into SciPy ODE or Solve IVP.
@@ -65,103 +66,22 @@ Symbolic expressions are mostly handled by <a class="reference external" href="h
 <div class="toctree-wrapper compound">
 </div>
 <div class="section" id="indices-and-tables">
-<h4>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h4>
+<h4>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h4>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="tutorial">
-<span id="id6"></span><h3>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h3>
-<p>Considering the Kuramoto model. The following examples simulate a network of coupled Kuramoto oscillators with frustration, delay and noise.</p>
-<div class="section" id="id7">
-<h4>ODE<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
-<span class="target" id="module-jitcsim.examples.scripts.00_ode_kuramoto_II"></span><p><strong>Simulation of the Kuramoto model on complete network.</strong></p>
-<div class="math">
-<p><img src="_images/math/185f8af51c5bebfc7a50ec212584a9cdf16e4ead.png" alt="\frac{d\theta_i}{dt} &amp;= \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - \alpha)"/></p>
-</div><p>where <img class="math" src="_images/math/71b2d54105337cb4f5a4d98c526efca03bbf0b26.png" alt="\theta_i"/> is phase of oscillator i, <img class="math" src="_images/math/74ba2b409c080b4e3153c234247143775552abb7.png" alt="\omega_i"/> angular frequency of oscillator i, <img class="math" src="_images/math/2f5aa019312e1bbc969deab8dca8b00f76025404.png" alt="\alpha"/> frustration, <img class="math" src="_images/math/3bfb3a64189a14b2704f4610827762d5e3145114.png" alt="N"/> number of oscillators, <img class="math" src="_images/math/e61098db468e82d5c147bb76f8913313d6334fc1.png" alt="a_{i,j}"/> is an element of the adjacency matrix, <img class="math" src="_images/math/042f3fa4cf640042c5cafeb198823fa6ff71a5c2.png" alt="a_{i,j}=1"/> if there is a directed link from the node j to i; otherwise <img class="math" src="_images/math/b48b48accc716b8ff74d4e6c8ea34219851968a1.png" alt="a_{i,j}=0"/>.</p>
-<p>The output of the example is plotting the Kuramoto order parameter vs time.</p>
-<p>Starting with a few imports</p>
-<div class="literal-block-wrapper docutils container" id="id20">
-<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">../../jitcsim/examples/scripts/00_ode_kuramoto_II.py</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
-<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">normal</span>
-<span class="kn">from</span> <span class="nn">jitcsim.models.kuramoto_ode</span> <span class="kn">import</span> <span class="n">Kuramoto_II</span>
-<span class="kn">from</span> <span class="nn">jitcsim</span> <span class="kn">import</span> <span class="n">plot_order</span>
-<span class="kn">from</span> <span class="nn">jitcsim</span> <span class="kn">import</span> <span class="n">make_network</span>
-</pre></div>
-</div>
-</div>
-<p>then we set the parameters of the system. We consier a complete network with <img class="math" src="_images/math/3bfb3a64189a14b2704f4610827762d5e3145114.png" alt="N"/> oscillators.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">30</span>
-<span class="n">omega0</span> <span class="o">=</span> <span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-<span class="n">initial_state</span> <span class="o">=</span> <span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">pi</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-
-<span class="c1"># make complete network</span>
-<span class="n">net</span> <span class="o">=</span> <span class="n">make_network</span><span class="p">()</span>
-<span class="n">adj</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-
-<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;N&#39;</span><span class="p">:</span> <span class="n">N</span><span class="p">,</span>                             <span class="c1"># number of nodes</span>
-    <span class="s1">&#39;adj&#39;</span><span class="p">:</span> <span class="n">adj</span><span class="p">,</span>                         <span class="c1"># adjacency matrix</span>
-    <span class="s1">&#39;t_initial&#39;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>                    <span class="c1"># initial time of integration</span>
-    <span class="s2">&quot;t_final&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>                     <span class="c1"># final time of integration</span>
-    <span class="s1">&#39;t_transition&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>                <span class="c1"># transition time</span>
-    <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>                    <span class="c1"># time interval for sampling</span>
-
-    <span class="s2">&quot;coupling&quot;</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>          <span class="c1"># coupling strength</span>
-    <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>                       <span class="c1"># frustration</span>
-    <span class="s2">&quot;omega&quot;</span><span class="p">:</span> <span class="n">omega0</span><span class="p">,</span>                    <span class="c1"># initial angular frequencies</span>
-    <span class="s1">&#39;initial_state&#39;</span><span class="p">:</span> <span class="n">initial_state</span><span class="p">,</span>     <span class="c1"># initial phase of oscillators</span>
-
-    <span class="s1">&#39;integration_method&#39;</span><span class="p">:</span> <span class="s1">&#39;dopri5&#39;</span><span class="p">,</span>     <span class="c1"># integration method</span>
-    <span class="s1">&#39;control&#39;</span><span class="p">:</span> <span class="p">[],</span>                      <span class="c1"># control parameters</span>
-
-    <span class="s2">&quot;use_omp&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>                   <span class="c1"># use OpenMP</span>
-    <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>                   <span class="c1"># output directory</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>make an instance of the model and pass the parameters to it.
-Then compile the model.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span> <span class="o">=</span> <span class="n">Kuramoto_II</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
-<span class="n">sol</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>and run the simulation</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">simulate</span><span class="p">([])</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
-<span class="n">t</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>to calculate and plot the order parameter of the system vs time:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">order</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">order_parameter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-<span class="n">plot_order</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
-           <span class="n">order</span><span class="p">,</span>
-           <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;data/00.png&quot;</span><span class="p">,</span>
-           <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> 
-           <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;r(t)&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="figure align-default" id="id21">
-<a class="reference internal image-reference" href="_images/00.png"><img alt="_images/00.png" src="_images/00.png" style="width: 450.0px; height: 300.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Kuramoto order parameter vs time, for a complete network at a fixed coupling strength.</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
-</div>
-</div>
-<div class="section" id="module-jitcsim.examples.scripts.02_ode_kuramoto_II_single_param_repeated_run">
-<span id="control-parameters"></span><span id="repeated"></span><h4>Control parameters<a class="headerlink" href="#module-jitcsim.examples.scripts.02_ode_kuramoto_II_single_param_repeated_run" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="module-jitcsim.examples.scripts.examples_kuramoto.02_ode_kuramoto_II_single_param_repeated_run">
+<span id="control-parameters"></span><span id="repeated"></span><span id="tutorial"></span><h4>Control parameters<a class="headerlink" href="#module-jitcsim.examples.scripts.examples_kuramoto.02_ode_kuramoto_II_single_param_repeated_run" title="Permalink to this heading">¶</a></h4>
 <p>If you try to run a simulation multiple times and for each simulation change a parameter, it will be more efficient to avoid multiple compiling the model and use control parameter.
 In next example we consider the <cite>coupling</cite> as a control parameter:</p>
 <p>The initial phase also could be changed in repeated simulations.
 The output is plotting the time average of the Kuramoto order parameter vs coupling.
 Only difference with respect to the previous examples is shown:</p>
-<div class="literal-block-wrapper docutils container" id="id22">
-<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">../../jitcsim/examples/scripts/02_ode_kuramoto_II_single_param_repeated_run.py</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">../../jitcsim/examples/scripts/examples_kuramoto/02_ode_kuramoto_II_single_param_repeated_run.py</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_ensembles</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;control&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;coupling&#39;</span><span class="p">],</span>
@@ -212,13 +132,13 @@ Compile <span class="nb">time</span> : <span class="m">1</span>.578 secondes.
 Simulation time: <span class="m">3</span>.385 seconds
 </pre></div>
 </div>
-<div class="figure align-default" id="id23">
+<div class="figure align-default" id="id21">
 <a class="reference internal image-reference" href="_images/02.png"><img alt="_images/02.png" src="_images/02.png" style="width: 450.0px; height: 300.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Time average of the Kuramoto order parameter vs coupling strength.</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Time average of the Kuramoto order parameter vs coupling strength.</span><a class="headerlink" href="#id21" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<div class="section" id="module-jitcsim.examples.scripts.01_sde_kuramoto_II_single_param">
-<span id="sde"></span><h4>SDE<a class="headerlink" href="#module-jitcsim.examples.scripts.01_sde_kuramoto_II_single_param" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="module-jitcsim.examples.scripts.examples_kuramoto.01_sde_kuramoto_II_single_param">
+<span id="sde"></span><h4>SDE<a class="headerlink" href="#module-jitcsim.examples.scripts.examples_kuramoto.01_sde_kuramoto_II_single_param" title="Permalink to this heading">¶</a></h4>
 <p><strong>Simulation of the Kuramoto model with noise.</strong></p>
 <div class="math">
 <p><img src="_images/math/be4decf6452aa7108519d5a2e846f971a42badc3.png" alt="\frac{d\theta_i}{dt} = \omega_i + \xi_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - \alpha)"/></p>
@@ -227,8 +147,8 @@ Simulation time: <span class="m">3</span>.385 seconds
 The initial phase also could be changed in repeated simulations.
 The output is plotting the Kuramoto order parameter vs time.</p>
 <p>Start with importing modules</p>
-<div class="literal-block-wrapper docutils container" id="id24">
-<div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">../../jitcsim/examples/scripts/01_sde_kuramoto_II_single_param.py</span><a class="headerlink" href="#id24" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">../../jitcsim/examples/scripts/examples_kuramoto/01_sde_kuramoto_II_single_param.py</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
 <span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">normal</span>
@@ -291,15 +211,15 @@ The output is plotting the Kuramoto order parameter vs time.</p>
            <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;r(t)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="figure align-default" id="id25">
+<div class="figure align-default" id="id23">
 <a class="reference internal image-reference" href="_images/01_sde.png"><img alt="_images/01_sde.png" src="_images/01_sde.png" style="width: 450.0px; height: 300.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Kuramoto order parameter vs time for complete network. The system of equations include noise.</span><a class="headerlink" href="#id25" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Kuramoto order parameter vs time for complete network. The system of equations include noise.</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
 </div>
 </div>
-<div class="section" id="module-jitcsim.examples.scripts.01_dde_kuramoto_II_single_param">
-<span id="dde"></span><h4>DDE<a class="headerlink" href="#module-jitcsim.examples.scripts.01_dde_kuramoto_II_single_param" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="module-jitcsim.examples.scripts.examples_kuramoto.01_dde_kuramoto_II_single_param">
+<span id="dde"></span><h4>DDE<a class="headerlink" href="#module-jitcsim.examples.scripts.examples_kuramoto.01_dde_kuramoto_II_single_param" title="Permalink to this heading">¶</a></h4>
 <p><strong>Simulation of the Kuramoto model with delay.</strong></p>
-<p>The system of equations reads <a class="reference internal" href="#yeung1999" id="id8"><span>[Yeung1999]</span></a> :</p>
+<p>The system of equations reads <a class="reference internal" href="#yeung1999" id="id6"><span>[Yeung1999]</span></a> :</p>
 <div class="math">
 <p><img src="_images/math/f2bac9de0383bc44a020d6d230cdfb8c0d13b5e4.png" alt="\frac{d\theta_i}{dt} = \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j(t - \tau_{ij}) - y_i - \alpha)"/></p>
 </div><p>The control parameter of the model is coupling.
@@ -363,24 +283,24 @@ To suppress warning messages use <code class="code docutils literal notranslate"
            <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span>
 </pre></div>
 </div>
-<div class="figure align-default" id="id26">
+<div class="figure align-default" id="id24">
 <a class="reference internal image-reference" href="_images/01_dde.png"><img alt="_images/01_dde.png" src="_images/01_dde.png" style="width: 450.0px; height: 300.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Kuramoto order parameter vs time for a complete network. The system of equations include delay.</span><a class="headerlink" href="#id26" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Kuramoto order parameter vs time for a complete network. The system of equations include delay.</span><a class="headerlink" href="#id24" title="Permalink to this image">¶</a></p>
 </div>
 <dl class="citation">
-<dt class="label" id="yeung1999"><span class="brackets"><a class="fn-backref" href="#id8">Yeung1999</a></span></dt>
+<dt class="label" id="yeung1999"><span class="brackets"><a class="fn-backref" href="#id6">Yeung1999</a></span></dt>
 <dd><p>Yeung, M.S. and Strogatz, S.H., 1999. Time delay in the Kuramoto model of coupled oscillators. Physical Review Letters, 82(3), p.648. Figure 3.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="module-jitcsim.examples.scripts.03_ode_kuramoto_II_single_param_parallel">
-<span id="parallel-using-multiprocessing"></span><h4>Parallel using Multiprocessing<a class="headerlink" href="#module-jitcsim.examples.scripts.03_ode_kuramoto_II_single_param_parallel" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="module-jitcsim.examples.scripts.examples_kuramoto.03_ode_kuramoto_II_single_param_parallel">
+<span id="parallel-using-multiprocessing"></span><h4>Parallel using Multiprocessing<a class="headerlink" href="#module-jitcsim.examples.scripts.examples_kuramoto.03_ode_kuramoto_II_single_param_parallel" title="Permalink to this heading">¶</a></h4>
 <p>In this example we use <strong>multiprocessing</strong> to speed up the computation by runnig the programm in parallel.
 The parameter of the model is coupling.</p>
 <p>The output is plotting the time average of the Kuramoto order parameter vs coupling.</p>
 <p>The only difference with respect to the previous examples is as follows:</p>
-<div class="literal-block-wrapper docutils container" id="id27">
-<div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">../../jitcsim/examples/scripts/03_ode_kuramoto_II_single_param_parallel.py</span><a class="headerlink" href="#id27" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">../../jitcsim/examples/scripts/examples_kuramoto/03_ode_kuramoto_II_single_param_parallel.py</span><a class="headerlink" href="#id25" title="Permalink to this code">¶</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
 </pre></div>
 </div>
@@ -414,13 +334,13 @@ The parameter of the model is coupling.</p>
 </div>
 </div>
 <div class="section" id="module-jitcsim.examples.scripts.07_ode_explosive_synchronization">
-<span id="explosive-synchronization-and-hysteresis-loop"></span><h4>Explosive synchronization and hysteresis loop<a class="headerlink" href="#module-jitcsim.examples.scripts.07_ode_explosive_synchronization" title="Permalink to this headline">¶</a></h4>
+<span id="explosive-synchronization-and-hysteresis-loop"></span><h4>Explosive synchronization and hysteresis loop<a class="headerlink" href="#module-jitcsim.examples.scripts.07_ode_explosive_synchronization" title="Permalink to this heading">¶</a></h4>
 <p>Consider the Kuramoto model on a Frequency Gap-conditioned (FGC) random network.
 To construct such a network which is proper to see explosive synchronization, we make a link from node i to j only if
-<img class="math" src="_images/math/8e1684a43b9e03b2cc4cb8a78d5c99dc513abf33.png" alt="|\omega_i - \omega_j|&gt; \gamma"/>, where <img class="math" src="_images/math/34d137cf01c787ecda732761c3f95b0f65a6c3e9.png" alt="\gamma"/> is frequency threshold <a class="reference internal" href="#leyva2013" id="id9"><span>[Leyva2013]</span></a> .</p>
+<img class="math" src="_images/math/8e1684a43b9e03b2cc4cb8a78d5c99dc513abf33.png" alt="|\omega_i - \omega_j|&gt; \gamma"/>, where <img class="math" src="_images/math/34d137cf01c787ecda732761c3f95b0f65a6c3e9.png" alt="\gamma"/> is frequency threshold <a class="reference internal" href="#leyva2013" id="id7"><span>[Leyva2013]</span></a> .</p>
 <p>Start with importing modules</p>
-<div class="literal-block-wrapper docutils container" id="id28">
-<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">../../jitcsim/examples/scripts/07_ode_explosive_synchronization.py</span><a class="headerlink" href="#id28" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">../../jitcsim/examples/scripts/07_ode_explosive_synchronization.py</span><a class="headerlink" href="#id26" title="Permalink to this code">¶</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -485,29 +405,29 @@ To construct such a network which is proper to see explosive synchronization, we
 <span class="n">r_forward</span><span class="p">,</span> <span class="n">r_backward</span> <span class="o">=</span> <span class="n">orders</span>
 </pre></div>
 </div>
-<div class="figure align-default" id="id29">
+<div class="figure align-default" id="id27">
 <a class="reference internal image-reference" href="_images/expl.png"><img alt="_images/expl.png" src="_images/expl.png" style="width: 750.0px; height: 337.5px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Time average of the Kuramoto order parameter in forward and backward direction and appearence of the hysteresis loop in explosive synchronization.</span><a class="headerlink" href="#id29" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Time average of the Kuramoto order parameter in forward and backward direction and appearence of the hysteresis loop in explosive synchronization.</span><a class="headerlink" href="#id27" title="Permalink to this image">¶</a></p>
 </div>
 <dl class="citation">
-<dt class="label" id="leyva2013"><span class="brackets"><a class="fn-backref" href="#id9">Leyva2013</a></span></dt>
+<dt class="label" id="leyva2013"><span class="brackets"><a class="fn-backref" href="#id7">Leyva2013</a></span></dt>
 <dd><p>Leyva, I., Navas, A., Sendina-Nadal, I., Almendral, J.A., Buldu, J.M., Zanin, M., Papo, D. and Boccaletti, S., 2013. Explosive transitions to synchronization in networks of phase oscillators. Scientific reports, 3(1), pp.1-5.</p>
 </dd>
 </dl>
-<p>There is also another exaple for calculation of explosive synchronization and hysteresis loop for the second order Kuramoto model <a class="reference internal" href="#kachhvah" id="id10"><span>[Kachhvah]</span></a>. Look at <cite>papers/Kachhavah2017</cite> for more details.</p>
+<p>There is also another exaple for calculation of explosive synchronization and hysteresis loop for the second order Kuramoto model <a class="reference internal" href="#kachhvah" id="id8"><span>[Kachhvah]</span></a>. Look at <cite>papers/Kachhavah2017</cite> for more details.</p>
 <dl class="citation">
-<dt class="label" id="kachhvah"><span class="brackets"><a class="fn-backref" href="#id10">Kachhvah</a></span></dt>
+<dt class="label" id="kachhvah"><span class="brackets"><a class="fn-backref" href="#id8">Kachhvah</a></span></dt>
 <dd><p>Kachhvah, A.D. and Jalan, S., 2017. Multiplexing induced explosive synchronization in Kuramoto oscillators with inertia. EPL (Europhysics Letters), 119(6), p.60005.</p>
 </dd>
 </dl>
 </div>
 <div class="section" id="module-jitcsim.examples.scripts.08_ode_lyapunov_exponents">
-<span id="lyapunov-exponents"></span><h4>Lyapunov exponents<a class="headerlink" href="#module-jitcsim.examples.scripts.08_ode_lyapunov_exponents" title="Permalink to this headline">¶</a></h4>
+<span id="lyapunov-exponents"></span><h4>Lyapunov exponents<a class="headerlink" href="#module-jitcsim.examples.scripts.08_ode_lyapunov_exponents" title="Permalink to this heading">¶</a></h4>
 <p>In this example we are going to calculate the Lyapunov exponent spectrum for the Kuramoto model on feed forward loop.</p>
 <p>The output is Lyapunov exponent (LE) spectrum vs time.</p>
 <p>Start with importing modules</p>
-<div class="literal-block-wrapper docutils container" id="id30">
-<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">../../jitcsim/examples/scripts/08_ode_lyapunov_exponents.py</span><a class="headerlink" href="#id30" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">../../jitcsim/examples/scripts/08_ode_lyapunov_exponents.py</span><a class="headerlink" href="#id28" title="Permalink to this code">¶</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
 <span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -556,21 +476,21 @@ Usually we need 2 or 3 largets LE. Increasing the number of LEs make the compila
 <span class="n">t</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="figure align-default" id="id31">
+<div class="figure align-default" id="id29">
 <a class="reference internal image-reference" href="_images/lyap.png"><img alt="_images/lyap.png" src="_images/lyap.png" style="width: 512.0px; height: 384.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">The LEs of the Kuramoto oscillators on feed forward loop.</span><a class="headerlink" href="#id31" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">The LEs of the Kuramoto oscillators on feed forward loop.</span><a class="headerlink" href="#id29" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="adding-new-models">
-<h2>Adding new models<a class="headerlink" href="#adding-new-models" title="Permalink to this headline">¶</a></h2>
+<h2>Adding new models<a class="headerlink" href="#adding-new-models" title="Permalink to this heading">¶</a></h2>
 <p>One the main purpose of JiTCSim is flexiblity and ease of development for users with medium knowledge about Python. No exprience on C/C++ is required.
 Process of adding new model is strightforward as we see in the following.
 The system of equations need to be provided in Python syntax, considering requirements of JiTC*DE, and
 also using available models (using ODE/DDE/SDE sovlers) as template.</p>
 <div class="section" id="module-jitcsim.models.damp_oscillator">
-<span id="damp-oscillator"></span><h3>Damp oscillator<a class="headerlink" href="#module-jitcsim.models.damp_oscillator" title="Permalink to this headline">¶</a></h3>
+<span id="damp-oscillator"></span><h3>Damp oscillator<a class="headerlink" href="#module-jitcsim.models.damp_oscillator" title="Permalink to this heading">¶</a></h3>
 <div class="math">
 <p><img src="_images/math/2d4f8d7bd45981575cee3002fb76270caf28c0c5.png" alt="\frac{dx}{dt} &amp;= x-xy-ax^2 \
 
@@ -578,8 +498,8 @@ also using available models (using ODE/DDE/SDE sovlers) as template.</p>
 </div><p>To add a new damp oscillator model we need to define the model in <cite>jitcsim/models/damp_oscillator.py</cite>
 The file can be used as a template for any other ODE model. For other models, <cite>rhs()</cite> need to be redefined.</p>
 <p>Starting with a few imports</p>
-<div class="literal-block-wrapper docutils container" id="id32">
-<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">../../jitcsim/models/damp_oscillator.py</span><a class="headerlink" href="#id32" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id30">
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">../../jitcsim/models/damp_oscillator.py</span><a class="headerlink" href="#id30" title="Permalink to this code">¶</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -613,20 +533,20 @@ The file can be used as a template for any other ODE model. For other models, <c
 </div>
 </div>
 <div class="section" id="auto-generated-documentation">
-<h2>Auto Generated Documentation<a class="headerlink" href="#auto-generated-documentation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="kuramoto-model">
-<h3>Kuramoto Model<a class="headerlink" href="#kuramoto-model" title="Permalink to this headline">¶</a></h3>
-<p>The following are the main classes for the Kuramoto model including:</p>
+<h2>Auto Generated Documentation<a class="headerlink" href="#auto-generated-documentation" title="Permalink to this heading">¶</a></h2>
 <div class="line-block">
 <div class="line"><a class="reference internal" href="#km-ode"><span class="std std-ref">ODE Kuramoto model class</span></a></div>
 <div class="line"><a class="reference internal" href="#km-sde"><span class="std std-ref">SDE Kuramoto model class</span></a></div>
 <div class="line"><a class="reference internal" href="#km-dde"><span class="std std-ref">DDE Kuramoto model class</span></a></div>
 </div>
+<div class="section" id="kuramoto-model">
+<h3>Kuramoto Model<a class="headerlink" href="#kuramoto-model" title="Permalink to this heading">¶</a></h3>
+<p>The following are the main classes for the Kuramoto model including:</p>
 <div class="section" id="the-main-class-for-the-ode-kuramot-model">
-<span id="km-ode"></span><h4>The main class for the ODE Kuramot model<a class="headerlink" href="#the-main-class-for-the-ode-kuramot-model" title="Permalink to this headline">¶</a></h4>
+<span id="km-ode"></span><h4>The main class for the ODE Kuramot model<a class="headerlink" href="#the-main-class-for-the-ode-kuramot-model" title="Permalink to this heading">¶</a></h4>
 <dl class="py class">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_Base">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_ode.</span></code><code class="sig-name descname"><span class="pre">Kuramoto_Base</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_Base">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_ode.</span></span><span class="sig-name descname"><span class="pre">Kuramoto_Base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the Kuramoto model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -643,16 +563,16 @@ The file can be used as a template for any other ODE model. For other models, <c
 <li><p><strong>integration_method</strong> (<em>str</em>) – <dl>
 <dt>name of the integrator</dt><dd><p>One of the following (or a new method supported by either backend):</p>
 <ul>
-<li><p><cite>”dopri5”</cite> – Dormand’s and Prince’s explicit fifth-order method via <cite>ode</cite></p></li>
-<li><p><cite>”RK45”</cite> – Dormand’s and Prince’s explicit fifth-order method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”dop853”</cite> – DoP853 (explicit) via <cite>ode</cite></p></li>
-<li><p><cite>”DOP853”</cite> – DoP853 (explicit) via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”RK23”</cite> – Bogacki’s and Shampine’s explicit third-order method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”BDF”</cite> – Implicit backward-differentiation formula via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”lsoda”</cite> – LSODA (implicit) via <cite>ode</cite></p></li>
-<li><p><cite>”LSODA”</cite> – LSODA (implicit) via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”Radau”</cite> – The implicit Radau method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”vode”</cite> – VODE (implicit) via <cite>ode</cite></p></li>
+<li><p><cite>”dopri5”</cite> - Dormand’s and Prince’s explicit fifth-order method via <cite>ode</cite></p></li>
+<li><p><cite>”RK45”</cite> - Dormand’s and Prince’s explicit fifth-order method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”dop853”</cite> - DoP853 (explicit) via <cite>ode</cite></p></li>
+<li><p><cite>”DOP853”</cite> - DoP853 (explicit) via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”RK23”</cite> - Bogacki’s and Shampine’s explicit third-order method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”BDF”</cite> - Implicit backward-differentiation formula via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”lsoda”</cite> - LSODA (implicit) via <cite>ode</cite></p></li>
+<li><p><cite>”LSODA”</cite> - LSODA (implicit) via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”Radau”</cite> - The implicit Radau method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”vode”</cite> - VODE (implicit) via <cite>ode</cite></p></li>
 </ul>
 <p>The <cite>solve_ivp</cite> methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with <cite>“dopri5”</cite>.</p>
 </dd>
@@ -666,8 +586,8 @@ The file can be used as a template for any other ODE model. For other models, <c
 </dd>
 </dl>
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_Base.compile">
-<code class="sig-name descname"><span class="pre">compile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base.compile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base.compile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_Base.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modulename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'km'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base.compile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base.compile" title="Permalink to this definition">¶</a></dt>
 <dd><p>compile model and produce shared library.
 translates the derivative to C code using SymEngine’s <a class="reference external" href="https://github.com/symengine/symengine/pull/1054">C-code printer</a>.</p>
 <dl class="field-list simple">
@@ -696,8 +616,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_Base.local_order_parameter">
-<code class="sig-name descname"><span class="pre">local_order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base.local_order_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base.local_order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_Base.local_order_parameter">
+<span class="sig-name descname"><span class="pre">local_order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base.local_order_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base.local_order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate local Kuramoto order parameter for given node indices</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -710,8 +630,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_Base.order_parameter">
-<code class="sig-name descname"><span class="pre">order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base.order_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base.order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_Base.order_parameter">
+<span class="sig-name descname"><span class="pre">order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base.order_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base.order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate the Kuramoto order parameter</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -721,8 +641,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_Base.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base.simulate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_Base.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_Base.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_Base.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 coordinates and times</p>
 <dl class="field-list simple">
@@ -743,8 +663,8 @@ coordinates and times</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_II">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_ode.</span></code><code class="sig-name descname"><span class="pre">Kuramoto_II</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_II"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_II">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_ode.</span></span><span class="sig-name descname"><span class="pre">Kuramoto_II</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_II"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Kuramoto model type II</strong></p>
 <div class="math">
 <p><img src="_images/math/185f8af51c5bebfc7a50ec212584a9cdf16e4ead.png" alt="\frac{d\theta_i}{dt} &amp;= \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - \alpha)"/></p>
@@ -763,16 +683,16 @@ coordinates and times</p>
 <li><p><strong>integration_method</strong> (<em>str</em>) – <dl>
 <dt>name of the integrator</dt><dd><p>One of the following (or a new method supported by either backend):</p>
 <ul>
-<li><p><cite>”dopri5”</cite> – Dormand’s and Prince’s explicit fifth-order method via <cite>ode</cite></p></li>
-<li><p><cite>”RK45”</cite> – Dormand’s and Prince’s explicit fifth-order method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”dop853”</cite> – DoP853 (explicit) via <cite>ode</cite></p></li>
-<li><p><cite>”DOP853”</cite> – DoP853 (explicit) via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”RK23”</cite> – Bogacki’s and Shampine’s explicit third-order method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”BDF”</cite> – Implicit backward-differentiation formula via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”lsoda”</cite> – LSODA (implicit) via <cite>ode</cite></p></li>
-<li><p><cite>”LSODA”</cite> – LSODA (implicit) via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”Radau”</cite> – The implicit Radau method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”vode”</cite> – VODE (implicit) via <cite>ode</cite></p></li>
+<li><p><cite>”dopri5”</cite> - Dormand’s and Prince’s explicit fifth-order method via <cite>ode</cite></p></li>
+<li><p><cite>”RK45”</cite> - Dormand’s and Prince’s explicit fifth-order method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”dop853”</cite> - DoP853 (explicit) via <cite>ode</cite></p></li>
+<li><p><cite>”DOP853”</cite> - DoP853 (explicit) via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”RK23”</cite> - Bogacki’s and Shampine’s explicit third-order method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”BDF”</cite> - Implicit backward-differentiation formula via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”lsoda”</cite> - LSODA (implicit) via <cite>ode</cite></p></li>
+<li><p><cite>”LSODA”</cite> - LSODA (implicit) via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”Radau”</cite> - The implicit Radau method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”vode”</cite> - VODE (implicit) via <cite>ode</cite></p></li>
 </ul>
 <p>The <cite>solve_ivp</cite> methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with <cite>“dopri5”</cite>.</p>
 </dd>
@@ -786,8 +706,8 @@ coordinates and times</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_II.compile">
-<code class="sig-name descname"><span class="pre">compile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.compile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_II.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modulename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'km'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.compile" title="Permalink to this definition">¶</a></dt>
 <dd><p>compile model and produce shared library.
 translates the derivative to C code using SymEngine’s <a class="reference external" href="https://github.com/symengine/symengine/pull/1054">C-code printer</a>.</p>
 <dl class="field-list simple">
@@ -816,8 +736,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_II.local_order_parameter">
-<code class="sig-name descname"><span class="pre">local_order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.local_order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_II.local_order_parameter">
+<span class="sig-name descname"><span class="pre">local_order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.local_order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate local Kuramoto order parameter for given node indices</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -830,8 +750,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_II.order_parameter">
-<code class="sig-name descname"><span class="pre">order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_II.order_parameter">
+<span class="sig-name descname"><span class="pre">order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate the Kuramoto order parameter</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -841,16 +761,16 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_II.rhs">
-<code class="sig-name descname"><span class="pre">rhs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_II.rhs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.rhs" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_II.rhs">
+<span class="sig-name descname"><span class="pre">rhs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_II.rhs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.rhs" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Kuramoto model of type II</strong></p>
 <div class="math">
 <p><img src="_images/math/185f8af51c5bebfc7a50ec212584a9cdf16e4ead.png" alt="\frac{d\theta_i}{dt} &amp;= \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - \alpha)"/></p>
 </div></dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_II.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.simulate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_II.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_II.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 coordinates and times</p>
 <dl class="field-list simple">
@@ -871,8 +791,8 @@ coordinates and times</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_I">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_ode.</span></code><code class="sig-name descname"><span class="pre">Kuramoto_I</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_I"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_I">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_ode.</span></span><span class="sig-name descname"><span class="pre">Kuramoto_I</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_I"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Kuramot model type I</strong></p>
 <div class="math">
 <p><img src="_images/math/5a7b1bb2e30e974fa8d3feb9bd5b3eb44495ff11.png" alt="\frac{d\theta_i}{dt} = \omega_i + 0.5 * \sum_{j=0}^{N-1} a_{i,j} \Big(1 - \cos(y_j - y_i - \alpha) \Big)"/></p>
@@ -891,16 +811,16 @@ coordinates and times</p>
 <li><p><strong>integration_method</strong> (<em>str</em>) – <dl>
 <dt>name of the integrator</dt><dd><p>One of the following (or a new method supported by either backend):</p>
 <ul>
-<li><p><cite>”dopri5”</cite> – Dormand’s and Prince’s explicit fifth-order method via <cite>ode</cite></p></li>
-<li><p><cite>”RK45”</cite> – Dormand’s and Prince’s explicit fifth-order method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”dop853”</cite> – DoP853 (explicit) via <cite>ode</cite></p></li>
-<li><p><cite>”DOP853”</cite> – DoP853 (explicit) via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”RK23”</cite> – Bogacki’s and Shampine’s explicit third-order method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”BDF”</cite> – Implicit backward-differentiation formula via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”lsoda”</cite> – LSODA (implicit) via <cite>ode</cite></p></li>
-<li><p><cite>”LSODA”</cite> – LSODA (implicit) via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”Radau”</cite> – The implicit Radau method via <cite>solve_ivp</cite></p></li>
-<li><p><cite>”vode”</cite> – VODE (implicit) via <cite>ode</cite></p></li>
+<li><p><cite>”dopri5”</cite> - Dormand’s and Prince’s explicit fifth-order method via <cite>ode</cite></p></li>
+<li><p><cite>”RK45”</cite> - Dormand’s and Prince’s explicit fifth-order method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”dop853”</cite> - DoP853 (explicit) via <cite>ode</cite></p></li>
+<li><p><cite>”DOP853”</cite> - DoP853 (explicit) via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”RK23”</cite> - Bogacki’s and Shampine’s explicit third-order method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”BDF”</cite> - Implicit backward-differentiation formula via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”lsoda”</cite> - LSODA (implicit) via <cite>ode</cite></p></li>
+<li><p><cite>”LSODA”</cite> - LSODA (implicit) via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”Radau”</cite> - The implicit Radau method via <cite>solve_ivp</cite></p></li>
+<li><p><cite>”vode”</cite> - VODE (implicit) via <cite>ode</cite></p></li>
 </ul>
 <p>The <cite>solve_ivp</cite> methods are usually slightly faster for large differential equations, but they come with a massive overhead that makes them considerably slower for small differential equations. Implicit solvers are slower than explicit ones, except for stiff problems. If you don’t know what to choose, start with <cite>“dopri5”</cite>.</p>
 </dd>
@@ -914,8 +834,8 @@ coordinates and times</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_I.compile">
-<code class="sig-name descname"><span class="pre">compile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.compile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_I.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modulename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'km'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.compile" title="Permalink to this definition">¶</a></dt>
 <dd><p>compile model and produce shared library.
 translates the derivative to C code using SymEngine’s <a class="reference external" href="https://github.com/symengine/symengine/pull/1054">C-code printer</a>.</p>
 <dl class="field-list simple">
@@ -944,8 +864,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_I.local_order_parameter">
-<code class="sig-name descname"><span class="pre">local_order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.local_order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_I.local_order_parameter">
+<span class="sig-name descname"><span class="pre">local_order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.local_order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate local Kuramoto order parameter for given node indices</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -958,8 +878,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_I.order_parameter">
-<code class="sig-name descname"><span class="pre">order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_I.order_parameter">
+<span class="sig-name descname"><span class="pre">order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate the Kuramoto order parameter</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -969,8 +889,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_I.rhs">
-<code class="sig-name descname"><span class="pre">rhs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_I.rhs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.rhs" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_I.rhs">
+<span class="sig-name descname"><span class="pre">rhs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#Kuramoto_I.rhs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.rhs" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Kuramoto model of type I</strong></p>
 <div class="math">
 <p><img src="_images/math/5a7b1bb2e30e974fa8d3feb9bd5b3eb44495ff11.png" alt="\frac{d\theta_i}{dt} = \omega_i + 0.5 * \sum_{j=0}^{N-1} a_{i,j} \Big(1 - \cos(y_j - y_i - \alpha) \Big)"/></p>
@@ -981,8 +901,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.Kuramoto_I.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.simulate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.Kuramoto_I.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.Kuramoto_I.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 coordinates and times</p>
 <dl class="field-list simple">
@@ -1003,16 +923,16 @@ coordinates and times</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_ode.</span></code><code class="sig-name descname"><span class="pre">SOKM_SingleLayer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#SOKM_SingleLayer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_ode.</span></span><span class="sig-name descname"><span class="pre">SOKM_SingleLayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#SOKM_SingleLayer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Second order Kuramoto Model for single layer network</strong></p>
 <div class="math">
 <p><img src="_images/math/0166aaad777ce7acb3eb43faf1ab13a2d3cbe32d.png" alt="m \frac{d^2 \theta_i(t)}{dt^2}+\frac{d\theta_i(t)}{dt} = \omega_i + \frac{\lambda}{\langle k \rangle} \sum_{j=1}^N \sin \Big[ \theta_j(t) - \theta_i(t) \Big]"/></p>
 </div><p>Reference:</p>
 <p>Kachhvah, A.D. and Jalan, S., 2017. Multiplexing induced explosive synchronization in Kuramoto oscillators with inertia. EPL (Europhysics Letters), 119(6), p.60005.</p>
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer.compile">
-<code class="sig-name descname"><span class="pre">compile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#SOKM_SingleLayer.compile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer.compile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#SOKM_SingleLayer.compile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer.compile" title="Permalink to this definition">¶</a></dt>
 <dd><p>compile model and produce shared library.
 translates the derivative to C code using SymEngine’s <a class="reference external" href="https://github.com/symengine/symengine/pull/1054">C-code printer</a>.</p>
 <dl class="field-list simple">
@@ -1041,8 +961,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer.local_order_parameter">
-<code class="sig-name descname"><span class="pre">local_order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer.local_order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer.local_order_parameter">
+<span class="sig-name descname"><span class="pre">local_order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer.local_order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate local Kuramoto order parameter for given node indices</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1055,8 +975,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer.order_parameter">
-<code class="sig-name descname"><span class="pre">order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer.order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer.order_parameter">
+<span class="sig-name descname"><span class="pre">order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer.order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate the Kuramoto order parameter</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1066,8 +986,8 @@ If smaller than 1, no chunking will happen.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#SOKM_SingleLayer.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer.simulate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_ode.SOKM_SingleLayer.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_ode.html#SOKM_SingleLayer.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_ode.SOKM_SingleLayer.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Integrate the system of equations and return the
 coordinates and times</p>
 <dl class="simple">
@@ -1081,13 +1001,12 @@ coordinates and times</p>
 
 </dd></dl>
 
-<hr class="docutils" />
 </div>
 <div class="section" id="the-main-class-for-the-sde-kuramot-model">
-<span id="km-sde"></span><h4>The main class for the SDE Kuramot model<a class="headerlink" href="#the-main-class-for-the-sde-kuramot-model" title="Permalink to this headline">¶</a></h4>
+<span id="km-sde"></span><h4>The main class for the SDE Kuramot model<a class="headerlink" href="#the-main-class-for-the-sde-kuramot-model" title="Permalink to this heading">¶</a></h4>
 <dl class="py class">
-<dt id="jitcsim.models.kuramoto_sde.Kuramoto_Base">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_sde.</span></code><code class="sig-name descname"><span class="pre">Kuramoto_Base</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_sde.Kuramoto_Base">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_sde.</span></span><span class="sig-name descname"><span class="pre">Kuramoto_Base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the Kuramoto model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1110,15 +1029,15 @@ coordinates and times</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_sde.Kuramoto_Base.set_integrator_parameters">
-<code class="sig-name descname"><span class="pre">set_integrator_parameters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base.set_integrator_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base.set_integrator_parameters" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_sde.Kuramoto_Base.set_integrator_parameters">
+<span class="sig-name descname"><span class="pre">set_integrator_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base.set_integrator_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base.set_integrator_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>!
 set properties for integrator</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_Base.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_Base.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 coordinates and times</p>
 <dl class="field-list simple">
@@ -1139,8 +1058,8 @@ coordinates and times</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="jitcsim.models.kuramoto_sde.Kuramoto_II">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_sde.</span></code><code class="sig-name descname"><span class="pre">Kuramoto_II</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_II"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_sde.Kuramoto_II">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_sde.</span></span><span class="sig-name descname"><span class="pre">Kuramoto_II</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_II"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Kuramoto model with noise.</strong></p>
 <div class="math">
 <p><img src="_images/math/be4decf6452aa7108519d5a2e846f971a42badc3.png" alt="\frac{d\theta_i}{dt} = \omega_i + \xi_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - \alpha)"/></p>
@@ -1165,29 +1084,29 @@ coordinates and times</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_sde.Kuramoto_II.g_">
-<code class="sig-name descname"><span class="pre">g_</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_II.g_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.g_" title="Permalink to this definition">¶</a></dt>
-<dd><p>to do.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="jitcsim.models.kuramoto_sde.Kuramoto_II.rhs">
-<code class="sig-name descname"><span class="pre">rhs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_II.rhs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.rhs" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_sde.Kuramoto_II.f_sym">
+<span class="sig-name descname"><span class="pre">f_sym</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_II.f_sym"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.f_sym" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Kuramoto model of type II</strong></p>
 <div class="math">
 <p><img src="_images/math/be4decf6452aa7108519d5a2e846f971a42badc3.png" alt="\frac{d\theta_i}{dt} = \omega_i + \xi_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - \alpha)"/></p>
 </div></dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_sde.Kuramoto_II.set_integrator_parameters">
-<code class="sig-name descname"><span class="pre">set_integrator_parameters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.set_integrator_parameters" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_sde.Kuramoto_II.g_sym">
+<span class="sig-name descname"><span class="pre">g_sym</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_sde.html#Kuramoto_II.g_sym"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.g_sym" title="Permalink to this definition">¶</a></dt>
+<dd><p>to do.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_sde.Kuramoto_II.set_integrator_parameters">
+<span class="sig-name descname"><span class="pre">set_integrator_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.set_integrator_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>!
 set properties for integrator</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_sde.Kuramoto_II.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.simulate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_sde.Kuramoto_II.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_sde.Kuramoto_II.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 coordinates and times</p>
 <dl class="field-list simple">
@@ -1206,13 +1125,94 @@ coordinates and times</p>
 
 </dd></dl>
 
+</div>
+</div>
 <hr class="docutils" />
+<div class="section" id="id18">
+<h3>Tutorial<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h3>
+<p>Considering the Kuramoto model. The following examples simulate a network of coupled Kuramoto oscillators with frustration, delay and noise.</p>
+<div class="section" id="id19">
+<h4>ODE<a class="headerlink" href="#id19" title="Permalink to this heading">¶</a></h4>
+<span class="target" id="module-jitcsim.examples.scripts.examples_kuramoto.00_ode_kuramoto_II"></span><p><strong>Simulation of the Kuramoto model on complete network.</strong></p>
+<div class="math">
+<p><img src="_images/math/185f8af51c5bebfc7a50ec212584a9cdf16e4ead.png" alt="\frac{d\theta_i}{dt} &amp;= \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j - y_i - \alpha)"/></p>
+</div><p>where <img class="math" src="_images/math/71b2d54105337cb4f5a4d98c526efca03bbf0b26.png" alt="\theta_i"/> is phase of oscillator i, <img class="math" src="_images/math/74ba2b409c080b4e3153c234247143775552abb7.png" alt="\omega_i"/> angular frequency of oscillator i, <img class="math" src="_images/math/2f5aa019312e1bbc969deab8dca8b00f76025404.png" alt="\alpha"/> frustration, <img class="math" src="_images/math/3bfb3a64189a14b2704f4610827762d5e3145114.png" alt="N"/> number of oscillators, <img class="math" src="_images/math/e61098db468e82d5c147bb76f8913313d6334fc1.png" alt="a_{i,j}"/> is an element of the adjacency matrix, <img class="math" src="_images/math/042f3fa4cf640042c5cafeb198823fa6ff71a5c2.png" alt="a_{i,j}=1"/> if there is a directed link from the node j to i; otherwise <img class="math" src="_images/math/b48b48accc716b8ff74d4e6c8ea34219851968a1.png" alt="a_{i,j}=0"/>.</p>
+<p>The output of the example is plotting the Kuramoto order parameter vs time.</p>
+<p>Starting with a few imports</p>
+<div class="literal-block-wrapper docutils container" id="id31">
+<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">../../jitcsim/examples/scripts/examples_kuramoto/00_ode_kuramoto_II.py</span><a class="headerlink" href="#id31" title="Permalink to this code">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">normal</span>
+<span class="kn">from</span> <span class="nn">jitcsim.models.kuramoto_ode</span> <span class="kn">import</span> <span class="n">Kuramoto_II</span>
+<span class="kn">from</span> <span class="nn">jitcsim</span> <span class="kn">import</span> <span class="n">plot_order</span>
+<span class="kn">from</span> <span class="nn">jitcsim</span> <span class="kn">import</span> <span class="n">make_network</span>
+</pre></div>
+</div>
+</div>
+<p>then we set the parameters of the system. We consier a complete network with <img class="math" src="_images/math/3bfb3a64189a14b2704f4610827762d5e3145114.png" alt="N"/> oscillators.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">omega0</span> <span class="o">=</span> <span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">initial_state</span> <span class="o">=</span> <span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">pi</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="c1"># make complete network</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">make_network</span><span class="p">()</span>
+<span class="n">adj</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;N&#39;</span><span class="p">:</span> <span class="n">N</span><span class="p">,</span>                             <span class="c1"># number of nodes</span>
+    <span class="s1">&#39;adj&#39;</span><span class="p">:</span> <span class="n">adj</span><span class="p">,</span>                         <span class="c1"># adjacency matrix</span>
+    <span class="s1">&#39;t_initial&#39;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>                    <span class="c1"># initial time of integration</span>
+    <span class="s2">&quot;t_final&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>                     <span class="c1"># final time of integration</span>
+    <span class="s1">&#39;t_transition&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span>                <span class="c1"># transition time</span>
+    <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>                    <span class="c1"># time interval for sampling</span>
+
+    <span class="s2">&quot;coupling&quot;</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>          <span class="c1"># coupling strength</span>
+    <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>                       <span class="c1"># frustration</span>
+    <span class="s2">&quot;omega&quot;</span><span class="p">:</span> <span class="n">omega0</span><span class="p">,</span>                    <span class="c1"># initial angular frequencies</span>
+    <span class="s1">&#39;initial_state&#39;</span><span class="p">:</span> <span class="n">initial_state</span><span class="p">,</span>     <span class="c1"># initial phase of oscillators</span>
+
+    <span class="s1">&#39;integration_method&#39;</span><span class="p">:</span> <span class="s1">&#39;dopri5&#39;</span><span class="p">,</span>     <span class="c1"># integration method</span>
+    <span class="s1">&#39;control&#39;</span><span class="p">:</span> <span class="p">[],</span>                      <span class="c1"># control parameters</span>
+
+    <span class="s2">&quot;use_omp&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>                   <span class="c1"># use OpenMP</span>
+    <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span>                   <span class="c1"># output directory</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>make an instance of the model and pass the parameters to it.
+Then compile the model.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span> <span class="o">=</span> <span class="n">Kuramoto_II</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+<span class="n">sol</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>and run the simulation</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">simulate</span><span class="p">([])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>to calculate and plot the order parameter of the system vs time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">order</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">order_parameter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">plot_order</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
+           <span class="n">order</span><span class="p">,</span>
+           <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;data/00.png&quot;</span><span class="p">,</span>
+           <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> 
+           <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;r(t)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id32">
+<a class="reference internal image-reference" href="_images/00.png"><img alt="_images/00.png" src="_images/00.png" style="width: 450.0px; height: 300.0px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Kuramoto order parameter vs time, for a complete network at a fixed coupling strength.</span><a class="headerlink" href="#id32" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 <div class="section" id="the-main-class-for-the-dde-kuramot-model">
-<span id="km-dde"></span><h4>The main class for the DDE Kuramot model<a class="headerlink" href="#the-main-class-for-the-dde-kuramot-model" title="Permalink to this headline">¶</a></h4>
+<span id="km-dde"></span><h4>The main class for the DDE Kuramot model<a class="headerlink" href="#the-main-class-for-the-dde-kuramot-model" title="Permalink to this heading">¶</a></h4>
 <dl class="py class">
-<dt id="jitcsim.models.kuramoto_dde.Kuramoto_Base">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_dde.</span></code><code class="sig-name descname"><span class="pre">Kuramoto_Base</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_dde.html#Kuramoto_Base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_Base" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_dde.Kuramoto_Base">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_dde.</span></span><span class="sig-name descname"><span class="pre">Kuramoto_Base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_dde.html#Kuramoto_Base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_Base" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for the Kuramoto model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1236,8 +1236,8 @@ coordinates and times</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_dde.Kuramoto_Base.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blind'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propagations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_dde.html#Kuramoto_Base.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_Base.simulate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_dde.Kuramoto_Base.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blind'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propagations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_dde.html#Kuramoto_Base.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_Base.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 computed state of the system after integration and times</p>
 <dl class="field-list simple">
@@ -1272,19 +1272,19 @@ computed state of the system after integration and times</p>
 
 <hr class="docutils" />
 <dl class="py class">
-<dt id="jitcsim.models.kuramoto_dde.Kuramoto_II">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_dde.</span></code><code class="sig-name descname"><span class="pre">Kuramoto_II</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_dde.html#Kuramoto_II"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_II" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_dde.Kuramoto_II">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.models.kuramoto_dde.</span></span><span class="sig-name descname"><span class="pre">Kuramoto_II</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_dde.html#Kuramoto_II"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_II" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt id="jitcsim.models.kuramoto_dde.Kuramoto_II.rhs">
-<code class="sig-name descname"><span class="pre">rhs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_dde.html#Kuramoto_II.rhs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_II.rhs" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_dde.Kuramoto_II.rhs">
+<span class="sig-name descname"><span class="pre">rhs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/models/kuramoto_dde.html#Kuramoto_II.rhs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_II.rhs" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Kuramoto model of type II</strong></p>
 <div class="math">
 <p><img src="_images/math/f2bac9de0383bc44a020d6d230cdfb8c0d13b5e4.png" alt="\frac{d\theta_i}{dt} = \omega_i + \sum_{j=0}^{N-1} a_{i,j} \sin(y_j(t - \tau_{ij}) - y_i - \alpha)"/></p>
 </div></dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.models.kuramoto_dde.Kuramoto_II.simulate">
-<code class="sig-name descname"><span class="pre">simulate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blind'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propagations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_II.simulate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.models.kuramoto_dde.Kuramoto_II.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">par</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'blind'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">propagations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode_2pi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">integrator_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jitcsim.models.kuramoto_dde.Kuramoto_II.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>integrate the system of equations and return the
 computed state of the system after integration and times</p>
 <dl class="field-list simple">
@@ -1319,16 +1319,16 @@ computed state of the system after integration and times</p>
 
 </div>
 <div class="section" id="module-jitcsim.visualization">
-<span id="visualization"></span><h4>Visualization<a class="headerlink" href="#module-jitcsim.visualization" title="Permalink to this headline">¶</a></h4>
+<span id="visualization"></span><h4>Visualization<a class="headerlink" href="#module-jitcsim.visualization" title="Permalink to this heading">¶</a></h4>
 <dl class="py function">
-<dt id="jitcsim.visualization.plot_lyaps">
-<code class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_lyaps</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'k'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_lyaps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_lyaps" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.visualization.plot_lyaps">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_lyaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'k'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_lyaps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_lyaps" title="Permalink to this definition">¶</a></dt>
 <dd><p>plot y vs x with given x and y labels</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="jitcsim.visualization.plot_matrix">
-<code class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">14</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'equal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'seismic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'F.png'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_matrix" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.visualization.plot_matrix">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ticks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">14</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aspect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'equal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'seismic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'F.png'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot given matrix using imshow module.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1341,7 +1341,7 @@ computed state of the system after integration and times</p>
 <li><p><strong>labelsize</strong> (<em>int</em>) – </p></li>
 <li><p><strong>colorbar</strong> (<em>boolian</em><em>,</em>) – </p></li>
 <li><p><strong>aspect</strong> (<em>{'equal'</em><em>, </em><em>'auto'}</em><em> or </em><em>float</em><em>, </em><em>default: rcParams</em><em>[</em><em>&quot;image.aspect&quot;</em><em>] </em><em>(</em><em>default: 'equal'</em><em>)</em>) – </p></li>
-<li><p><strong>cmapstr</strong><strong> or </strong><strong>Colormap</strong> (<em>cmap</em>) – The Colormap instance or registered colormap name used to map scalar data to colors. This parameter is ignored for RGB(A) data.</p></li>
+<li><p><strong>Colormap</strong> (<em>cmap cmapstr or</em>) – The Colormap instance or registered colormap name used to map scalar data to colors. This parameter is ignored for RGB(A) data.</p></li>
 <li><p><strong>default</strong> (<em>rcParams</em><em>[</em><em>&quot;image.cmap&quot;</em><em>] </em><em>(</em><em>default: 'seismic'</em><em>)</em>) – The Colormap instance or registered colormap name used to map scalar data to colors. This parameter is ignored for RGB(A) data.</p></li>
 <li><p><strong>filename</strong> (<em>str</em><em>, </em><em>(</em><em>default: F.png</em><em>)</em>) – filename of the figure to be stored.</p></li>
 </ul>
@@ -1350,8 +1350,8 @@ computed state of the system after integration and times</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="jitcsim.visualization.plot_order">
-<code class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_order</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'k'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6,</span> <span class="pre">4)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_order" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.visualization.plot_order">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'f.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'k'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(6,</span> <span class="pre">4)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/visualization.html#plot_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.visualization.plot_order" title="Permalink to this definition">¶</a></dt>
 <dd><p>plot y vs x with given x and y labels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1372,15 +1372,15 @@ computed state of the system after integration and times</p>
 
 </div>
 <div class="section" id="module-jitcsim.networks">
-<span id="networks"></span><h4>Networks<a class="headerlink" href="#module-jitcsim.networks" title="Permalink to this headline">¶</a></h4>
+<span id="networks"></span><h4>Networks<a class="headerlink" href="#module-jitcsim.networks" title="Permalink to this heading">¶</a></h4>
 <dl class="py class">
-<dt id="jitcsim.networks.make_network">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">jitcsim.networks.</span></code><code class="sig-name descname"><span class="pre">make_network</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.networks.make_network">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jitcsim.networks.</span></span><span class="sig-name descname"><span class="pre">make_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network" title="Permalink to this definition">¶</a></dt>
 <dd><p>make different graphs ans return their adjacency matrices
 as a 1 dimensional double vector in stl library</p>
 <dl class="py method">
-<dt id="jitcsim.networks.make_network.barabasi">
-<code class="sig-name descname"><span class="pre">barabasi</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network.barabasi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network.barabasi" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.networks.make_network.barabasi">
+<span class="sig-name descname"><span class="pre">barabasi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network.barabasi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network.barabasi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return random network using Barabási-Albert preferential attachment model.
 A graph of n nodes is grown by attaching new nodes each with m edges that are preferentially attached to existing nodes with high degree.</p>
 <p>This is <cite>networkx.barabasi_albert_graph</cite> module.</p>
@@ -1401,8 +1401,8 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.networks.make_network.complete">
-<code class="sig-name descname"><span class="pre">complete</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network.complete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network.complete" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.networks.make_network.complete">
+<span class="sig-name descname"><span class="pre">complete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network.complete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network.complete" title="Permalink to this definition">¶</a></dt>
 <dd><p>make complete all to all adjacency matrix</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1418,8 +1418,8 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.networks.make_network.erdos_renyi">
-<code class="sig-name descname"><span class="pre">erdos_renyi</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network.erdos_renyi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network.erdos_renyi" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.networks.make_network.erdos_renyi">
+<span class="sig-name descname"><span class="pre">erdos_renyi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network.erdos_renyi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network.erdos_renyi" title="Permalink to this definition">¶</a></dt>
 <dd><p>make Erdos Renyi network</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1439,8 +1439,8 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 </dd></dl>
 
 <dl class="py method">
-<dt id="jitcsim.networks.make_network.fgc">
-<code class="sig-name descname"><span class="pre">fgc</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network.fgc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network.fgc" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.networks.make_network.fgc">
+<span class="sig-name descname"><span class="pre">fgc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omega</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/networks.html#make_network.fgc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.networks.make_network.fgc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Frequency Gap-conditioned (FGC) network</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1463,21 +1463,18 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 
 </div>
 <div class="section" id="module-jitcsim.utility">
-<span id="utility"></span><h4>Utility<a class="headerlink" href="#module-jitcsim.utility" title="Permalink to this headline">¶</a></h4>
+<span id="utility"></span><h4>Utility<a class="headerlink" href="#module-jitcsim.utility" title="Permalink to this heading">¶</a></h4>
 <dl class="py function">
-<dt id="jitcsim.utility.display_time">
-<code class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></code><code class="sig-name descname"><span class="pre">display_time</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#display_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.display_time" title="Permalink to this definition">¶</a></dt>
-<dd><p>print elaped time in hours, minutes and seconds.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>time</strong> (<em>float</em>) – Time elapsed in seconds.</p>
-</dd>
-</dl>
+<dt class="sig sig-object py" id="jitcsim.utility.display_time">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></span><span class="sig-name descname"><span class="pre">display_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#display_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.display_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>display elapsed time in hours, minutes, seconds
+:param time: elaspsed time in seconds
+:type time: float</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="jitcsim.utility.flatten">
-<code class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></code><code class="sig-name descname"><span class="pre">flatten</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#flatten"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.flatten" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.utility.flatten">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></span><span class="sig-name descname"><span class="pre">flatten</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#flatten"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.flatten" title="Permalink to this definition">¶</a></dt>
 <dd><p>flatten a list of list</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1490,8 +1487,8 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 </dd></dl>
 
 <dl class="py function">
-<dt id="jitcsim.utility.kuramoto_correlation">
-<code class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></code><code class="sig-name descname"><span class="pre">kuramoto_correlation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#kuramoto_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.kuramoto_correlation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.utility.kuramoto_correlation">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></span><span class="sig-name descname"><span class="pre">kuramoto_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#kuramoto_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.kuramoto_correlation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the Kuramoto correlation between phase of nodes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1507,8 +1504,8 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 </dd></dl>
 
 <dl class="py function">
-<dt id="jitcsim.utility.local_order_parameter">
-<code class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></code><code class="sig-name descname"><span class="pre">local_order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#local_order_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.local_order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.utility.local_order_parameter">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></span><span class="sig-name descname"><span class="pre">local_order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#local_order_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.local_order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate the local order parameter of given indices</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1527,8 +1524,8 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 </dd></dl>
 
 <dl class="py function">
-<dt id="jitcsim.utility.order_parameter">
-<code class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></code><code class="sig-name descname"><span class="pre">order_parameter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#order_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.order_parameter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jitcsim.utility.order_parameter">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></span><span class="sig-name descname"><span class="pre">order_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phases</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#order_parameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.order_parameter" title="Permalink to this definition">¶</a></dt>
 <dd><p>calculate the Kuramoto order parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1543,6 +1540,14 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="jitcsim.utility.timer">
+<span class="sig-prename descclassname"><span class="pre">jitcsim.utility.</span></span><span class="sig-name descname"><span class="pre">timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jitcsim/utility.html#timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jitcsim.utility.timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>decorator to measure elapsed time
+:param func: function to be decorated
+:type func: function</p>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -1555,20 +1560,17 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Welcome to JiTCSim’s documentation!</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a><ul>
 <li><a class="reference internal" href="#what-are-jitc-de">What are JiTC*DE:</a><ul>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#tutorial">Tutorial</a><ul>
-<li><a class="reference internal" href="#id7">ODE</a></li>
-<li><a class="reference internal" href="#module-jitcsim.examples.scripts.02_ode_kuramoto_II_single_param_repeated_run">Control parameters</a></li>
-<li><a class="reference internal" href="#module-jitcsim.examples.scripts.01_sde_kuramoto_II_single_param">SDE</a></li>
-<li><a class="reference internal" href="#module-jitcsim.examples.scripts.01_dde_kuramoto_II_single_param">DDE</a></li>
-<li><a class="reference internal" href="#module-jitcsim.examples.scripts.03_ode_kuramoto_II_single_param_parallel">Parallel using Multiprocessing</a></li>
+<li><a class="reference internal" href="#module-jitcsim.examples.scripts.examples_kuramoto.02_ode_kuramoto_II_single_param_repeated_run">Control parameters</a></li>
+<li><a class="reference internal" href="#module-jitcsim.examples.scripts.examples_kuramoto.01_sde_kuramoto_II_single_param">SDE</a></li>
+<li><a class="reference internal" href="#module-jitcsim.examples.scripts.examples_kuramoto.01_dde_kuramoto_II_single_param">DDE</a></li>
+<li><a class="reference internal" href="#module-jitcsim.examples.scripts.examples_kuramoto.03_ode_kuramoto_II_single_param_parallel">Parallel using Multiprocessing</a></li>
 <li><a class="reference internal" href="#module-jitcsim.examples.scripts.07_ode_explosive_synchronization">Explosive synchronization and hysteresis loop</a></li>
 <li><a class="reference internal" href="#module-jitcsim.examples.scripts.08_ode_lyapunov_exponents">Lyapunov exponents</a></li>
 </ul>
@@ -1583,6 +1585,10 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 <li><a class="reference internal" href="#kuramoto-model">Kuramoto Model</a><ul>
 <li><a class="reference internal" href="#the-main-class-for-the-ode-kuramot-model">The main class for the ODE Kuramot model</a></li>
 <li><a class="reference internal" href="#the-main-class-for-the-sde-kuramot-model">The main class for the SDE Kuramot model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id18">Tutorial</a><ul>
+<li><a class="reference internal" href="#id19">ODE</a></li>
 <li><a class="reference internal" href="#the-main-class-for-the-dde-kuramot-model">The main class for the DDE Kuramot model</a></li>
 <li><a class="reference internal" href="#module-jitcsim.visualization">Visualization</a></li>
 <li><a class="reference internal" href="#module-jitcsim.networks">Networks</a></li>
@@ -1595,6 +1601,7 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
 </li>
 </ul>
 
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -1606,12 +1613,12 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1631,7 +1638,7 @@ A graph of n nodes is grown by attaching new nodes each with m edges that are pr
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2021, Abolfazl Ziaeemehr.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>
