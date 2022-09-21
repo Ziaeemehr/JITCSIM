@@ -131,7 +131,7 @@ class Kuramoto_Base:
         self.initial_state = x0
     # ---------------------------------------------------------------
 
-    def simulate(self, par, **integrator_params):
+    def simulate(self, par, mode_2pi=True, **integrator_params):
         '''
         integrate the system of equations and return the
         coordinates and times
@@ -160,7 +160,10 @@ class Kuramoto_Base:
                       self.t_transition, self.interval)
         phases = np.zeros((len(times), self.N))
         for i in range(len(times)):
-            phases[i, :] = I.integrate(times[i]) % (2*np.pi)
+            if mode_2pi:
+                phases[i, :] = I.integrate(times[i]) % (2*np.pi)
+            else:
+                phases[i, :] = I.integrate(times[i])
 
         return {"t": times, "x": phases}
     # ---------------------------------------------------------------
