@@ -25,7 +25,7 @@ copyright = '2021, Abolfazl Ziaeemehr'
 author = 'Abolfazl Ziaeemehr'
 
 # The full version, including alpha/beta/rc tags
-release = '0.3'
+release = '0.3.1'
 # release = version = get_version(root='..', relative_to=__file__)
 
 
