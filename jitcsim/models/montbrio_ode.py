@@ -195,7 +195,7 @@ class Montbrio_call_single(Montbrio_Base):
         single population Montbrio model without frequency addaptation
         """
 
-        yield self.Delta / (self.tau * pi) + 2 * y(0)*y(1) / self.tau
+        yield 1/self.tau*(self.Delta/(self.tau * pi) + 2 * y(0)*y(1)) 
         yield 1.0/self.tau * (y(1)**2 + self.eta + self.Iapp(t) + self.J * 
                               self.tau * y(0) - (pi*self.tau * y(0))**2)
     # ---------------------------------------------------------------
