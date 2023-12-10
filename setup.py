@@ -8,8 +8,13 @@ with open("requirements.txt") as f:
 
 setuptools.setup(
     name='jitcsim',
+<<<<<<< HEAD
     version="0.3",
     author="Abolfazl Ziaeemehr",
+=======
+    version='0.3.1',
+    author="...",
+>>>>>>> ed5ee808b6480ba3292b9b9a1b5aec04e6f47abd
     author_email="a.ziaeemehr@gmail.com",
     description="Simulation of networks with Ordinary/Delay/Stochastic differential equations (just-in-time compilation",
     long_description=long_description,
@@ -23,6 +28,6 @@ setuptools.setup(
     ],
     # python_requires='>=3.8',
     # package_data={'sbi_nmms': ['DampOscillator.so']},
-    install_requires=requirements,
+    # install_requires=requirements,
     # include_package_data=True,
 )

@@ -7,7 +7,11 @@ The initial phase also could be changed in repeated simulations.
 The output is plotting the time average of the Kuramoto order parameter vs coupling.
 Only difference with respect to the previous examples is shown:
 
+<<<<<<< HEAD
 .. literalinclude:: ../jitcsim/examples/scripts/02_ode_kuramoto_II_single_param_repeated_run.py    
+=======
+.. literalinclude:: ../../jitcsim/examples/scripts/examples_kuramoto/02_ode_kuramoto_II_single_param_repeated_run.py    
+>>>>>>> ed5ee808b6480ba3292b9b9a1b5aec04e6f47abd
         :start-after: example-st\u0061rt
         :lines: 15, 23, 36, 39
         :dedent: 4
@@ -16,7 +20,11 @@ Only difference with respect to the previous examples is shown:
 to make an instance of the model and measure the compilation time:
 (time module need to be imported)
 
+<<<<<<< HEAD
 .. literalinclude:: ../jitcsim/examples/scripts/02_ode_kuramoto_II_single_param_repeated_run.py    
+=======
+.. literalinclude:: ../../jitcsim/examples/scripts/examples_kuramoto/02_ode_kuramoto_II_single_param_repeated_run.py    
+>>>>>>> ed5ee808b6480ba3292b9b9a1b5aec04e6f47abd
         :start-after: example-st\u0061rt
         :lines: 41-44
         :dedent: 4
@@ -24,21 +32,21 @@ to make an instance of the model and measure the compilation time:
 then define an array for the various coupling strenghts
 and an zero array to record the order parameter at different couplings:
 
-.. literalinclude:: ../jitcsim/examples/scripts/02_ode_kuramoto_II_single_param_repeated_run.py    
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/02_ode_kuramoto_II_single_param_repeated_run.py    
         :start-after: example-st\u0061rt
         :lines: 46-47
         :dedent: 4
 
 we need a loop over each coupling and repeat the simulation `num_ensembles` times. The initial state of the oscillators can also be changed for each simulation using :py:meth:`set_initial_state`.
 
-.. literalinclude:: ../jitcsim/examples/scripts/02_ode_kuramoto_II_single_param_repeated_run.py    
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/02_ode_kuramoto_II_single_param_repeated_run.py    
         :start-after: example-st\u0061rt
         :lines: 49-61
         :dedent: 4
 
 and finally plot the time averaged order parameter vs coupling strength:
 
-.. literalinclude:: ../jitcsim/examples/scripts/02_ode_kuramoto_II_single_param_repeated_run.py    
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/02_ode_kuramoto_II_single_param_repeated_run.py    
         :start-after: example-st\u0061rt
         :lines: 63-67
         :dedent: 4
@@ -51,7 +59,7 @@ and finally plot the time averaged order parameter vs coupling strength:
 
 
 
-.. figure:: ../jitcsim/examples/scripts//data/02.png
+.. figure:: ../jitcsim/examples/scripts/examples_kuramoto/data/02.png
     :scale: 50 %
 
     Time average of the Kuramoto order parameter vs coupling strength.

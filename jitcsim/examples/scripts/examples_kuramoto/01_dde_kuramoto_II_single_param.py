@@ -12,13 +12,17 @@ The output is plotting the Kuramoto order parameter vs time.
 
 Start with importing required modules:
 
+<<<<<<< HEAD
 .. literalinclude:: ../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py    
+=======
+.. literalinclude:: ../../jitcsim/examples/scripts/examples_kuramoto/01_dde_kuramoto_II_single_param.py    
+>>>>>>> ed5ee808b6480ba3292b9b9a1b5aec04e6f47abd
         :start-after: example-st\u0061rt
         :lines: 1-6
     
 setting the parameters of the model. The new item here is definition of delay matrix.
 
-.. literalinclude:: ../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py    
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/01_dde_kuramoto_II_single_param.py    
         :start-after: example-st\u0061rt
         :lines: 10-38
         :dedent: 4
@@ -26,13 +30,13 @@ setting the parameters of the model. The new item here is definition of delay ma
 compiling and run the simulation. We can also determine type of `Dealing with initial discontinuities <https://jitcdde.readthedocs.io/en/stable/#discontinuities>`_.
 To suppress warning messages use :code:`python -W ignore script.py`.
 
-.. literalinclude:: ../jitcsim/examples/scripts/01_dde_kuramoto_II_single_param.py        
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/01_dde_kuramoto_II_single_param.py        
         :start-after: example-st\u0061rt
         :lines: 40-53
         :dedent: 4
 
 
-.. figure:: ../jitcsim/examples/scripts/data/01_dde.png
+.. figure:: ../jitcsim/examples/scripts/examples_kuramoto/data/01_dde.png
     :scale: 50 %
 
     Kuramoto order parameter vs time for a complete network. The system of equations include delay.

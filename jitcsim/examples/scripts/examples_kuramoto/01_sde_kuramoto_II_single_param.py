@@ -12,26 +12,26 @@ The output is plotting the Kuramoto order parameter vs time.
 
 Start with importing modules
 
-.. literalinclude:: ../jitcsim/examples/scripts/01_sde_kuramoto_II_single_param.py    
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/01_sde_kuramoto_II_single_param.py    
         :start-after: example-st\u0061rt
         :lines: 1-6
         :caption:
 
 define the amplitude of the noise with normal distribution, set the parameters and runnig the simulation:
 
-.. literalinclude:: ../jitcsim/examples/scripts/01_sde_kuramoto_II_single_param.py    
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/01_sde_kuramoto_II_single_param.py    
         :start-after: example-st\u0061rt
         :lines: 10-47
         :dedent: 4
         
 and finally plotting the order parameter:
 
-.. literalinclude:: ../jitcsim/examples/scripts/01_sde_kuramoto_II_single_param.py    
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/01_sde_kuramoto_II_single_param.py    
         :start-after: example-st\u0061rt
         :lines: 49-57
         :dedent: 4
 
-.. figure:: ../jitcsim/examples/scripts//data/01_sde.png
+.. figure:: ../jitcsim/examples/scripts/examples_kuramoto/data/01_sde.png
     :scale: 50 %
 
     Kuramoto order parameter vs time for complete network. The system of equations include noise.

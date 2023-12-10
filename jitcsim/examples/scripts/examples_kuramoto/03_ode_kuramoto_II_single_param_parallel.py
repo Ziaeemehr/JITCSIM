@@ -6,19 +6,19 @@ The output is plotting the time average of the Kuramoto order parameter vs coupl
 
 The only difference with respect to the previous examples is as follows:
 
-.. literalinclude:: ../jitcsim/examples/scripts/03_ode_kuramoto_II_single_param_parallel.py
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/03_ode_kuramoto_II_single_param_parallel.py
         :start-after: example-st\u0061rt
         :lines: 4
         :caption:
 
-.. literalinclude:: ../jitcsim/examples/scripts/03_ode_kuramoto_II_single_param_parallel.py
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/03_ode_kuramoto_II_single_param_parallel.py
         :start-after: example-st\u0061rt
         :lines: 15-17, 42-52
         :dedent: 4
 
 after compiling we need to provide the `par` and make a pool:
 
-.. literalinclude:: ../jitcsim/examples/scripts/03_ode_kuramoto_II_single_param_parallel.py
+.. literalinclude:: ../jitcsim/examples/scripts/examples_kuramoto/03_ode_kuramoto_II_single_param_parallel.py
         :start-after: example-st\u0061rt
         :lines: 65-72
         :dedent: 4
