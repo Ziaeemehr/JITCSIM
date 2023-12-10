@@ -31,7 +31,7 @@ Symbolic expressions are mostly handled by `SymEngine <https://github.com/symeng
 
 .. [Rackauckas2017] Rackauckas, C. and Nie, Q., 2017. Adaptive methods for stochastic differential equations via natural embeddings and rejection sampling with memory. Discrete and continuous dynamical systems. Series B, 22(7), p.2731, `10.3934/dcdsb.2017133 <http://dx.doi.org/10.3934/dcdsb.2017133>`_.
 
-.. [Robler2010] Rößler, A., 2010. Runge–Kutta methods for the strong approximation of solutions of stochastic differential equations. SIAM Journal on Numerical Analysis, 48(3), pp.922-952. `10.1137/09076636X <http://dx.doi.org/10.1137/09076636X>`_.
+.. [Robler2010] Rößler, A., 2010. Runge-Kutta methods for the strong approximation of solutions of stochastic differential equations. SIAM Journal on Numerical Analysis, 48(3), pp.922-952. `10.1137/09076636X <http://dx.doi.org/10.1137/09076636X>`_.
 
 .. toctree::
    :maxdepth: 2

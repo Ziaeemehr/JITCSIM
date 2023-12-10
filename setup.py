@@ -1,3 +1,4 @@
+# from jitcsim.__init__ import __version__ as v
 import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -7,8 +8,8 @@ with open("requirements.txt") as f:
 
 setuptools.setup(
     name='jitcsim',
-    version='0.3',
-    author="...",
+    version="0.3",
+    author="Abolfazl Ziaeemehr",
     author_email="a.ziaeemehr@gmail.com",
     description="Simulation of networks with Ordinary/Delay/Stochastic differential equations (just-in-time compilation",
     long_description=long_description,

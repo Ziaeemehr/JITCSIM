@@ -1,4 +1,4 @@
-build/
+_build/
 dist/
 .vscode/
 __pycache__/

@@ -13,7 +13,7 @@ Start with importing modules
 
 define feed forward loop adjacency matrix and set the parameters:
 
-.. literalinclude:: ../../jitcsim/examples/scripts/08_ode_lyapunov_exponents.py
+.. literalinclude:: ../jitcsim/examples/scripts/08_ode_lyapunov_exponents.py
         :start-after: example-st\u0061rt
         :lines: 21-44
         :dedent: 4
@@ -23,12 +23,12 @@ Usually we need 2 or 3 largets LE. Increasing the number of LEs make the compila
 
 `Lyap_Kuramoto_II` class is defined for calculation of LEs:
 
-.. literalinclude:: ../../jitcsim/examples/scripts/08_ode_lyapunov_exponents.py
+.. literalinclude:: ../jitcsim/examples/scripts/08_ode_lyapunov_exponents.py
         :start-after: example-st\u0061rt
         :lines: 46-52
         :dedent: 4
 
-.. figure:: ../../jitcsim/examples/scripts/data/lyap.png
+.. figure:: ../jitcsim/examples/scripts/data/lyap.png
     :scale: 80 %
 
     The LEs of the Kuramoto oscillators on feed forward loop.
